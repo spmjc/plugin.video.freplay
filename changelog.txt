@@ -1,0 +1,85 @@
+18 April 205 Version 0.4.1
+	-Fixed ARTE
+	-Added NRJ12
+	
+12 April 2015 version 0.4.0
+	-Added D8
+	-Added D17
+
+10 Apr 2015 version 0.3.9
+    -Fixed ARTE
+    
+09 Apr 2015 version 0.3.8
+	-Improved TF1,NT1,TMC - Thanks to kunaruto and nekwebdev
+	-Fixed dependencies thanks to Julien094
+    -Fixed ARTE
+
+11/10/2014 version 0.3.7
+	-Fixed Canal+
+
+04/10/2014 version 0.3.5
+	-Fixed Canal+
+	-Added TF1 + NT1 + TMC full videos (Partially works)
+	-Partially fixed Arte	-First version on the repo :)
+
+23/04/2014 version 0.3.4
+	-Fixed Canal+
+	
+30/03/2014 version 0.3.2
+	-Added Search function for Canal + (will add for others later)
+	
+	
+26/03/2014 version 0.3.1
+	-Fixed dependencies
+	-Ordered channels
+	
+24/03/2014 version 0.3.0
+	-Added NT1+TMC
+	-Changed Channels list to Dictionnary
+	-Icons
+	
+22/03/2014 version 0.2.1
+	-Added TF1
+	-Fixed Favorites issue
+	-Show Videos as episodes (Confluence)
+	-More metadata displayed
+	
+20/03/2014 Version 0.2
+	-Added Arte
+	-Added France TV Pluzz
+	-Added Favorite Management
+	-Watched items working
+
+14/03/2014 Version 0.1 par SPM
+    - Canal+ OK
+    TODO:
+    	-Icon Addon
+    	-Show only Favorites unseen
+    	-Other channels
+    		-Pluzz
+    		-D8
+    		-D17
+    		-Gully
+    		-HD1
+    		-NT1
+    		-Arte
+    		-BFM TV
+    		-France 24
+    		-TF1
+    		-M6/W9
+    		-equipe TV
+    		    		
+    	-Contextual Menu
+    		-Mark as watched
+    		-Download
+    		-Mark All as Watched
+    		-Add to Favorites
+    	-Settings
+    		-Video Quality
+    		-Channels to Display
+    	
+
+
+
+
+

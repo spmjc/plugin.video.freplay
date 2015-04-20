@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings> <!--   Finnish 19.5.2009   -->
+
+    <!--GENERAL STRINGS -->
+    <string id="30000">Canal Plus</string>
+    <string id="30001">Etsi</string>
+    <string id="30002">Kategoriat</string>
+    <string id="30003">FAVORITES</string>
+    <string id="30004">Favorite saved</string>
+    <string id="30005">This links is already in your Favorites</string>
+
+    <!--SETTINGS STRINGS -->
+    <string id="30010">Videotoistin</string>
+    <string id="30011">Automaattinen</string>
+    <string id="30012">MPlayer</string>
+    <string id="30013">DVD Player</string>
+
+    <string id="30020">Video Quality</string>
+    <string id="30021">Korkea</string>
+    <string id="30022">Matala</string>
+
+    <string id="30030">Debug</string>
+    <string id="30031">Activate Debug mode</string>
+
+    <string id="30040">Video</string>
+    <string id="30050">Advanced settings</string>
+    <string id="30051">Options display</string>
+    <string id="30052">Context menu</string>
+    <string id="30053">Videos list</string>
+    <string id="30054">Both</string>
+
+    <!--CONTEXT MENU STRINGS -->
+    <string id="30100">Tallenna (korkealaatu)</string>
+    <string id="30101">Tallenna (matalalaatu)</string>
+    <string id="30110">Add current page to Favorites</string>
+    <string id="30111">Add selected item to Favorites</string>
+    <string id="30112">Delete from Favorites</string>
+
+    <!--DIALOG STRINGS -->
+    <string id="30200">Ladataan tietoja...</string>
+    <string id="30201">Noudetaan videoluetteloa...</string>
+    <string id="30202">Ladataan kohteita...</string>
+    <string id="30203">Etsitään Canal Plus-videoita</string>
+    <string id="30204">Virhe!</string>
+    <string id="30205">Hakusanan täytyy olla</string>
+    <string id="30206">vähintään kolme merkkiä pitkä</string>
+    <string id="30207">The Favorite string should have</string>
+    <string id="30208">Favorite string</string>
+    <string id="30209">Name already used</string>
+
+</strings>

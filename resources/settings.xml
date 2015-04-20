@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <!-- GENERAL -->
+  	<category label="$LOCALIZE[128]">
+	    <setting label="30040" type="lsep" />
+	    <setting id="video_quality" type="enum" lvalues="30021|30022" label="30020" default="0" />
+	    <setting id="option_display" type="enum" lvalues="30052|30053|30054" label="30051" default="0"/>
+	</category>
+
+    <!-- ADVANCED -->
+  	<category label="30050">
+	    <setting label="30030" type="lsep" />
+	    <setting label="30031" type="bool" id="debug" default="false" />
+	</category>
+</settings>

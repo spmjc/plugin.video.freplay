@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Les strings de 30000 à 30999 sont réservées aux paramètres plug-in -->
+    <!--GENERAL STRINGS -->
+    <string id="30000">Canal Plus</string>
+    <string id="30001">Recherche</string>
+    <string id="30002">Catégories</string>
+    <string id="30003">FAVORIS</string>
+    <string id="30004">Favoris sauvegardé</string>
+    <string id="30005">Ce lien est deja present dans vos Favoris</string>
+
+    <!--SETTINGS STRINGS -->
+    <string id="30010">Player Vidéo</string>
+    <string id="30011">Auto</string>
+    <string id="30012">MPlayer</string>
+    <string id="30013">DVD Player</string>
+
+    <string id="30020">Qualité vidéo</string>
+    <string id="30021">Haute</string>
+    <string id="30022">Basse</string>
+
+    <string id="30030">Debug</string>
+    <string id="30031">Activer le mode Debug</string>
+
+    <string id="30040">Vidéo</string>
+    <string id="30050">Configuration avancée</string>
+    <string id="30051">Affichage des options</string>
+    <string id="30052">Menu contextuel</string>
+    <string id="30053">Liste des vidéos</string>
+    <string id="30054">Les deux</string>
+
+    <!--CONTEXT MENU STRINGS -->
+    <string id="30100">Enregistrer (Haute Qualité)</string>
+    <string id="30101">Enregistrer (Basse Qualité)</string>
+    <string id="30110">Ajouter la page courante aux Favoris</string>
+    <string id="30111">Ajouter l'élément selectionné aux Favoris</string>
+    <string id="30112">Supprimer des Favoris</string>
+
+    <!--DIALOG STRINGS -->
+    <string id="30200">Chargement des informations...</string>
+    <string id="30201">Récupération des listes de videos...</string>
+    <string id="30202">Chargement des éléments...</string>
+    <string id="30203">Recherche sur Canal Plus Videos</string>
+    <string id="30204">Erreur!</string>
+    <string id="30205">Le terme de recherche doit contenir</string>
+    <string id="30206">au moins trois caractères</string>
+    <string id="30207">Le nom du Favoris doit contenir</string>
+    <string id="30208">Nom du Favoris</string>
+    <string id="30209">Nom déjà utilisé</string>
+
+</strings>

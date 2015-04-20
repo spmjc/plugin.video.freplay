@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.freplay"
+       name="FReplay"
+       version="0.4.1"
+       provider-name="SPM">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.requests" version="1.1.0"/>
+    <import addon="script.module.parsedom" version="0.9.1"/>
+    <import addon="script.module.simplejson"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary>Plugin vidéo donnant acces aux replays de differentes chaines FR</summary>
+    <description>Ce plugin permet d'acceder aux replay TV de differentes chaines francophones. <BR/>
+    Les favoris affichent seulement les emissions non visualisees : Plus besoin de parcourir 50 repertoires ;)
+    </description>
+    <platform>all</platform>
+  </extension>
+</addon>
