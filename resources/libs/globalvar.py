@@ -20,7 +20,9 @@ CATALOG_M6=os.path.join(CACHE_DIR,'m6.xml')
 CATALOG_PLUZZ        = os.path.join(CACHE_DIR,'PluzzMobileCatalog.zip')
 CATALOG_CANAL        = os.path.join(CACHE_DIR,'CANAL.json')
 CATALOG_ARTE        = os.path.join(CACHE_DIR,'ARTE.xml')
-CATALOG_D8= os.path.join(CACHE_DIR,'D8.json')
+
+LOGLEVEL=1 #From to 3
+DEVMODE=TRUE
 
 VIEWID='503'
 
