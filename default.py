@@ -11,6 +11,7 @@ import xbmcaddon
 import resources.libs.globalvar as globalvar
 import resources.libs.utils as utils
 import resources.libs.favourites as favourites
+import resources.libs.commondownloader as commondownloader
 
 base_url = sys.argv[0]
 addon_handle = int(sys.argv[1])
@@ -30,8 +31,8 @@ def buildShowsList(videos):
         if video_mode=='play':
             li.setInfo( type='Video', infoLabels=infoLabels)            
             li.setProperty('IsPlayable', 'true')
-            #li.addContextMenuItems([ ('Download', 'XBMC.RunPlugin(%s?mode=dl&channel=%s&param=%s&name=%s)' % (sys.argv[0],200,video_url.encode('utf-8'),video_title)),
-            #         ], replaceItems=True)
+            li.addContextMenuItems([ ('Download', 'XBMC.RunPlugin(%s?mode=dl&channel=%s&param=%s&name=%s)' % (sys.argv[0],chan,video_url.encode('utf-8'),video_title)),
+                     ], replaceItems=True)
         url = build_url({'mode': video_mode, 'channel': chan, 'param':video_url})
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=False)
         xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_NONE)
@@ -102,5 +103,15 @@ else:
             result=favourites.rem_favourite(channel,param)
         notify(result,channel)
     elif mode[0]=='dl':
-        notify('Not implemented yet',0)
+        if globalvar.dlfolder=='':
+            notify('You need to set the download folder first', channel)
+        else:
+            url=globalvar.channels[channel][1].getVideoURL(channel,param)
+            extensionStart=url.rfind('.')
+            extension=url[extensionStart:len(url)].upper()
+            if extension=='.MP4':            
+                fileName=utils.format_filename(args['name'][0]+'.mp4')
+                commondownloader.download(url, os.path.join(globalvar.dlfolder,fileName))
+            else:
+                notify(extension + ' not supported', channel)
     xbmcplugin.endOfDirectory( handle=int(addon_handle), succeeded=True, updateListing=False)
