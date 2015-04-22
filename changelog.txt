@@ -10,7 +10,7 @@ Version 0.4.2
 	-Added D17
 
 10 Apr 2015 version 0.3.9
-    -Fixed ARTE
+  -Fixed ARTE
     
 09 Apr 2015 version 0.3.8
 	-Improved TF1,NT1,TMC - Thanks to kunaruto and nekwebdev
