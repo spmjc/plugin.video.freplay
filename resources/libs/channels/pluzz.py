@@ -1,6 +1,10 @@
 import zipfile
 import json
-import globalvar
+from resources.libs import globalvar                
+
+title=['France 1','France 2', 'France 3', 'France 4', 'France 5', 'France O']
+img=['france1' ,'france2','france3','france4','france5','franceo']
+readyForUse=True
 
 catalogconffilename = "message_FT.json"
 catalogcatfilename  = "categories.json"

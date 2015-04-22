@@ -3,7 +3,11 @@ import json
 import CommonFunctions
 common = CommonFunctions
 from xml.dom import minidom
-import globalvar
+from resources.libs import globalvar           
+
+title=['ARTE']
+img=['arte']
+readyForUse=True
 
 url_base='http://www.arte.tv/papi/tvguide-flow/sitemap/feeds/videos/F.xml' 
 

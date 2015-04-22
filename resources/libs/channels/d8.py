@@ -1,7 +1,10 @@
 import urllib,urllib2
 import xml.etree.ElementTree as ET
-import globalvar
 import json
+
+title=['D8','D17']
+img=['D8','D17']
+readyForUse=True
 
 def list_shows(channel,folder):
     shows=[]

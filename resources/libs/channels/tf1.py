@@ -1,6 +1,10 @@
 import urllib2
 import json
 
+title=['TF1','TMC','NT1']
+img=['tf1','tmc','nt1']
+readyForUse=True
+
 url_categories={'tf1':'http://api.tf1.fr/tf1-genders/ipad/',
              'tmc':'http://api.tmc.tv/tmc-genres/android-smartphone/',
              'nt1':'http://api.nt1.tv/nt1-genres/android-smartphone/'

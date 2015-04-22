@@ -1,87 +1,47 @@
 import globalvar
-import cplus
-import pluzz
-import arte
-import favourites
-import gulli
-import tf1
-import msix
-import acine
-import tara
-import d8
-import nrj12
 
-import os
+import os,imp,inspect
 import sys
 import urllib,urllib2
 import json
 
-def init():
-    # append pydev remote debugger
-    if globalvar.REMOTE_DBG:
-        # Make pydev debugger works for auto reload.
-        # Note pydevd module need to be copied in XBMC\system\python\Lib\pysrc
-        try:
-            import pysrc.pydevd as pydevd
-        # stdoutToServer and stderrToServer redirect stdout and stderr to eclipse console
-            pydevd.settrace('localhost', stdoutToServer=True, stderrToServer=True)
-        except ImportError:
-            sys.stderr.write("Error: " +
-                "You must add org.python.pydev.debug.pysrc to your PYTHONPATH.")
+def getOrderChannel(chanName):
+  return globalvar.ADDON.getSetting('disp'+chanName)
 
-    globalvar.channels = {'favourites': [ 'Favourites', favourites,False],
-           'tf1': ['TF1', tf1,False],
-           'tmc': ['TMC', tf1,False],
-           'nt1': ['NT1', tf1,False],
-           'france1': ['France 1', pluzz,False],
-           'france2': ['France 2', pluzz,False],
-           'france3': ['France 3', pluzz,False],
-           'france4': ['France 4', pluzz,False],
-           'france5': ['France 5', pluzz,False],
-           'franceo': ['France O', pluzz,False],
-           'cplus': ['Canal +', cplus,False],
-           'arte': ['Arte', arte,False],
-           'gulli': ['Gulli', gulli,False],
-           'msix': ['M6', msix,False],
-           'acine': ['AlloCine', acine,False],
-           'D8': ['D8', d8,False],
-           'D17': ['D17', d8,False],
-           'nrj12': ['NRJ12', nrj12 ,False]
-           }
-    globalvar.ordered_channels=[
-           'favourites',
-           'tf1',
-           'france2',
-           'france3',
-           'cplus',
-           'arte',
-           'D8',
-           'nrj12',
-           'tmc',
-           'D17',
-           'france1',
-           'france4',
-           'france5',
-           'franceo',
-           'nt1'
-           ]
+def init():
+    print globalvar.CHANNELS_DIR
+    for subdir, dirs, files in os.walk(globalvar.CHANNELS_DIR):    
+      for file in files:
+        extensionStart=file.rfind('.')
+        extension=file[extensionStart:len(file)].upper()
+        if extension=='.PY':
+          f, filename, description = imp.find_module(file[:-3],[globalvar.CHANNELS_DIR])
+          channelModule = imp.load_module(file[:-3], f, filename, description) 
+          if channelModule.readyForUse :
+            for i in range (0,len(channelModule.title)):
+              order=getOrderChannel(channelModule.img[i])
+              if order<>'99':
+                globalvar.channels[channelModule.img[i]]=[channelModule.title[i], channelModule,getOrderChannel(channelModule.img[i])] 
+                globalvar.ordered_channels.append((channelModule.img[i],order))   
     
-            
+    globalvar.ordered_channels.sort(key=lambda channel: channel[1])
+    globalvar.dlfolder=globalvar.ADDON.getSetting('dlFolder')
+    
 def firstRun():
     if not os.path.exists(globalvar.CACHE_DIR) :
         os.makedirs(globalvar.CACHE_DIR, mode=0777)
     #Download Pluzz Catalog
     if os.path.exists(globalvar.CATALOG_PLUZZ):
         os.remove(globalvar.CATALOG_PLUZZ)
-    urllib.urlretrieve('http://webservices.francetelevisions.fr/catchup/flux/flux_main.zip',globalvar.CATALOG_PLUZZ)
+    #urllib.urlretrieve('http://webservices.francetelevisions.fr/catchup/flux/flux_main.zip',globalvar.CATALOG_PLUZZ)
     #Download Canal
     if os.path.exists(globalvar.CATALOG_CANAL):
         os.remove(globalvar.CATALOG_CANAL)
-    urllib.urlretrieve('http://service.mycanal.fr/authenticate.json/Android_Tab/1.1?highResolution=1',globalvar.CATALOG_CANAL)
+    #urllib.urlretrieve('http://service.mycanal.fr/authenticate.json/Android_Tab/1.1?highResolution=1',globalvar.CATALOG_CANAL)
     #Download ARTE
     if os.path.exists(globalvar.CATALOG_ARTE):
         os.remove(globalvar.CATALOG_ARTE)
-    urllib.urlretrieve('http://www.arte.tv/papi/tvguide-flow/sitemap/feeds/videos/F.xml',globalvar.CATALOG_ARTE)
+    #urllib.urlretrieve('http://www.arte.tv/papi/tvguide-flow/sitemap/feeds/videos/F.xml',globalvar.CATALOG_ARTE)
         
 
     #Download M6 Catalog
@@ -89,8 +49,18 @@ def firstRun():
     #    os.remove(globalvar.CATALOG_M6)
     #urllib.urlretrieve('http://static.m6replay.fr/catalog/m6group_ipad/m6replay/catalogue.xml',globalvar.CATALOG_M6)
     
-#def download_video(name, url):
-    #downloader = simpledownloader.SimpleDownloader()
-    
-    #params = { "url": url, "download_path": globalvar.CACHE_DIR }
-    #downloader.download('test', params)
+
+def format_filename(s):
+    """Take a string and return a valid filename constructed from the string.
+Uses a whitelist approach: any characters not present in valid_chars are
+removed. Also spaces are replaced with underscores.
+ 
+Note: this method may produce invalid filenames such as ``, `.` or `..`
+When I use this method I prepend a date string like '2009_01_15_19_46_32_'
+and append a file extension like '.txt', so I avoid the potential of using
+an invalid filename.
+ 
+"""
+    valid_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
+    filename = ''.join(c for c in s if c in valid_chars)
+    return filename

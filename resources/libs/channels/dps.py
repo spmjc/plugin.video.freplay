@@ -1,6 +1,10 @@
 
 import urllib2
-import re
+import re      
+
+title=['dps']
+img=['dps']
+readyForUse=False
 
 def list_shows(channel,folder):
     shows=[]

@@ -1,5 +1,9 @@
 import urllib
-import xml.dom.minidom
+import xml.dom.minidom    
+
+title=['Gulli']
+img=['gulli']
+readyForUse=False
 
 url_base='http://sslreplay.gulli.fr/replay/api?call=%7B%22api_key%22%3A%22andphone_72abef4bfc0c64d99b87b939ad32edf7%22%2C%22method%22%3A%22programme.getLatestEpisodes%22%2C%22params%22%3A%7B%22category_id%22%3A%22$$CATEG$$%22%2C%22episode_image_thumb%22%3A%5B285%2C213%5D%2C+%22episode_image_thumb_fiche%22%3A%5B0%2C0%5D%2C+%22program_image_thumb%22%3A%5B540%2C405%5D%2C+%22episode_image_fiche%22%3A%5B1080%2C810%5D%7D%7D'
 url_basf='http://sslreplay.gulli.fr/replay/api?call=%7B%22api_key%22%3A%22andphone_72abef4bfc0c64d99b87b939ad32edf7%22%2C%22method%22%3A%22programme.getLatestEpisodes%22%2C%22params%22%3A%7B%22category_id%22%3A%22emissions%22%2C%22episode_image_thumb%22%3A%5B285%2C213%5D%2C+%22episode_image_thumb_fiche%22%3A%5B0%2C0%5D%2C+%22program_image_thumb%22%3A%5B540%2C405%5D%2C+%22episode_image_fiche%22%3A%5B1080%2C810%5D%7D%7D'

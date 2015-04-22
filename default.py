@@ -56,8 +56,8 @@ print xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetFileDetails", 
 if mode is None:
     notify('Downloading Catalogs',1)
     utils.firstRun()
-    for item in globalvar.ordered_channels:  
-        add_Channel(item,globalvar.channels[item][0])
+    for item in globalvar.ordered_channels:
+      add_Channel(item[0],globalvar.channels[item[0]][0])
     
     xbmcplugin.endOfDirectory(addon_handle)
 else:    
@@ -65,12 +65,6 @@ else:
     param = args['param'][0]
     print 'FReplay:'+'mode='+mode[0]+' | channel=' + str(channel)+' | param=' + param
     if mode[0]=='folder':
-        if globalvar.channels[channel][2] and param=='none':
-            url = build_url({'mode': 'Search', 'channel': channel,'param':'none'})
-            li = xbmcgui.ListItem('Search','')
-            li.addContextMenuItems([], replaceItems=True)
-            xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=True)
-                
         for chan,folder_param, folder_title, folder_icon, mode in globalvar.channels[channel][1].list_shows(channel,param):
             url = build_url({'mode': mode, 'channel': chan, 'param':folder_param})
             li = xbmcgui.ListItem(folder_title, iconImage=folder_icon)

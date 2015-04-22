@@ -1,7 +1,11 @@
 import urllib
 import xml.dom.minidom
 import os
-import globalvar
+from resources.libs import globalvar
+
+title=['M6']
+img=['msix']
+readyForUse=False
 
 url_catalogue='http://static.m6replay.fr/catalog/m6group_ipad/m6replay/catalogue.xml'
 

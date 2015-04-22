@@ -3,6 +3,10 @@ import re
 import CommonFunctions
 common = CommonFunctions
 
+title=['NRJ12']
+img=['nrj12']
+readyForUse=True
+
 def list_shows(channel,folder):
     shows=[]
     

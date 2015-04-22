@@ -1,5 +1,9 @@
 from HTMLParser import HTMLParser
-import urllib2
+import urllib2                  
+
+title=['Taratata']
+img=['tara']
+readyForUse=False
 
 class HomeParse(HTMLParser):
     def handle_starttag(self, tag, attrs):

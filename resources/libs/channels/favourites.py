@@ -1,7 +1,11 @@
-import globalvar
+from resources.libs import globalvar
 import json
 import os
-import xbmcgui
+import xbmcgui                         
+
+title=['Favourites']
+img=['favourites']
+readyForUse=True
 
 def list_shows(channel,folder):
     shows=[]

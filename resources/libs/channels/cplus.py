@@ -1,7 +1,11 @@
 import urllib,urllib2
 import xml.dom.minidom
-import globalvar
+from resources.libs import globalvar
 import json
+
+title=['Canal +']
+img=['cplus']
+readyForUse=True
 
 def get_token():
     #Download Canal Catalog
