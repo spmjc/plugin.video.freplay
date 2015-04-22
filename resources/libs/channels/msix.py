@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import urllib
 import xml.dom.minidom
 import os

@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import xbmc
 import xbmcplugin
 import xbmcgui

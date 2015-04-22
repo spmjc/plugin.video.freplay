@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import zipfile
 import json
 from resources.libs import globalvar                

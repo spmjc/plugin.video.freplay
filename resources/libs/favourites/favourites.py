@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 from resources.libs import globalvar
 import json
 import os

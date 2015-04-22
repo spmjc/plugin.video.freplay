@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 '''
     Simple XBMC Download Script
     Copyright (C) 2013 Sean Poyser (seanpoyser@gmail.com)
