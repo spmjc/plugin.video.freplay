@@ -1,3 +1,6 @@
+Version 0.4.2
+  -Amelioration de la gestion des chaines (code + Affichage/Ordre)
+
 18 April 205 Version 0.4.1
 	-Fixed ARTE
 	-Added NRJ12
