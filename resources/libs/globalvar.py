@@ -5,12 +5,13 @@ import xbmcaddon
 
 import os
 
-ADDON_NAME='plugin.video.freplay'
-ADDON     = xbmcaddon.Addon(ADDON_NAME)
-SETTINGS  = ADDON
-LANGUAGE  = ADDON.getLocalizedString
-ADDON_DIR = ADDON.getAddonInfo( "path" )
-RESOURCES = os.path.join( ADDON_DIR, "resources" )   
+ADDON_NAME = 'plugin.video.freplay'
+ADDON      = xbmcaddon.Addon(ADDON_NAME)
+SETTINGS   = ADDON
+LANGUAGE   = ADDON.getLocalizedString
+ADDON_DIR  = ADDON.getAddonInfo( "path" )
+VERSION = ADDON.getAddonInfo("version")
+RESOURCES  = os.path.join( ADDON_DIR, "resources" )   
 CHANNELS_DIR= os.path.join( RESOURCES, "libs","channels" ) 
 MEDIA     = os.path.join( RESOURCES, "media")
 ADDON_DATA= xbmc.translatePath( "special://profile/addon_data/%s/" % ADDON_NAME )
