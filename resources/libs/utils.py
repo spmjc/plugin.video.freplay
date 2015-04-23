@@ -5,6 +5,7 @@ import os,imp,inspect
 import sys
 import urllib,urllib2
 import json
+import string
 
 def getOrderChannel(chanName):
   return globalvar.ADDON.getSetting('disp'+chanName)
