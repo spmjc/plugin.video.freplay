@@ -7,7 +7,7 @@ import urllib,urllib2
 def logEvent(category,action,screen):
   cid = str(uuid.uuid1())
   cid=cid[cid.rfind('-')+1:]   
-  tid='UA-62039003-1'
+  tid='UA-62192019-1'
   av=xbmc.getInfoLabel( "System.BuildVersion" )
   av=av[:av.find(' ')]
   an='kodi_' + av
