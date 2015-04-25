@@ -2,9 +2,12 @@
 import urllib2
 import json
 
+#Channels Parameters
 title=['TF1','TMC','NT1']
 img=['tf1','tmc','nt1']
 readyForUse=True
+
+#Channels Settings
 
 url_categories={'tf1':'http://api.tf1.fr/tf1-genders/ipad/',
              'tmc':'http://api.tmc.tv/tmc-genres/android-smartphone/',
@@ -44,7 +47,7 @@ def list_shows(channel,folder):
             if str(prgm['genderId'])==folder:
                 if prgm['images']:
                     img=prgm['images'][0]['url']
-                shows.append( [channel,prgm['id'], prgm['shortTitle'].encode('utf-8'),img,'shows'] )
+                shows.append( [channel,str(prgm['id']), prgm['shortTitle'].encode('utf-8'),img,'shows'] )
     
     return shows
 

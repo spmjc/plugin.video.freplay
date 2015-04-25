@@ -20,4 +20,7 @@
     <string id="30099">99</string>
     
     <string id="32000">Repertoire de Telechargements</string>
+    <string id="32001">Afficher la chaine</string>              
+    <string id="32002">Ordre pour affichage</string>            
+    <string id="32003">Qualite Video</string>
 </strings>

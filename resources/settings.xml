@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <category label="Channels">
-	    <setting label="Favourites" type="labelenum" id="dispfavourites" default="30001" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	    <setting label="TF1" type="labelenum" id="disptf1" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	    <setting label="France 2" type="labelenum" id="dispfrance2" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	    <setting label="France 3" type="labelenum" id="dispfrance3" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	    <setting label="France 4" type="labelenum" id="dispfrance4" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	    <setting label="France 5" type="labelenum" id="dispfrance5" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	    <setting label="France 1" type="labelenum" id="dispfrance1" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	    <setting label="France O" type="labelenum" id="dispfranceo" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	    <setting label="Canal +" type="labelenum" id="dispcplus" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	    <setting label="ARTE" type="labelenum" id="disparte" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	    <setting label="D8" type="labelenum" id="dispD8" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	    <setting label="D17" type="labelenum" id="dispD17" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	    <setting label="NT1" type="labelenum" id="dispnt1" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	    <setting label="TMC" type="labelenum" id="disptmc" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	    <setting label="NRJ12" type="labelenum" id="dispnrj12" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
-	</category>
-    <category label="Download">
-    	<setting label="32000" type="folder" id="dlFolder" source="auto" option="writeable"/>
-    </category>
+  <category label="Channels">
+    <setting label="Favourites" type="labelenum" id="dispfavourites" default="30001" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+    <setting label="TF1" type="labelenum" id="disptf1" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+    <setting label="France 2" type="labelenum" id="dispfrance2" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+    <setting label="France 3" type="labelenum" id="dispfrance3" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+    <setting label="France 4" type="labelenum" id="dispfrance4" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+    <setting label="France 5" type="labelenum" id="dispfrance5" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+    <setting label="France 1" type="labelenum" id="dispfrance1" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+    <setting label="France O" type="labelenum" id="dispfranceo" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+    <setting label="Canal +" type="labelenum" id="dispcplus" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+    <setting label="ARTE" type="labelenum" id="disparte" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+    <setting label="D8" type="labelenum" id="dispD8" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+    <setting label="D17" type="labelenum" id="dispD17" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+    <setting label="NT1" type="labelenum" id="dispnt1" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+    <setting label="TMC" type="labelenum" id="disptmc" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+    <setting label="NRJ12" type="labelenum" id="dispnrj12" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015|30099"/>
+  </category>
+  <category label="Download">
+    <setting label="32000" type="folder" id="dlFolder" source="auto" option="writeable"/>
+  </category>
+  <category label="TF1">
+    <setting label="32001" type="bool" id="tf1Disp" default="false"/>
+    <setting label="32002" type="labelenum" id="tf1Order" default="1" lvalues="30000|30001|30002|30003|30004|30005|30006|30007|30008|30009|30010|30011|30012|30013|30014|30015"/>
+    <setting label="32003" type="labelenum" id="tf1Quality" default="HLS" values="BAS_DEBIT|HAUT_DEBIT|HD|MOBILE|SMOOTH_STREAMING|IPHONE|IPAD|HDS|HLS|"/>
+      
+  </category>    
 </settings>

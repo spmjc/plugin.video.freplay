@@ -11,12 +11,11 @@ def getOrderChannel(chanName):
   return globalvar.ADDON.getSetting('disp'+chanName)
 
 def init():
-    print globalvar.CHANNELS_DIR
     for subdir, dirs, files in os.walk(globalvar.CHANNELS_DIR):    
       for file in files:
         extensionStart=file.rfind('.')
         extension=file[extensionStart:len(file)].upper()
-        if extension=='.PY':
+        if extension=='.PY' and file!='__init__.py':
           f, filename, description = imp.find_module(file[:-3],[globalvar.CHANNELS_DIR])
           channelModule = imp.load_module(file[:-3], f, filename, description) 
           if channelModule.readyForUse :
@@ -66,3 +65,4 @@ an invalid filename.
     valid_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
     filename = ''.join(c for c in s if c in valid_chars)
     return filename
+        

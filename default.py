@@ -11,7 +11,7 @@ import xbmcaddon
 
 import resources.libs.globalvar as globalvar
 import resources.libs.utils as utils
-import resources.libs.favourites as favourites
+import resources.libs.channels.favourites as favourites
 import resources.libs.commondownloader as commondownloader 
 import resources.libs.log as log
 
@@ -48,12 +48,10 @@ def notify(text,channel):
     time = 3000  #in miliseconds 
     xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%('FReplay',text, time, os.path.join( globalvar.ADDON_DIR, "icon.png")))
 
-    
+print args    
 mode = args.get('mode', None)
 
 utils.init()
-
-print xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetFileDetails", "params": { "file": "1" }, "id": 1}')
 
 if mode is None:
     notify('Downloading Catalogs',1)     
@@ -75,10 +73,12 @@ else:
             #Contextual Menu
             li.addContextMenuItems([], replaceItems=True)
             if mode=='shows' and channel!='favourites':
-                li.addContextMenuItems([ ('Add to FReplay Favourites', 'XBMC.RunPlugin(%s?mode=bkm&action=add&channel=%s&param=%s&display=%s)' % (urllib.quote_plus(sys.argv[0]),urllib.quote_plus(chan),urllib.quote_plus(folder_param),urllib.quote_plus(folder_title))),
+                li.addContextMenuItems([ ('Add to FReplay Favourites', 'XBMC.RunPlugin(%s?mode=bkm&action=add&channel=%s&param=%s&display=%s)' % 
+                    (sys.argv[0],chan,urllib.quote_plus(folder_param),urllib.quote_plus(folder_title))),
                          ], replaceItems=True)
             if mode=='shows' and channel=='favourites':
-                li.addContextMenuItems([ ('Remove from Favourites', 'XBMC.RunPlugin(%s?mode=bkm&action=rem&channel=%s&param=%s&display=%s)' % (sys.argv[0],urllib.quote_plus(chan),urllib.quote_plus(folder_param),urllib.quote_plus(folder_title))),
+                li.addContextMenuItems([ ('Remove from Favourites', 'XBMC.RunPlugin(%s?mode=bkm&action=rem&channel=%s&param=%s&display=%s)' % 
+                (sys.argv[0],chan,urllib.quote_plus(folder_param),urllib.quote_plus(folder_title))),
                          ], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=True)
     elif mode[0]=='shows':     
@@ -96,6 +96,7 @@ else:
         if (keyboard.isConfirmed()):
             buildShowsList(globalvar.channels[channel][1].list_videos(channel,keyboard.getText()))
     elif mode[0]=='bkm':      
+        print '-----------------------------Hi'
         log.logEvent(channel,'Favs',param)
         if args['action'][0]=='add':#Add to Favourites
             display = args['display'][0]

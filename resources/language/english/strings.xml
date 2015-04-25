@@ -20,5 +20,8 @@
     <string id="30099">99</string>
     
     
-    <string id="32000">Select Download Path</string>
+    <string id="32000">Select Download Path</string> 
+    <string id="32001">Display Channel</string>              
+    <string id="32002">Order</string>            
+    <string id="32003">Video Quality</string>
 </strings>
