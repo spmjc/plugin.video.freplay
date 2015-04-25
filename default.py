@@ -33,8 +33,8 @@ def buildShowsList(videos):
         if video_mode=='play':
             li.setInfo( type='Video', infoLabels=infoLabels)            
             li.setProperty('IsPlayable', 'true')
-            #li.addContextMenuItems([ ('Download', 'XBMC.RunPlugin(%s?mode=dl&channel=%s&param=%s&name=%s)' % (sys.argv[0],chan,video_url.encode('utf-8'),video_title.encode('utf-8'))),
-            #         ], replaceItems=True)
+            li.addContextMenuItems([ ('Download', 'XBMC.RunPlugin(%s?mode=dl&channel=%s&param=%s&name=%s)' % (sys.argv[0],urllib.quote_plus(chan),urllib.quote_plus(video_url),urllib.quote_plus(video_title))),
+                     ], replaceItems=True)
         url = build_url({'mode': video_mode, 'channel': chan, 'param':video_url})
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=False)
         xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_NONE)
@@ -74,12 +74,12 @@ else:
             li = xbmcgui.ListItem(folder_title, iconImage=folder_icon)
             #Contextual Menu
             li.addContextMenuItems([], replaceItems=True)
-            #if mode=='shows' and channel!='favourites':
-                #li.addContextMenuItems([ ('Add to FReplay Favourites', 'XBMC.RunPlugin(%s?mode=bkm&action=add&channel=%s&param=%s&display=%s)' % (sys.argv[0],chan,folder_param,folder_title)),
-                #         ], replaceItems=True)
-            #if mode=='shows' and channel=='favourites':
-            #    li.addContextMenuItems([ ('Remove from Favourites', 'XBMC.RunPlugin(%s?mode=bkm&action=rem&channel=%s&param=%s&display=%s)' % (sys.argv[0],chan,folder_param,folder_title)),
-            #             ], replaceItems=True)
+            if mode=='shows' and channel!='favourites':
+                li.addContextMenuItems([ ('Add to FReplay Favourites', 'XBMC.RunPlugin(%s?mode=bkm&action=add&channel=%s&param=%s&display=%s)' % (urllib.quote_plus(sys.argv[0]),urllib.quote_plus(chan),urllib.quote_plus(folder_param),urllib.quote_plus(folder_title))),
+                         ], replaceItems=True)
+            if mode=='shows' and channel=='favourites':
+                li.addContextMenuItems([ ('Remove from Favourites', 'XBMC.RunPlugin(%s?mode=bkm&action=rem&channel=%s&param=%s&display=%s)' % (sys.argv[0],urllib.quote_plus(chan),urllib.quote_plus(folder_param),urllib.quote_plus(folder_title))),
+                         ], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=True)
     elif mode[0]=='shows':     
         log.logEvent(channel,'Display',param)
