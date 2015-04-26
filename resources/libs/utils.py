@@ -9,7 +9,10 @@ import string
 import log
 
 def getOrderChannel(chanName):
-  return globalvar.ADDON.getSetting('disp'+chanName)
+  if globalvar.ADDON.getSetting('disp'+chanName):
+    return int(globalvar.ADDON.getSetting('disp'+chanName))
+  else:
+    return 20
 
 def init():
     for subdir, dirs, files in os.walk(globalvar.CHANNELS_DIR):    
@@ -22,7 +25,7 @@ def init():
           if channelModule.readyForUse :
             for i in range (0,len(channelModule.title)):
               order=getOrderChannel(channelModule.img[i])
-              if order<>'99':
+              if order<>99:
                 globalvar.channels[channelModule.img[i]]=[channelModule.title[i], channelModule,getOrderChannel(channelModule.img[i])] 
                 globalvar.ordered_channels.append((channelModule.img[i],order))   
     

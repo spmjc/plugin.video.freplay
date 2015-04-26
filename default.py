@@ -33,7 +33,7 @@ def buildShowsList(videos):
         if video_mode=='play':
             li.setInfo( type='Video', infoLabels=infoLabels)            
             li.setProperty('IsPlayable', 'true')
-            li.addContextMenuItems([ ('Download', 'XBMC.RunPlugin(%s?mode=dl&channel=%s&param=%s&name=%s)' % (sys.argv[0],urllib.quote_plus(chan),urllib.quote_plus(video_url),urllib.quote_plus(video_title))),
+            li.addContextMenuItems([ ('Download', 'XBMC.RunPlugin(%s?mode=dl&channel=%s&param=%s&name=%s)' % (sys.argv[0],chan,urllib.quote_plus(video_url),urllib.quote_plus(video_title))),
                      ], replaceItems=True)
         url = build_url({'mode': video_mode, 'channel': chan, 'param':video_url})
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=False)

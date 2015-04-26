@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 import urllib2
-import json
+import json      
+from resources.libs import globalvar      
 
 #Channels Parameters
 title=['TF1','TMC','NT1']
@@ -8,6 +9,9 @@ img=['tf1','tmc','nt1']
 readyForUse=True
 
 #Channels Settings
+bonus={'tf1':globalvar.ADDON.getSetting('tf1Bonus'),
+      'tmc':globalvar.ADDON.getSetting('tmcBonus'),
+      'nt1':globalvar.ADDON.getSetting('nt1Bonus')}
 
 url_categories={'tf1':'http://api.tf1.fr/tf1-genders/ipad/',
              'tmc':'http://api.tmc.tv/tmc-genres/android-smartphone/',
@@ -73,21 +77,21 @@ def list_videos(channel,show_title):
 
         infoLabels={ "Title": name,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}
         videos.append( [channel, video_url, name, image_url,infoLabels,'play'] )
-
-    fileVideos=urllib2.urlopen(url_videos2[channel] + str(show_title)).read()
-    jsonvid     = json.loads(fileVideos)
-    for video in jsonvid : 
-        video_url=''
-        if 'watId' in video:
-            video_url=str(video['watId'])
-        name='Bonus-' + video['shortTitle'].encode('utf-8')
-        image_url=video['images'][0]['url']
-        date=video['publicationDate'][:10]
-        duration=int(video['duration']) / 60
-        views=''
-        desc=video['longTitle']
-        rating=''
-
-        infoLabels={ "Title": name,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}
-        videos.append( [channel, video_url, name, image_url,infoLabels,'play'] )
+    if (bonus)[channel]=='true':
+      fileVideos=urllib2.urlopen(url_videos2[channel] + str(show_title)).read()
+      jsonvid     = json.loads(fileVideos)
+      for video in jsonvid : 
+          video_url=''
+          if 'watId' in video:
+              video_url=str(video['watId'])
+          name='Bonus-' + video['shortTitle'].encode('utf-8')
+          image_url=video['images'][0]['url']
+          date=video['publicationDate'][:10]
+          duration=int(video['duration']) / 60
+          views=''
+          desc=video['longTitle']
+          rating=''
+  
+          infoLabels={ "Title": name,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}
+          videos.append( [channel, video_url, name, image_url,infoLabels,'play'] )
     return videos
