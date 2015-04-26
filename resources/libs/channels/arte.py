@@ -4,25 +4,22 @@ import json
 import CommonFunctions
 common = CommonFunctions
 from xml.dom import minidom
-from resources.libs import globalvar           
+from resources.libs import utils           
 
 title=['ARTE']
 img=['arte']
 readyForUse=True
 
-url_base='http://www.arte.tv/papi/tvguide-flow/sitemap/feeds/videos/F.xml' 
-
-def fix_text(text):
-
-    return text.replace('&amp;','&').encode('utf-8').replace('&#039;',' ')
+def fix_text(text): 
+  return text.replace('&amp;','&').encode('utf-8').replace('&#039;',' ')
 
 def list_shows(channel,folder):
     shows=[]
     d=dict()
     
-    
+    filePath=utils.downloadCatalog('http://www.arte.tv/papi/tvguide-flow/sitemap/feeds/videos/F.xml','ARTE.XML',False)
     if folder=='none':
-        xml = open(globalvar.CATALOG_ARTE).read()
+        xml = open(filePath).read()
         url=common.parseDOM(xml, "url")
         for i in range(0, len(url)):
             categoryTab=common.parseDOM(url[i], "video:category")
@@ -32,7 +29,7 @@ def list_shows(channel,folder):
                     shows.append( [channel,category,category,'','folder'] )
                     d[category]=category
     else:
-        xml = open(globalvar.CATALOG_ARTE).read()
+        xml = open(filePath).read()
         url=common.parseDOM(xml, "url")
         for i in range(0, len(url)):
             titleTab=common.parseDOM(url[i], "video:title")

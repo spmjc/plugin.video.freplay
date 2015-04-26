@@ -1,31 +1,31 @@
 #-*- coding: utf-8 -*-
 import urllib,urllib2
 import xml.dom.minidom
-from resources.libs import globalvar
+from resources.libs import utils
 import json
 
 title=['Canal +']
 img=['cplus']
 readyForUse=True
 
-def get_token():
-    #Download Canal Catalog
-    filPrgm=open(globalvar.CATALOG_CANAL).read()
-    jsoncat     = json.loads(filPrgm)
-    return jsoncat['token']
+def get_token():  
+  filePath=utils.downloadCatalog('http://service.mycanal.fr/authenticate.json/Android_Tab/1.1?highResolution=1','TokenCPlus.json',False) 
+  filPrgm=open(filePath).read()
+  jsoncat     = json.loads(filPrgm)
+  return jsoncat['token']
 
 def list_shows(channel,folder):
     shows=[]
-            
-    if folder=='none':
-        filPrgm=urllib2.urlopen('http://service.mycanal.fr/page/'+get_token()+'/1595.json').read()
+                    
+    filePath=utils.downloadCatalog('http://service.mycanal.fr/page/'+get_token()+'/1595.json','CPLUS.json',False)
+    filPrgm=open(filePath).read()
+    if folder=='none':                        
         jsoncat     = json.loads(filPrgm)
         strates  = jsoncat['strates']
         for strate in strates :
             if strate['type']=='contentGrid':
                 shows.append( [channel,strate['title'].encode('utf-8'), strate['title'].encode('utf-8'),'','folder'] )
     else:
-        filPrgm=urllib2.urlopen('http://service.mycanal.fr/page/'+get_token()+'/1595.json').read()
         jsoncat     = json.loads(filPrgm)
         strates  = jsoncat['strates']
         for strate in strates :

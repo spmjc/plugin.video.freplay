@@ -1,12 +1,13 @@
 #-*- coding: utf-8 -*-
 import zipfile
 import json
-from resources.libs import globalvar                
+import resources.libs.utils as utils           
 
 title=['France 1','France 2', 'France 3', 'France 4', 'France 5', 'France O']
 img=['france1' ,'france2','france3','france4','france5','franceo']
 readyForUse=True
 
+filePath=utils.downloadCatalog('http://webservices.francetelevisions.fr/catchup/flux/flux_main.zip','Pluzz.zip',False)
 catalogconffilename = "message_FT.json"
 catalogcatfilename  = "categories.json"
 url_base_videos= "http://medias2.francetv.fr/catchup-mobile"
@@ -14,16 +15,15 @@ url_base_images= "http://www.pluzz.fr"
     
 def list_shows(channel,folder):
     shows=[]
-    if folder=='none':
-        
-        zf          = zipfile.ZipFile(globalvar.CATALOG_PLUZZ)
+    if folder=='none':                     
+        zf          = zipfile.ZipFile(filePath)
         data        = zf.read(catalogcatfilename)
         jsoncat     = json.loads(data.decode('iso-8859-1'))
         categories  = jsoncat['categories']
         for cat in categories :
             shows.append( [channel,cat['titre'].encode('utf-8'), cat['titre'].encode('utf-8'),'','folder'] )
     else:
-        zf          = zipfile.ZipFile(globalvar.CATALOG_PLUZZ)
+        zf          = zipfile.ZipFile(filePath)
         data        = zf.read('catch_up_' + channel + '.json')
         jsoncatalog = json.loads(data)
         programmes  = jsoncatalog['programmes']
@@ -53,7 +53,7 @@ def getVideoURL(channel,video_URL):
 
 def list_videos(channel,show_title):
     videos=[]     
-    zf          = zipfile.ZipFile(globalvar.CATALOG_PLUZZ)
+    zf          = zipfile.ZipFile(filePath)
     data        = zf.read('catch_up_' + channel + '.json')
     jsoncatalog = json.loads(data)
     programmes  = jsoncatalog['programmes']

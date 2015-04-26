@@ -40,7 +40,6 @@ def list_videos(channel,show_title):
             
             pDialog.close()
     else:
-        print str(channel) + ' : ' + show_title
         videos=globalvar.channels[channel][1].list_videos(channel,show_title) 
     return videos
 

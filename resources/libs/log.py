@@ -5,6 +5,18 @@ import globalvar
 import uuid
 import urllib,urllib2
 
+def logDLFile(url):
+  if globalvar.LOGLEVEL==1:
+    print 'OS=' + sys.platform
+    print 'Build=' + xbmc.getInfoLabel( "System.BuildVersion" )
+    print 'Internet' + xbmc.getInfoLabel( "System.InternetState" )
+  
+  if globalvar.LOGLEVEL<=2:
+    print 'Addon=' + globalvar.ADDON.getAddonInfo('name') + ' ' + globalvar.ADDON.getAddonInfo('version')
+    print 'Addon Path=' + globalvar.ADDON.getAddonInfo('path')
+  
+  print 'Download Catalog=' + url  
+  
 def logEvent(category,action,screen):
   cid = str(uuid.uuid1())
   cid=cid[cid.rfind('-')+1:]   

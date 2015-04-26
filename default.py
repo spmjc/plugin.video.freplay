@@ -48,15 +48,12 @@ def notify(text,channel):
     time = 3000  #in miliseconds 
     xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%('FReplay',text, time, os.path.join( globalvar.ADDON_DIR, "icon.png")))
 
-print args    
 mode = args.get('mode', None)
 
 utils.init()
 
-if mode is None:
-    notify('Downloading Catalogs',1)     
+if mode is None: 
     log.logEvent(mode,'Display','Home')
-    utils.firstRun()
     for item in globalvar.ordered_channels:
       add_Channel(item[0],globalvar.channels[item[0]][0])
     
@@ -64,7 +61,6 @@ if mode is None:
 else:    
     channel = args['channel'][0]
     param = args['param'][0]
-    print 'FReplay:'+'mode='+mode[0]+' | channel=' + str(channel)+' | param=' + param
     if mode[0]=='folder':        
         log.logEvent(channel,'Display',param)
         for chan,folder_param, folder_title, folder_icon, mode in globalvar.channels[channel][1].list_shows(channel,param):
@@ -96,7 +92,6 @@ else:
         if (keyboard.isConfirmed()):
             buildShowsList(globalvar.channels[channel][1].list_videos(channel,keyboard.getText()))
     elif mode[0]=='bkm':      
-        print '-----------------------------Hi'
         log.logEvent(channel,'Favs',param)
         if args['action'][0]=='add':#Add to Favourites
             display = args['display'][0]
