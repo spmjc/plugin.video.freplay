@@ -53,7 +53,8 @@ def getVideoURL(channel,video_id):
     
 def list_videos(channel,show_title):
     videos=[]
-    xml = open(globalvar.CATALOG_ARTE).read()	
+    filePath=utils.downloadCatalog('http://www.arte.tv/papi/tvguide-flow/sitemap/feeds/videos/F.xml','ARTE.XML',False)
+    xml = open(filePath).read()	
     url=common.parseDOM(xml, "url")
     
     for i in range(0, len(url)):   

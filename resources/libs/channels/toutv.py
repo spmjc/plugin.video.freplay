@@ -28,24 +28,36 @@ def list_shows(channel,param):
   
 def list_videos(channel,show_URL):
     videos=[] 
-    filPrgm=urllib2.urlopen(('http://www.tou.tv/presentation%s?AkamaiDevice=phone&excludeLineups=False&playerWidth=0') % (show_URL)).read()
+    filPrgm=urllib2.urlopen('http://www.tou.tv/presentation%s?AkamaiDevice=phone&excludeLineups=False&playerWidth=0' % (show_URL)).read()
     jsonParser     = json.loads(filPrgm)
     
     url=''
     title=''
     icon=''
-    
-    for season in jsonParser['SeasonLineups'] :
-      for item in season['LineupItems'] :
-        url=item['Url']
-        title=item['Title'].encode('utf-8')
-        icon=item['ImageUrl']
-        desc=item['Details']['Description'].encode('utf-8')
-        date=item['Details']['AirDate']
-        duration=item['Details']['Length']
-        
-        infoLabels={ "Title": title,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}
-        videos.append( [channel, url, title, icon,infoLabels,'play'] )
+    print 'http://www.tou.tv/presentation%s?AkamaiDevice=phone&excludeLineups=False&playerWidth=0' % (show_URL) 
+    print jsonParser['SeasonLineups']
+    if jsonParser['SeasonLineups']:
+      for season in jsonParser['SeasonLineups'] :
+        for item in season['LineupItems'] :
+          url=item['Url']
+          title=item['Title'].encode('utf-8')
+          icon=item['ImageUrl']
+          desc=item['Details']['Description'].encode('utf-8')
+          date=item['Details']['AirDate']
+          duration=item['Details']['Length']
+          
+          infoLabels={ "Title": title,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}
+          videos.append( [channel, url, title, icon,infoLabels,'play'] )
+    else:
+      url=show_URL
+      title=jsonParser['Title'].encode('utf-8')
+      icon=jsonParser['ImageUrl']
+      desc=jsonParser['Details']['Description'].encode('utf-8')
+      date=jsonParser['Details']['AirDate']
+      duration=jsonParser['Details']['Length']
+      
+      infoLabels={ "Title": title,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}
+      videos.append( [channel, url, title, icon,infoLabels,'play'] )
              
     return videos               
 
