@@ -98,6 +98,7 @@ else:
             result=favourites.add_favourite(channel,param,display)
         else:
             result=favourites.rem_favourite(channel,param)
+            xbmc.executebuiltin("XBMC.Container.Refresh")
         notify(result,channel)
     elif mode[0]=='dl':      
         log.logEvent(channel,'Download',param)
