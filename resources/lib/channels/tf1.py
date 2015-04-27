@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 import urllib2
 import json      
-from resources.libs import globalvar      
+from resources.lib import globalvar      
 
 #Channels Parameters
 title=['TF1','TMC','NT1']

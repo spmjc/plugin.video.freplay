@@ -13,10 +13,10 @@ LANGUAGE   = ADDON.getLocalizedString
 ADDON_DIR  = ADDON.getAddonInfo( "path" )
 VERSION = ADDON.getAddonInfo("version")
 RESOURCES  = os.path.join( ADDON_DIR, "resources" )   
-CHANNELS_DIR= os.path.join( RESOURCES, "libs","channels" ) 
+CHANNELS_DIR= os.path.join( RESOURCES, "lib","channels" ) 
 MEDIA     = os.path.join( RESOURCES, "media")
 ADDON_DATA= xbmc.translatePath( "special://profile/addon_data/%s/" % ADDON_NAME )
-CACHE_DIR = os.path.join( ADDON_DATA, "cache")
+CACHE_DIR = os.path.join( ADDON_DATA, "catalog_cache")
 FAVOURITES_FILE = os.path.join( ADDON_DATA, "favourites.json")
 
 LOGLEVEL=1 #From to 3

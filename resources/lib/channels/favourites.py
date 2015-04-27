@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-from resources.libs import globalvar
+from resources.lib import globalvar
 import json
 import os
 import xbmcgui                         

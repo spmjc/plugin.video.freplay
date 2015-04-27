@@ -2,7 +2,7 @@
 import urllib
 import xml.dom.minidom
 import os
-from resources.libs import globalvar
+from resources.lib import globalvar
 
 title=['M6']
 img=['msix']

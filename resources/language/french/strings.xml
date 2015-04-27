@@ -1,8 +1,36 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-    <string id="32000">Repertoire de Telechargements</string>
-    
-    <string id="32101">Afficher les bonus de TF1</string>
-    <string id="32102">Afficher les bonus de TMC</string>
-    <string id="32103">Afficher les bonus de NT1</string>
+  <!--------------------------------------------------->
+  <!--PLUGINS AND SETTINGS STRINGS (30000 thru 30999)-->
+  <!--------------------------------------------------->
+  <string id="30000">FReplay</string>
+  
+  <string id="30100">Chaînes</string>
+  
+  <string id="30200">Téléchargement</string>
+  <string id="30201">Sélectionner le dossier de téléchargement</string>
+  
+  <string id="30300">Divers</string>
+  <string id="30301">Afficher les bonue de TF1</string>
+  <string id="30302">Afficher les bonue de TMC</string>
+  <string id="30303">Afficher les bonue de NT1</string>
+  
+  <string id="30400">Avancé</string>
+  <string id="30401">Supprimer le cache des catalogues</string>
+  
+  
+  <!------------------------------------>
+  <!--SKINS STRINGS (31000 thru 31999)-->
+  <!------------------------------------>
+  
+  
+  <!------------------------------------>
+  <!--SCRIPTS STRINGS 32000 thru 32999-->
+  <!------------------------------------>
+  <string id="32000">Cache des catalogues supprimé</string>
+  
+  <!--------------------------------------------------->
+  <!--COMMON STRINGS USED IN ADDONS(33000 thru 33999)-->
+  <!--------------------------------------------------->
+
 </strings>

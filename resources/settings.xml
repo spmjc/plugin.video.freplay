@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-  <category label="Channels">
+  <category label="30100">
     <setting label="Favourites" type="labelenum" id="dispfavourites" default="0" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="TF1" type="labelenum" id="disptf1" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="France 2" type="labelenum" id="dispfrance2" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
@@ -20,12 +20,15 @@
     <setting label="iTele" type="labelenum" id="dispitele" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="Tou.tv" type="labelenum" id="disptoutv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
   </category>
-  <category label="Download">
-    <setting label="32000" type="folder" id="dlFolder" source="auto" option="writeable"/>
+  <category label="30200">
+    <setting label="30201" type="folder" id="dlFolder" source="auto" option="writeable"/>
   </category>
-  <category label="Misc">
-    <setting label="32101" type="bool" id="tf1Bonus" default="true"/> 
-    <setting label="32102" type="bool" id="tmcBonus" default="true"/> 
-    <setting label="32103" type="bool" id="nt1Bonus" default="true"/>      
+  <category label="30300">
+    <setting label="30301" type="bool" id="tf1Bonus" default="true"/> 
+    <setting label="30302" type="bool" id="tmcBonus" default="true"/> 
+    <setting label="30303" type="bool" id="nt1Bonus" default="true"/>      
+  </category>
+  <category label="30400">
+    <setting label="30401" type="action" action="RunScript($CWD/resources/lib/delete_catalog_cache.py)"/>      
   </category>    
 </settings>

@@ -9,11 +9,11 @@ import xbmcplugin
 import xbmcgui
 import xbmcaddon
 
-import resources.libs.globalvar as globalvar
-import resources.libs.utils as utils
-import resources.libs.channels.favourites as favourites
-import resources.libs.commondownloader as commondownloader 
-import resources.libs.log as log
+import resources.lib.globalvar as globalvar
+import resources.lib.utils as utils
+import resources.lib.channels.favourites as favourites
+import resources.lib.commondownloader as commondownloader 
+import resources.lib.log as log
 
 base_url = sys.argv[0]
 addon_handle = int(sys.argv[1])

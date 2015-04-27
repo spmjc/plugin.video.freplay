@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 import zipfile
 import json
-import resources.libs.utils as utils           
+import resources.lib.utils as utils           
 
 title=['France 1','France 2', 'France 3', 'France 4', 'France 5', 'France O']
 img=['france1' ,'france2','france3','france4','france5','franceo']

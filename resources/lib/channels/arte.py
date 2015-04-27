@@ -4,7 +4,7 @@ import json
 import CommonFunctions
 common = CommonFunctions
 from xml.dom import minidom
-from resources.libs import utils           
+from resources.lib import utils           
 
 title=['ARTE']
 img=['arte']

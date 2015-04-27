@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 import urllib,urllib2
 import xml.dom.minidom
-from resources.libs import utils
+from resources.lib import utils
 import json
 
 title=['Canal +']

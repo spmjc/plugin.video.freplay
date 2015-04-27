@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-    
-from resources.libs import utils
+from resources.lib import utils
 import json                   
 import urllib,urllib2
 
