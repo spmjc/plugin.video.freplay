@@ -28,7 +28,7 @@ def init():
               if order<>99:
                 globalvar.channels[channelModule.img[i]]=[channelModule.title[i], channelModule,getOrderChannel(channelModule.img[i])] 
                 globalvar.ordered_channels.append((channelModule.img[i],order))   
-    
+    globalvar.ordered_channels.sort(key=lambda channel: channel[0])
     globalvar.ordered_channels.sort(key=lambda channel: channel[1])
     globalvar.dlfolder=globalvar.ADDON.getSetting('dlFolder')
         
