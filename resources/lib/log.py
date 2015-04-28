@@ -1,11 +1,11 @@
 #-*- coding: utf-8 -*-
 import xbmc
-import sys
+import sys,os
 import globalvar
 import uuid
 import urllib,urllib2
 
-def logDLFile(url):
+def debugInfo():
   if globalvar.LOGLEVEL==1:
     print 'OS=' + sys.platform
     print 'Build=' + xbmc.getInfoLabel( "System.BuildVersion" )
@@ -14,8 +14,16 @@ def logDLFile(url):
   if globalvar.LOGLEVEL<=2:
     print 'Addon=' + globalvar.ADDON.getAddonInfo('name') + ' ' + globalvar.ADDON.getAddonInfo('version')
     print 'Addon Path=' + globalvar.ADDON.getAddonInfo('path')
-  
+
+
+def logDLFile(url):
+  debugInfo()   
   print 'Download Catalog=' + url  
+
+def logError(args,error):      
+  debugInfo()   
+  xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%('FReplay',str(error), 3000, os.path.join( globalvar.ADDON_DIR, "icon.png")))
+  print '-----------Error' + str(args) + str(error)  
   
 def logEvent(category,action,screen):
   cid = str(uuid.uuid1())
@@ -35,17 +43,8 @@ def logEvent(category,action,screen):
     category='Start'  
     
   if action is None:  
-    action='Start'
-  
-  if globalvar.LOGLEVEL==1:
-    print 'OS=' + sys.platform
-    print 'Build=' + xbmc.getInfoLabel( "System.BuildVersion" )
-    print 'Internet' + xbmc.getInfoLabel( "System.InternetState" )
-    print 'Session Id=' + cid
-  
-  if globalvar.LOGLEVEL<=2:
-    print 'Addon=' + globalvar.ADDON.getAddonInfo('name') + ' ' + globalvar.ADDON.getAddonInfo('version')
-    print 'Addon Path=' + globalvar.ADDON.getAddonInfo('path')
+    action='Start' 
+  debugInfo()   
   
   url = 'http://www.google-analytics.com/collect'
   

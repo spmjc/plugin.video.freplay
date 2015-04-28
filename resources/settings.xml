@@ -29,6 +29,7 @@
     <setting label="30303" type="bool" id="nt1Bonus" default="true"/>      
   </category>
   <category label="30400">
+    <setting label="30402" type="slider" id="ctlgRefresh" default="60" range="0,5,100" option="int" /> 
     <setting label="30401" type="action" action="RunScript($CWD/resources/lib/delete_catalog_cache.py)"/>      
   </category>    
 </settings>

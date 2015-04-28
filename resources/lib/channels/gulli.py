@@ -21,9 +21,6 @@ def getVideoURL(channel,url):
     html=urllib.urlopen(url).read()
     start=html.find('urlsVideoIPad: [')+17
     end=html.find('.m3u8:',start)
-    print str(start)
-    print str(end)
-    print html[start:18950]
     return 'http://wat.tv/get/ipad/' + id + '.m3u8'
         
 def list_videos(channel,category):

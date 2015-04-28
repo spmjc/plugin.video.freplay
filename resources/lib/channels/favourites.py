@@ -9,7 +9,7 @@ img=['favourites']
 readyForUse=True
 
 def list_shows(channel,folder):
-    shows=[]
+    shows=[] 
     if folder=='none':
         shows.append( [channel,'show_folder', 'By Show','','folder'] )
         shows.append( [channel,'unseen', 'All Unseen Episodes','','shows'] )
@@ -25,7 +25,7 @@ def list_shows(channel,folder):
     return shows
 
 def list_videos(channel,show_title):
-    videos=[]
+    videos=[]                
     if show_title=='unseen':
         if os.path.exists(globalvar.FAVOURITES_FILE) :
             #Read favourites

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
   <!--------------------------------------------------->
   <!--PLUGINS AND SETTINGS STRINGS (30000 thru 30999)-->
@@ -17,6 +17,7 @@
   
   <string id="30400">Avancé</string>
   <string id="30401">Supprimer le cache des catalogues</string>
+  <string id="30402">Rafraichissement des catalogues (min)</string>
   
   
   <!------------------------------------>

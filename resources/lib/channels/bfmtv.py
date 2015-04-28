@@ -34,7 +34,6 @@ def getVideoURL(channel,videoId):
       quality=medium['encoding_rate']
       video_url=medium['video_url']
       
-  print quality  
   return video_url
     
 def search(channel,keyWord):
@@ -42,7 +41,7 @@ def search(channel,keyWord):
 
 def list_videos(channel,show):
   videos=[] 
-
+  
   if show=='TOUTACTU': 
     jsonFile=urllib2.urlopen('http://api.nextradiotv.com/bfmtv-android/4/%s/getLastVideosList?count=40&page=1' % (get_token() )).read()
   else:

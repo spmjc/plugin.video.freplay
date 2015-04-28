@@ -16,7 +16,8 @@
   <string id="30303">Show NT1 Bonus</string>
   
   <string id="30400">Advanced</string>
-  <string id="30401">Delete catalog cache</string>
+  <string id="30401">Delete catalog cache</string> 
+  <string id="30402">Rafraichissement des catalogues (min)</string>
   
   
   <!------------------------------------>

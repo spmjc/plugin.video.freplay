@@ -2,7 +2,8 @@
 import urllib2
 import re
 import CommonFunctions
-common = CommonFunctions
+common = CommonFunctions 
+from resources.lib import utils
 
 title=['NRJ12']
 img=['nrj12']
@@ -11,9 +12,8 @@ readyForUse=True
 def list_shows(channel,folder):
     shows=[]
     
-    req = urllib2.Request('http://www.nrj12.fr/replay-4203/collectionvideo/')
-    req.add_header('User-agent', 'Mozilla 5.10')
-    html=urllib2.urlopen(req).read().replace('\xe9', 'e').replace('\xe0', 'a')
+    filePath=utils.downloadCatalog('http://www.nrj12.fr/replay-4203/collectionvideo/','NRJ12.html',False)    
+    html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a')
 
     if folder=='none':      
         match = re.compile(r'<a href="#" rel="nofollow" class="nocursor">(.*?)</a>',re.DOTALL).findall(html)
@@ -44,12 +44,11 @@ def list_shows(channel,folder):
 def getVideoURL(channel,mediaId):
     return 'http://videos.enrj.net/web/' + mediaId + '_h264_12.mp4'
 
-def list_videos(channel,show):
+def list_videos(channel,show): 
     
-    videos=[] 
-    req = urllib2.Request('http://www.nrj12.fr/replay-4203/collectionvideo/')
-    req.add_header('User-agent', 'Mozilla 5.10')
-    html=urllib2.urlopen(req).read().replace('\xe9', 'e').replace('\xe0', 'a')
+    videos=[]                  
+    filePath=utils.downloadCatalog('http://www.nrj12.fr/replay-4203/collectionvideo/','NRJ12.html',False)    
+    html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a')
         
     line_replay_s = common.parseDOM(html,"div",attrs={"class":"line replay"})
     for line_replay in line_replay_s :
@@ -61,7 +60,6 @@ def list_videos(channel,show):
                 titre_u   = common.parseDOM(titre_p,"a") [0]
                 titre     = titre_u.encode("utf-8")
                 if titre==show:
-                    print show
                     replay_hover = replay_hover_s[0]
                     content_ul   = common.parseDOM(replay_hover,"ul",attrs={"class":"content"}) [0]
                     li_s         = common.parseDOM(content_ul,"li")

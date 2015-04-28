@@ -34,7 +34,6 @@ def getVideoURL(channel,video_URL):
     match=re.compile('<IFRAME SRC="(.*?)" FRAMEBORDER',re.DOTALL).findall(html)
     youwatchurl=match[0]
     
-    print youwatchurl
     req = urllib2.Request(youwatchurl)
     html=urllib2.urlopen(req).read()
     html=html.replace('|','/')
@@ -43,7 +42,6 @@ def getVideoURL(channel,video_URL):
     for videoid,socket,server in stream:
         continue
     stream_url='http://'+server+'.youwatch.org:'+socket+'/'+videoid+'/video.mp4?start=0'
-    print stream_url
     return stream_url
 
 def list_videos(channel,show_URL):

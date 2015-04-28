@@ -53,7 +53,6 @@ def list_videos(channel,show_URL):
     url=''
     title=''
     icon=''
-    print show_URL
     filPrgm=urllib2.urlopen(show_URL).read()
     jsoncat     = json.loads(filPrgm)
     contents={}

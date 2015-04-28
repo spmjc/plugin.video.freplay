@@ -48,11 +48,10 @@ def getVideoURL(channel,video_id):
     #Parse JSON to
     jsoncat = json.loads(jsonFile)
     url=jsoncat['videoJsonPlayer']['VSR']['HLS_SQ_1']['url']
-    print url
     return url
     
 def list_videos(channel,show_title):
-    videos=[]
+    videos=[]                
     filePath=utils.downloadCatalog('http://www.arte.tv/papi/tvguide-flow/sitemap/feeds/videos/F.xml','ARTE.XML',False)
     xml = open(filePath).read()	
     url=common.parseDOM(xml, "url")
@@ -99,12 +98,8 @@ def list_videos(channel,show_title):
                     start=tmpTab[0].find("%2Fplayer%2FF%2F")
                     end=tmpTab[0].find("%2F", start+16)
                     video_id=tmpTab[0][start+16:end]
-                    print name
-                    print video_id
-                    print video_id.find("EXTRAIT")
                     if video_id.find("EXTRAIT")>0 :
                         name="Extrait-" + name
-                        print name
            
             picTab=common.parseDOM(url[i], "video:thumbnail_loc")
             if len(picTab)>0:
