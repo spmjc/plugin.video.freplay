@@ -34,7 +34,7 @@
   <!--------------------------------------------------->
   <!--COMMON STRINGS USED IN ADDONS(33000 thru 33999)-->
   <!--------------------------------------------------->
-  <string id="33000">Par émission</string>
-  <string id="33001">Tous les épisodes non vus</string>
+  <string id="33000">By Show</string>
+  <string id="33001">All Unseen Episodes</string>
 
 </strings>
