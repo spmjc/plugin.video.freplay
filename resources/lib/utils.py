@@ -35,7 +35,6 @@ def init():
 def downloadCatalog(url,fileName,force):  
   bDLFile=True
   iCtlgRefresh=int(globalvar.ADDON.getSetting('ctlgRefresh')) *60
-  print iCtlgRefresh
   if not os.path.exists(globalvar.CACHE_DIR) :
     os.makedirs(globalvar.CACHE_DIR, mode=0777)
   filePath=os.path.join(globalvar.CACHE_DIR,fileName)   

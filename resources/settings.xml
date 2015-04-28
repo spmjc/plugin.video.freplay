@@ -19,6 +19,7 @@
     <setting label="BFM TV" type="labelenum" id="dispbfmtv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="iTele" type="labelenum" id="dispitele" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="Tou.tv" type="labelenum" id="disptoutv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
+    <setting label="Tou.tv" type="labelenum" id="dispfrance24" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
   </category>
   <category label="30200">
     <setting label="30201" type="folder" id="dlFolder" source="auto" option="writeable"/>
@@ -26,7 +27,8 @@
   <category label="30300">
     <setting label="30301" type="bool" id="tf1Bonus" default="true"/> 
     <setting label="30302" type="bool" id="tmcBonus" default="true"/> 
-    <setting label="30303" type="bool" id="nt1Bonus" default="true"/>      
+    <setting label="30303" type="bool" id="nt1Bonus" default="true"/> 
+    <setting label="30324" type="labelenum" id="france24Quality" default="mp4-mbr" values="flv|mp4|mp4-mbr"/>       
   </category>
   <category label="30400">
     <setting label="30402" type="slider" id="ctlgRefresh" default="60" range="0,5,100" option="int" /> 

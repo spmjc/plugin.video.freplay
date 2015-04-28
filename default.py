@@ -116,4 +116,4 @@ try:
                   notify(extension + ' not supported', channel)
       xbmcplugin.endOfDirectory( handle=int(addon_handle), succeeded=True, updateListing=False)
 except Exception as e:
-      log.logError(args,e)
+  log.logError(args,e)
