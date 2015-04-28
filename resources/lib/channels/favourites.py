@@ -11,8 +11,8 @@ readyForUse=True
 def list_shows(channel,folder):
     shows=[] 
     if folder=='none':
-        shows.append( [channel,'show_folder', 'By Show','','folder'] )
-        shows.append( [channel,'unseen', 'All Unseen Episodes','','shows'] )
+        shows.append( [channel,'show_folder',globalvar.LANGUAGE(33000).encode('utf-8'),'','folder'] )
+        shows.append( [channel,'unseen',globalvar.LANGUAGE(33001).encode('utf-8'),'','shows'] )
     elif folder=='show_folder':
         if os.path.exists(globalvar.FAVOURITES_FILE) :
             #Read favourites
