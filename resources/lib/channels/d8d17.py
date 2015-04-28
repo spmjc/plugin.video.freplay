@@ -25,12 +25,10 @@ def list_shows(channel,folder):
                 for program in programs :
                     title = program['title'].encode('utf-8')
                     shows.append([channel,'%s|%s'%(folder,title),title,'','shows'])
-
     return shows
             
 def list_videos(channel,params):
     videos     = []
-    
     webcontent = get_webcontent('%s/replay/%s' %(url_lab_api,channel_index[channel]))
     catalogue  = json.loads(webcontent)
     param_cat  = params.split('|')[0]
@@ -50,20 +48,22 @@ def list_videos(channel,params):
                             webcontent     = get_webcontent(url_video_info)
                             video_infos    = json.loads(webcontent)
                             for video in video_infos :
-                              video_id = video['ID']
-                              if video_id not in video_done :
-                                  infos          = {}
-                                  infos['Plot']  = video['INFOS']['DESCRIPTION'].encode('utf-8')
-                                  infos['Title'] = video['INFOS']['TITRAGE']['TITRE'].encode('utf-8')
-                                  infos['Sub']   = video['INFOS']['TITRAGE']['SOUS_TITRE'].encode('utf-8')
-                                  if infos['Sub'] != "" :
-                                      infos['Title'] = "%s - [I]%s[/I]" %(infos['Title'],infos['Sub'])
-                                  infos['Thumb'] = video['MEDIA']['IMAGES']['GRAND'].encode('utf-8')
-                                  video_fanart   = video['MEDIA']['IMAGES']['GRAND'].encode('utf-8')
-                                  video_name     = infos['Title']
-                                  videos.append([channel,video_id,video_name,infos['Thumb'],infos,'play'])
-                                  video_done.append(video_id)
-
+                              try :
+                                  video_id = video['ID']
+                                  if video_id not in video_done :
+                                      infos          = {}
+                                      infos['Plot']  = video['INFOS']['DESCRIPTION'].encode('utf-8')
+                                      infos['Title'] = video['INFOS']['TITRAGE']['TITRE'].encode('utf-8')
+                                      infos['Sub']   = video['INFOS']['TITRAGE']['SOUS_TITRE'].encode('utf-8')
+                                      if infos['Sub'] != "" :
+                                          infos['Title'] = "%s - [I]%s[/I]" %(infos['Title'],infos['Sub'])
+                                      infos['Thumb'] = video['MEDIA']['IMAGES']['GRAND'].encode('utf-8')
+                                      video_fanart   = video['MEDIA']['IMAGES']['GRAND'].encode('utf-8')
+                                      video_name     = infos['Title']
+                                      videos.append([channel,video_id,video_name,infos['Thumb'],infos,'play'])
+                                      video_done.append(video_id)
+                              except :
+                                  pass
     return videos
     
 def getVideoURL(channel,video_id):
