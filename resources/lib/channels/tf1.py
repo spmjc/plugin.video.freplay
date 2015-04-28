@@ -33,29 +33,26 @@ url_videos2={'tf1':'http://api.tf1.fr/tf1-vods/ipad/integral/0/program_id/',
 def list_shows(channel,folder):
     shows=[]
     
-    try:
-      if folder=='none':
-          filPrgm=urllib2.urlopen(url_categories[channel]).read()
-          jsoncat     = json.loads(filPrgm)
-          for prtCat in jsoncat :
-              childs  = prtCat['childs']
-              for child in childs :
-                  shows.append( [channel,str(childs[child]['id']), childs[child]['name'].encode('utf-8'),'','folder'] )
+    if folder=='none':
+        filPrgm=urllib2.urlopen(url_categories[channel]).read()
+        jsoncat     = json.loads(filPrgm)
+        for prtCat in jsoncat :
+            childs  = prtCat['childs']
+            for child in childs :
+                shows.append( [channel,str(childs[child]['id']), childs[child]['name'].encode('utf-8'),'','folder'] )
+    
+    else:
+        filPrgm=urllib2.urlopen(url_shows[channel]).read()
+        jsoncat     = json.loads(filPrgm)
+        #TMC...
+        if channel=='tmc' or channel=='nt1':
+            folder='999'
+        for prgm in jsoncat :
+            if str(prgm['genderId'])==folder:
+                if prgm['images']:
+                    img=prgm['images'][0]['url']
+                shows.append( [channel,str(prgm['id']), prgm['shortTitle'].encode('utf-8'),img,'shows'] )
       
-      else:
-          filPrgm=urllib2.urlopen(url_shows[channel]).read()
-          jsoncat     = json.loads(filPrgm)
-          #TMC...
-          if channel=='tmc' or channel=='nt1':
-              folder='999'
-          for prgm in jsoncat :
-              if str(prgm['genderId'])==folder:
-                  if prgm['images']:
-                      img=prgm['images'][0]['url']
-                  shows.append( [channel,str(prgm['id']), prgm['shortTitle'].encode('utf-8'),img,'shows'] )
-      
-    except Exception as e:
-      log.logError(channel,e)
     return shows
 
 def getVideoURL(channel,idVideo):
@@ -64,14 +61,30 @@ def getVideoURL(channel,idVideo):
 def list_videos(channel,show_title):
     videos=[]
     
-    try:
-      fileVideos=urllib2.urlopen(url_videos[channel] + str(show_title)).read()
+    fileVideos=urllib2.urlopen(url_videos[channel] + str(show_title)).read()
+    jsonvid     = json.loads(fileVideos)
+    for video in jsonvid : 
+        video_url=''
+        if 'watId' in video:
+            video_url=str(video['watId'])
+        name=video['shortTitle'].encode('utf-8')
+        image_url=video['images'][0]['url']
+        date=video['publicationDate'][:10]
+        duration=int(video['duration']) / 60
+        views=''
+        desc=video['longTitle']
+        rating=''
+
+        infoLabels={ "Title": name,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}
+        videos.append( [channel, video_url, name, image_url,infoLabels,'play'] )
+    if (bonus)[channel]=='true':
+      fileVideos=urllib2.urlopen(url_videos2[channel] + str(show_title)).read()
       jsonvid     = json.loads(fileVideos)
       for video in jsonvid : 
           video_url=''
           if 'watId' in video:
               video_url=str(video['watId'])
-          name=video['shortTitle'].encode('utf-8')
+          name='Bonus-' + video['shortTitle'].encode('utf-8')
           image_url=video['images'][0]['url']
           date=video['publicationDate'][:10]
           duration=int(video['duration']) / 60
@@ -81,23 +94,4 @@ def list_videos(channel,show_title):
   
           infoLabels={ "Title": name,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}
           videos.append( [channel, video_url, name, image_url,infoLabels,'play'] )
-      if (bonus)[channel]=='true':
-        fileVideos=urllib2.urlopen(url_videos2[channel] + str(show_title)).read()
-        jsonvid     = json.loads(fileVideos)
-        for video in jsonvid : 
-            video_url=''
-            if 'watId' in video:
-                video_url=str(video['watId'])
-            name='Bonus-' + video['shortTitle'].encode('utf-8')
-            image_url=video['images'][0]['url']
-            date=video['publicationDate'][:10]
-            duration=int(video['duration']) / 60
-            views=''
-            desc=video['longTitle']
-            rating=''
-    
-            infoLabels={ "Title": name,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}
-            videos.append( [channel, video_url, name, image_url,infoLabels,'play'] )
-    except Exception as e:
-      log.logError(channel,e)
     return videos

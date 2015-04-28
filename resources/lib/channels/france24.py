@@ -26,8 +26,7 @@ def list_videos(channel,show):
   filPrgm=open(filePath).read()
   jsonParser = json.loads(filPrgm)
   
-  for item in jsonParser['result']['f24fr']['list'] : 
-    print show, item['nid']
+  for item in jsonParser['result']['f24fr']['list'] :
     if item['nid']==show:
       for video in item['editions']['list']:
         url=video['video'][0][globalvar.ADDON.getSetting('france24Quality')].encode('utf-8')
