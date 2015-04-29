@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.video.freplay"
        name="FReplay"
        version="0.4.2"
-       provider-name="SPM">
+       provider-name="SPM, JUL1EN094">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.requests" version="1.1.0"/>
@@ -14,10 +14,20 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
-    <summary>Plugin vidéo donnant acces aux replays de differentes chaines FR</summary>
-    <description>Ce plugin permet d'acceder aux replay TV de differentes chaines francophones. <BR/>
-    Les favoris affichent seulement les emissions non visualisees : Plus besoin de parcourir 50 repertoires ;)
+    <summary lang="en">Addon giving access to catchups tvshows for french channel</summary>
+    <summary lang="fr">Plugin vidéo donnant acces aux replays de differentes chaines FR</summary>
+    <description lang="en">This addon give access to frenches catchups TV Channel<BR/>
+    Favourites can now show only unwatched TVShows : Browsing lot of folder is no more needed ;)
     </description>
-    <platform>all</platform>
+    <description lang="fr">Ce plugin permet d'acceder aux replay TV de differentes chaines francophones. <BR/>
+    Les favoris affichent seulement les emissions non visualisées : Plus besoin de parcourir 50 repertoires ;)
+    </description>
+    <email>kodi.freplay@gmail.com</email>
+    <forum>http://media-passion.fr/add-ons-video/freplay-french-replay/</forum>
+    <language>fr</language>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <source>https://github.com/spmjc/plugin.video.freplay</source>
+    <disclaimer></disclaimer>
+    <website></website>
   </extension>
 </addon>
