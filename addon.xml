@@ -14,13 +14,13 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
-    <summary lang="en">Addon giving access to catchups tvshows for french channel</summary>
+    <summary lang="en">Addon giving access to catchups tvshows for french channels</summary>
     <summary lang="fr">Plugin vidéo donnant acces aux replays de differentes chaines FR</summary>
-    <description lang="en">This addon give access to frenches catchups TV Channel<BR/>
-    Favourites can now show only unwatched TVShows : Browsing lot of folder is no more needed ;)
+    <description lang="en">This addon gives access to french catchups TV Channels<BR/>
+    Favourites show all shows by folder, or all videos. You can then filter to only show unwatched shows.
     </description>
     <description lang="fr">Ce plugin permet d'acceder aux replay TV de differentes chaines francophones. <BR/>
-    Les favoris affichent seulement les emissions non visualisées : Plus besoin de parcourir 50 repertoires ;)
+    Les favoris affichent les emissions par repertoire ou toutes les videos. Vous pouvez ensuite filtrer les videos non visualisees.
     </description>
     <email>kodi.freplay@gmail.com</email>
     <forum>http://media-passion.fr/add-ons-video/freplay-french-replay/</forum>
