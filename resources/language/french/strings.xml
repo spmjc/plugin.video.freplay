@@ -11,9 +11,10 @@
   <string id="30201">Sélectionner le dossier de téléchargement</string>
   
   <string id="30300">Divers</string>
-  <string id="30301">Afficher les bonue de TF1</string>
-  <string id="30302">Afficher les bonue de TMC</string>
-  <string id="30303">Afficher les bonue de NT1</string>
+  <string id="30301">Afficher les bonus de TF1</string>
+  <string id="30302">Afficher les bonus de TMC</string>
+  <string id="30303">Afficher les bonus de NT1</string>
+  <string id="30304">Afficher les bonus de HD1</string>
   <string id="30324">France 24 - Qualité Vidéo</string>
   
   <string id="30400">Avancé</string>
