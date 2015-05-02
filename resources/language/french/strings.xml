@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
   <!--------------------------------------------------->
   <!--PLUGINS AND SETTINGS STRINGS (30000 thru 30999)-->
@@ -15,7 +15,7 @@
   <string id="30302">Afficher les bonus de TMC</string>
   <string id="30303">Afficher les bonus de NT1</string>
   <string id="30304">Afficher les bonus de HD1</string>
-<<<<<<< HEAD
+  <string id="30305">HD1/NT1/TF1/TMC : Forcer la qualité HD</string>   
   
   <string id="30324">France 24 - Qualité Vidéo</string>  
   
@@ -27,10 +27,6 @@
   <string id="30334">France 4 - Qualité Vidéo</string>
   <string id="30335">France 5 - Qualité Vidéo</string>
   <string id="30336">France O - Qualité Vidéo</string>
-=======
-  <string id="30305">HD1/NT1/TF1/TMC : Forcer la qualité HD</string>   
-  <string id="30324">France 24 - Qualité Vidéo</string>
->>>>>>> origin/master
   
   <string id="30400">Avancé</string>
   <string id="30401">Supprimer le cache des catalogues</string>

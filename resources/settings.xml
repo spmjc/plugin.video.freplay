@@ -7,7 +7,7 @@
     <setting label="Canal +" type="labelenum" id="dispcplus" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="D8" type="labelenum" id="dispd8" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="D17" type="labelenum" id="dispd17" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
-    <setting label="France 1" type="labelenum" id="dispfrance1" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
+    <setting label="France 1" type="labelenum" id="displa_1ere" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="France 2" type="labelenum" id="dispfrance2" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="France 3" type="labelenum" id="dispfrance3" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="France 4" type="labelenum" id="dispfrance4" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
@@ -28,20 +28,20 @@
   <category label="30300">
     <setting label="30304" type="bool" id="hd1Bonus" default="true"/>  
     <setting label="30303" type="bool" id="nt1Bonus" default="true"/>
-    <setting label="30301" type="bool" id="tf1Bonus" default="true"/> 
-<<<<<<< HEAD
-    <setting label="30302" type="bool" id="tmcBonus" default="true"/> 
+    <setting label="30302" type="bool" id="tmcBonus" default="true"/>
+    <setting label="30301" type="bool" id="tf1Bonus" default="true"/>  
+    <setting label="30305" type="bool" id="tf1ForceHD" default="false"/> 
+    
     <setting label="30324" type="labelenum" id="france24Quality" default="mp4-mbr" values="flv|mp4|mp4-mbr"/>     
     <setting label="30325" type="labelenum" id="arteQuality" default="HD" values="HD|SD"/>     
+    
     <setting label="30331" type="labelenum" id="la_1ereQuality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>  
     <setting label="30332" type="labelenum" id="france2Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
     <setting label="30333" type="labelenum" id="france3Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
     <setting label="30334" type="labelenum" id="france4Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
     <setting label="30335" type="labelenum" id="france5Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>  
-    <setting label="30336" type="labelenum" id="franceoQuality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>  
-=======
-    <setting label="30302" type="bool" id="tmcBonus" default="true"/>
-    <setting label="30305" type="bool" id="tf1ForceHD" default="false"/> 
+    <setting label="30336" type="labelenum" id="franceoQuality" default="m3u8-download" values="m3u8-download|hls_v5_os"/> 
+    
     <setting label="30324" type="labelenum" id="france24Quality" default="mp4-mbr" values="flv|mp4|mp4-mbr"/>       
 >>>>>>> origin/master
   </category>
