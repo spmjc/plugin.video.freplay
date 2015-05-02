@@ -5,7 +5,7 @@ import resources.lib.utils as utils
 
 title=['France 1','France 2', 'France 3', 'France 4', 'France 5', 'France O']
 img=['france1' ,'france2','france3','france4','france5','franceo']
-readyForUse=True
+readyForUse=False
 
 filePath=utils.downloadCatalog('http://webservices.francetelevisions.fr/catchup/flux/flux_main.zip','Pluzz.zip',False)
 catalogconffilename = "message_FT.json"

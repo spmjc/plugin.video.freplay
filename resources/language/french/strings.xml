@@ -15,7 +15,17 @@
   <string id="30302">Afficher les bonus de TMC</string>
   <string id="30303">Afficher les bonus de NT1</string>
   <string id="30304">Afficher les bonus de HD1</string>
-  <string id="30324">France 24 - Qualité Vidéo</string>
+  
+  <string id="30324">France 24 - Qualité Vidéo</string>  
+  
+  <string id="30325">ARTE - Qualité Vidéo</string>
+  
+  <string id="30331">La 1ere - Qualité Vidéo</string>
+  <string id="30332">France 2 - Qualité Vidéo</string>
+  <string id="30333">France 3 - Qualité Vidéo</string>
+  <string id="30334">France 4 - Qualité Vidéo</string>
+  <string id="30335">France 5 - Qualité Vidéo</string>
+  <string id="30336">France O - Qualité Vidéo</string>
   
   <string id="30400">Avancé</string>
   <string id="30401">Supprimer le cache des catalogues</string>

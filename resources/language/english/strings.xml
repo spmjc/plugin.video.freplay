@@ -15,7 +15,17 @@
   <string id="30302">Show TMC Bonus</string>
   <string id="30303">Show NT1 Bonus</string>
   <string id="30304">Show HD1 Bonus</string>   
-  <string id="30324">France 24 - Video Quality</string>
+  
+  <string id="30324">France 24 - Video Quality</string> 
+  
+  <string id="30325">ARTE - Video Quality</string>
+  
+  <string id="30331">La 1ere - Video Quality</string>
+  <string id="30332">France 2 - Video Quality</string>
+  <string id="30333">France 3 - Video Quality</string>
+  <string id="30334">France 4 - Video Quality</string>
+  <string id="30335">France 5 - Video Quality</string>
+  <string id="30336">France O - Video Quality</string>
   
   <string id="30400">Advanced</string>
   <string id="30401">Delete catalog cache</string> 

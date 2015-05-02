@@ -29,7 +29,7 @@ def list_videos(channel,show):
   for item in jsonParser['result']['f24fr']['list'] :
     if item['nid']==show:
       for video in item['editions']['list']:
-        url=video['video'][0][globalvar.ADDON.getSetting('france24Quality')].encode('utf-8')
+        url=video['video'][0][globalvar.ADDON.getSetting('%sQuality' % (channel))].encode('utf-8')
         title=video['title'].encode('utf-8')
         icon=video['image'][0]['original'].encode('utf-8')
         desc=video['intro']

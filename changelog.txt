@@ -1,3 +1,9 @@
+Version 0.5.1
+  -Added HD1
+  -Fixed ARTE (Thanks to Torok)
+  -Updated France TV
+  -Updated Settings  
+
 Version 0.5.0
   -Work on the encoding and the source code (Preparation to release on official Kodi Repo)
   -Improved catalog management: Downloaded if too old (defaut is 60 minutes)

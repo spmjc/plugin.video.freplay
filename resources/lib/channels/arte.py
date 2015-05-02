@@ -47,6 +47,27 @@ def getVideoURL(channel,video_id):
     jsonFile=urllib2.urlopen('http://arte.tv/papi/tvguide/videos/stream/player/F/'+ video_id + '/ALL/ALL.json').read()
     #Parse JSON to
     jsoncat = json.loads(jsonFile)
+    
+    url=''
+    if globalvar.ADDON.getSetting('%sQuality' % (channel))=='HD':
+      #HD HTTP
+      if 'HTTP_MP4_SQ_1' in jsoncat['videoJsonPlayer']['VSR']:
+        url=jsoncat['videoJsonPlayer']['VSR']['HTTP_MP4_SQ_1']['url']
+      
+      #HD RTMP
+      else:
+        url=jsoncat['videoJsonPlayer']['VSR']['RTMP_SQ_1']['streamer'] + jsoncat['videoJsonPlayer']['VSR']['RTMP_SQ_1']['url']
+		
+    if globalvar.ADDON.getSetting('%sQuality' % (channel))=='SD' or url=='':
+      #SD HTTP
+      if 'HLS_SQ_1':
+          url=jsoncat['videoJsonPlayer']['VSR']['HLS_SQ_1']['url']
+          
+      #SD RTMP   
+      else:
+          url=jsoncat['videoJsonPlayer']['VSR']['RTMP_MQ_1']['streamer'] + jsoncat['videoJsonPlayer']['VSR']['RTMP_MQ_1']['url']    
+
+    
     url=jsoncat['videoJsonPlayer']['VSR']['HLS_SQ_1']['url']
     return url
     
