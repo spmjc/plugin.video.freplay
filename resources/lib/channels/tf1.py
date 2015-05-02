@@ -59,7 +59,10 @@ def list_shows(channel,folder):
     return shows
 
 def getVideoURL(channel,idVideo):
-    return 'http://wat.tv/get/ipad/'+idVideo+'.m3u8'
+    VideoURL = 'http://wat.tv/get/ipad/'+idVideo+'.m3u8'
+    if globalvar.ADDON.getSetting('tf1ForceHD')=='true' :
+        VideoURL += '?bwmin=2000000&bwmax=20000000'
+    return VideoURL
 
 def list_videos(channel,show_title):
     videos=[]    
