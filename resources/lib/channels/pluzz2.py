@@ -58,13 +58,15 @@ def list_videos(channel,folder):
       date=jsonParserShow['diffusion']['date_debut']
       duration=jsonParserShow['real_duration']/60
       titre=jsonParserShow['titre'].encode('utf-8')
-      if jsonParserShow['titre']!='':
+      if jsonParserShow['sous_titre']!='':
         titre+=' - ' + jsonParserShow['sous_titre'].encode('utf-8')
       for video in jsonParserShow['videos']:
         if video['format']==globalvar.ADDON.getSetting('%sQuality' % (channel)):
           url=video['url']
       image=imgURL % (jsonParserShow['image'])  
-      infoLabels={ "Title": titre,"Plot":plot,"Aired":date,"Duration": duration, "Year":date[:4]}
+      infoLabels={ "Title": titre,"Plot":plot,"Aired":date,"Duration": duration, "Year":date[6:10]}
+      if jsonParserShow['genre']!='':
+          infoLabels['Genre']=jsonParserShow['genre'].encode('utf-8')
       videos.append( [channel, url, titre, image,infoLabels,'play'] )
     
   return videos    
