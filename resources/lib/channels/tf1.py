@@ -1,7 +1,8 @@
 #-*- coding: utf-8 -*-
 import urllib2
 import json      
-from resources.lib import globalvar      
+from resources.lib import globalvar
+from resources.lib import utils      
 
 #Channels Parameters
 title=['HD1','NT1','TF1','TMC',]
@@ -60,8 +61,8 @@ def list_shows(channel,folder):
 
 def getVideoURL(channel,idVideo):
     VideoURL = 'http://wat.tv/get/ipad/'+idVideo+'.m3u8'
-    if globalvar.ADDON.getSetting('tf1ForceHD')=='true' :
-        VideoURL += '?bwmin=2000000&bwmax=20000000'
+    if globalvar.ADDON.getSetting('tf1ForceHD')=='true' and isHD(VideoURL) :
+        VideoURL += '?bwmin=2000000'
     return VideoURL
 
 def list_videos(channel,show_title):
@@ -98,3 +99,8 @@ def list_videos(channel,show_title):
           infoLabels={ "Title": name,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}
           videos.append( [channel, video_url, name, image_url,infoLabels,'play'] )
     return videos
+    
+def isHD(VideoURL) :
+    m3u8 = utils.get_webcontent(VideoURL)
+    if '1280x720' in m3u8 : return True
+    else                  : return False

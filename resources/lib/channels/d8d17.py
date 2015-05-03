@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 import urllib2
 import simplejson as json
+from resources.lib import utils
 
 title       = ['D8','D17']
 img         = ['d8','d17']
@@ -12,7 +13,7 @@ channel_index = {'d8':1,'d17':2}
 
 def list_shows(channel,folder):
     shows      = []
-    webcontent = get_webcontent('%s/replay/%s' %(url_lab_api,channel_index[channel]))
+    webcontent = utils.get_webcontent('%s/replay/%s' %(url_lab_api,channel_index[channel]))
     catalogue  = json.loads(webcontent)
     if folder=='none':
         for categorie in catalogue :
@@ -29,7 +30,7 @@ def list_shows(channel,folder):
             
 def list_videos(channel,params):
     videos     = []
-    webcontent = get_webcontent('%s/replay/%s' %(url_lab_api,channel_index[channel]))
+    webcontent = utils.get_webcontent('%s/replay/%s' %(url_lab_api,channel_index[channel]))
     catalogue  = json.loads(webcontent)
     param_cat  = params.split('|')[0]
     param_show = params.split('|')[1]
@@ -45,7 +46,7 @@ def list_videos(channel,params):
                         videos_list.append(program['videos_hot'])
                         for item in videos_list :
                             url_video_info = '%s/list/%s/%s' %(url_pg_infos,channel_index[channel],item)
-                            webcontent     = get_webcontent(url_video_info)
+                            webcontent     = utils.get_webcontent(url_video_info)
                             video_infos    = json.loads(webcontent)
                             for video in video_infos :
                               try :
@@ -68,16 +69,9 @@ def list_videos(channel,params):
     
 def getVideoURL(channel,video_id):
     url_infos   = '%s/video/%s/%s' %(url_pg_infos,channel_index[channel],video_id)
-    webcontent = get_webcontent(url_infos)
+    webcontent = utils.get_webcontent(url_infos)
     infosdic   = json.loads(webcontent)
     url_video  = infosdic['main']['MEDIA']['VIDEOS']['HLS']
     if url_video == '' :
         url_video = infosdic['main']['MEDIA']['VIDEOS']['IPAD']
     return url_video
-
-def get_webcontent(url):
-    req  = urllib2.Request(url)
-    req.add_header('User-Agent','Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20100101 Firefox/15.0.1')           
-    req.add_header('Referer',url)
-    webcontent = urllib2.urlopen(req).read()
-    return webcontent

@@ -56,4 +56,11 @@ removed. Also spaces are replaced with underscores.
   valid_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
   filename = ''.join(c for c in s if c in valid_chars)
   return filename
+
+def get_webcontent(url):
+  req  = urllib2.Request(url)
+  req.add_header('User-Agent','Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20100101 Firefox/15.0.1')           
+  req.add_header('Referer',url)
+  webcontent = urllib2.urlopen(req).read()
+  return webcontent
         
