@@ -35,7 +35,7 @@ def buildShowsList(videos):
             li.setProperty('IsPlayable', 'true')
             li.addContextMenuItems([ ('Download', 'XBMC.RunPlugin(%s?mode=dl&channel=%s&param=%s&name=%s)' % (sys.argv[0],chan,urllib.quote_plus(video_url),urllib.quote_plus(video_title))),
                      ], replaceItems=True)
-        url = build_url({'mode': video_mode, 'channel': chan, 'param':video_url})
+        url = build_url({'mode': video_mode, 'channel': chan, 'param':video_url,'name':video_title})
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=False)
         xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_NONE)
         xbmcplugin.setPluginCategory(addon_handle, 'episodes' )
@@ -47,14 +47,13 @@ def buildShowsList(videos):
 def notify(text,channel):
     time = 3000  #in miliseconds 
     xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%('FReplay',text, time, os.path.join( globalvar.ADDON_DIR, "icon.png")))
-
-
+              
+log.logEvent(args)
 mode = args.get('mode', None)
 
 utils.init()
 
 if mode is None: 
-    log.logEvent(mode,'Display','Home')
     for item in globalvar.ordered_channels:
       add_Channel(item[0],globalvar.channels[item[0]][0])
     
@@ -63,7 +62,6 @@ else:
     channel = args['channel'][0]
     param = args['param'][0]
     if mode[0]=='folder':        
-        log.logEvent(channel,'Display',param)
         for chan,folder_param, folder_title, folder_icon, mode in globalvar.channels[channel][1].list_shows(channel,param):
             url = build_url({'mode': mode, 'channel': chan, 'param':folder_param})
             li = xbmcgui.ListItem(folder_title, iconImage=folder_icon)
@@ -79,21 +77,19 @@ else:
                          ], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=True)
     elif mode[0]=='shows':     
-        log.logEvent(channel,'Display',param)
         buildShowsList(globalvar.channels[channel][1].list_videos(channel,param))
     elif mode[0]=='play':   
-        log.logEvent(channel,'Play',param)
         url=globalvar.channels[channel][1].getVideoURL(channel,param)
+        programName=args['name'][0]
+        log.logGA(channel,programName,url)
         item = xbmcgui.ListItem(path=url)
         xbmcplugin.setResolvedUrl(addon_handle, True, item)  
     elif mode[0]=='Search':      
-        log.logEvent(channel,'Search',param)
         keyboard = xbmc.Keyboard('','Enter the search text')
         keyboard.doModal()
         if (keyboard.isConfirmed()):
             buildShowsList(globalvar.channels[channel][1].list_videos(channel,keyboard.getText()))
     elif mode[0]=='bkm':      
-        log.logEvent(channel,'Favs',param)
         if args['action'][0]=='add':#Add to Favourites
             display = args['display'][0]
             result=favourites.add_favourite(channel,param,display)
@@ -102,7 +98,6 @@ else:
             xbmc.executebuiltin("XBMC.Container.Refresh")
         notify(result,channel)
     elif mode[0]=='dl':      
-        log.logEvent(channel,'Download',param)
         if globalvar.dlfolder=='':
             notify('You need to set the download folder first', channel)
         else:

@@ -15,11 +15,13 @@
   <string id="30302">Afficher les bonus de TMC</string>
   <string id="30303">Afficher les bonus de NT1</string>
   <string id="30304">Afficher les bonus de HD1</string>
-  <string id="30305">HD1/NT1/TF1/TMC : Forcer la qualité HD</string>   
+  <string id="30305">HD1/NT1/TF1/TMC : Forcer la qualité HD</string> 
+  
   
   <string id="30324">France 24 - Qualité Vidéo</string>  
   
   <string id="30325">ARTE - Qualité Vidéo</string>
+  <string id="30326">ARTE - Afficher seulement les replay complets</string>  
   
   <string id="30331">La 1ere - Qualité Vidéo</string>
   <string id="30332">France 2 - Qualité Vidéo</string>

@@ -7,7 +7,6 @@ title=['France 1','France 2', 'France 3', 'France 4', 'France 5', 'France O']
 img=['france1' ,'france2','france3','france4','france5','franceo']
 readyForUse=False
 
-filePath=utils.downloadCatalog('http://webservices.francetelevisions.fr/catchup/flux/flux_main.zip','Pluzz.zip',False)
 catalogconffilename = "message_FT.json"
 catalogcatfilename  = "categories.json"
 url_base_videos= "http://medias2.francetv.fr/catchup-mobile"
@@ -15,6 +14,7 @@ url_base_images= "http://www.pluzz.fr"
     
 def list_shows(channel,folder):
     shows=[]
+    filePath=utils.downloadCatalog('http://webservices.francetelevisions.fr/catchup/flux/flux_main.zip','Pluzz.zip',False)
     
     if folder=='none':                     
         zf          = zipfile.ZipFile(filePath)
@@ -56,6 +56,8 @@ def getVideoURL(channel,video_URL):
 def list_videos(channel,show_title):
     videos=[]     
     
+    filePath=utils.downloadCatalog('http://webservices.francetelevisions.fr/catchup/flux/flux_main.zip','Pluzz.zip',False)
+
     zf          = zipfile.ZipFile(filePath)
     data        = zf.read('catch_up_' + channel + '.json')
     jsoncatalog = json.loads(data)

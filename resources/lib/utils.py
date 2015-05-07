@@ -39,8 +39,9 @@ def downloadCatalog(url,fileName,force):
     os.makedirs(globalvar.CACHE_DIR, mode=0777)
   filePath=os.path.join(globalvar.CACHE_DIR,fileName)   
   if os.path.exists(filePath):
-    ctime = os.stat(filePath).st_ctime  
-    bDLFile=(time.time()-ctime>iCtlgRefresh)
+    mtime = os.stat(filePath).st_mtime  
+    bDLFile=(time.time()-mtime>iCtlgRefresh)
+    print fileName,time.time()-mtime
   else:
     bDLFile=True
   if bDLFile:

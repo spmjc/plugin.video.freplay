@@ -4,7 +4,8 @@ import json
 import CommonFunctions
 common = CommonFunctions
 from xml.dom import minidom
-from resources.lib import utils           
+from resources.lib import utils  
+from resources.lib import globalvar         
 
 title=['ARTE']
 img=['arte']
@@ -36,8 +37,12 @@ def list_shows(channel,folder):
             if len(titleTab)>0:
                 title=fix_text(titleTab[0])
             categoryTab=common.parseDOM(url[i], "video:category")
+            if globalvar.ADDON.getSetting('arteFull')=='true':
+              videoTag=common.parseDOM(url[i], "video:tag")[0]
+            else:
+              videoTag='ARTE+7'  
             if len(categoryTab)>0:
-                if(fix_text(categoryTab[0])==folder and title not in d):                   
+                if(fix_text(categoryTab[0])==folder and title not in d and videoTag=='ARTE+7'):                   
                     shows.append( [channel,title,title,'','shows'] )
                     d[title]=title
     return shows
@@ -121,11 +126,12 @@ def list_videos(channel,show_title):
                     video_id=tmpTab[0][start+16:end]
                     if video_id.find("EXTRAIT")>0 :
                         name="Extrait-" + name
-           
+            videoTag=common.parseDOM(url[i], "video:tag")[0]
             picTab=common.parseDOM(url[i], "video:thumbnail_loc")
             if len(picTab)>0:
                 image_url=picTab[0]
 
-                infoLabels={ "Title": name,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}   
-                videos.append( [channel, video_id, name, image_url,infoLabels,'play'] )
+            infoLabels={ "Title": name,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}
+            if not(globalvar.ADDON.getSetting('arteFull')=='true' and videoTag!='ARTE+7'):   
+              videos.append( [channel, video_id, name, image_url,infoLabels,'play'] )
     return videos
