@@ -39,6 +39,7 @@ def logGA(channel,programName,video_url):
   values = {'v' : '1',
           'tid' : tid,
           'cid' : cid,
+          't'   : 'pageview',
           'dl' : video_url,
           'dt' : channel + '$$' + programName[:50],
           'ua' : build + '-' + globalvar.ADDON.getAddonInfo('name') + ' ' + globalvar.ADDON.getAddonInfo('version')}
