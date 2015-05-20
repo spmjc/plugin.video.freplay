@@ -29,7 +29,7 @@ def logEvent(args):
   debugInfo() 
   print str(args)  
     
-def logGA(channel,programName,video_url):  
+def logGA(channel,param,programName):  
   url = 'http://www.google-analytics.com/collect'
   cid = str(uuid.uuid1())
   cid=cid[cid.rfind('-')+1:]   
@@ -40,9 +40,10 @@ def logGA(channel,programName,video_url):
           'tid' : tid,
           'cid' : cid,
           't'   : 'pageview',
-          'dl' : video_url,
-          'dt' : channel + '$$' + programName[:50],
+          'dl' : 'c=%s&p=%s' % (channel,param),
+          'dt' : programName[:50],
           'ua' : build + '-' + globalvar.ADDON.getAddonInfo('name') + ' ' + globalvar.ADDON.getAddonInfo('version')}
+  print 'Log','c=%s&p=%s' % (channel,param)        
   data = urllib.urlencode(values)
   req = urllib2.Request(url, data)
   response = urllib2.urlopen(req)  

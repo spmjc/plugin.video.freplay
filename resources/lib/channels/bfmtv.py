@@ -1,22 +1,34 @@
 #-*- coding: utf-8 -*-
 import urllib,urllib2
-import xml.dom.minidom
 import json
 
-title=['BFM TV']
-img=['bfmtv']
+title=['BFM TV','BFM Business']
+img=['bfmtv','bfmbusiness']
 readyForUse=True
 
-def get_token():
-  jsonFile=urllib2.urlopen('http://api.nextradiotv.com/bfmtv-android/4/').read()
+urlToken={'bfmtv':'http://api.nextradiotv.com/bfmtv-android/4/',
+'bfmbusiness':'http://api.nextradiotv.com/bfmbusiness-iphone/3/'}  
+
+urlMenu={'bfmtv':'http://api.nextradiotv.com/bfmtv-android/4/%s/getMainMenu',
+'bfmbusiness':'http://api.nextradiotv.com/bfmbusiness-iphone/3/%s/getMainMenu'}
+
+urlVideoList={'bfmtv':'http://api.nextradiotv.com/bfmtv-android/4/%s/getVideosList?count=40&page=1&category=%s',
+'bfmbusiness':'http://api.nextradiotv.com/bfmbusiness-iphone/3/%s/getVideosList?count=40&page=1&category=%s'}  
+
+urlVideo={'bfmtv':'http://api.nextradiotv.com/bfmtv-android/4/%s/getVideo?idVideo=%s&quality=2',
+'bfmbusiness':'http://api.nextradiotv.com/bfmbusiness-iphone/3/%s/getVideo?idVideo=%s&quality=2'}
+
+def get_token(channel):
+  jsonFile=urllib2.urlopen(urlToken[channel]).read()
   jsonParser= json.loads(jsonFile)
   return jsonParser['session']['token']
   
 def list_shows(channel,param):  
   shows=[]
            
-  shows.append( [channel,'TOUTACTU', "Toute l'actu en video".encode('utf-8'),'','shows'] )
-  jsonFile=urllib2.urlopen('http://api.nextradiotv.com/bfmtv-android/4/%s/getMainMenu' % (get_token() )).read()
+  if channel=='bfmtv':
+    shows.append( [channel,'TOUTACTU', "Toute l'actu en video".encode('utf-8'),'','shows'] )
+  jsonFile=urllib2.urlopen(urlMenu[channel] % (get_token(channel) )).read()
   jsonParser= json.loads(jsonFile)
   for menu in jsonParser['menu']['right'] :
     if menu['type']=='REPLAY':
@@ -25,7 +37,7 @@ def list_shows(channel,param):
   return shows
 
 def getVideoURL(channel,videoId):
-  jsonFile=urllib2.urlopen('http://api.nextradiotv.com/bfmtv-android/4/%s/getVideo?idVideo=%s&quality=2' % (get_token() ,videoId)).read()
+  jsonFile=urllib2.urlopen(urlVideo[channel] % (get_token(channel) ,videoId)).read()
   jsonParser= json.loads(jsonFile)
   video_url=''
   quality=0
@@ -43,9 +55,9 @@ def list_videos(channel,show):
   videos=[] 
   
   if show=='TOUTACTU': 
-    jsonFile=urllib2.urlopen('http://api.nextradiotv.com/bfmtv-android/4/%s/getLastVideosList?count=40&page=1' % (get_token() )).read()
+    jsonFile=urllib2.urlopen('http://api.nextradiotv.com/bfmtv-android/4/%s/getLastVideosList?count=40&page=1' % (get_token(channel))).read()
   else:
-    jsonFile=urllib2.urlopen('http://api.nextradiotv.com/bfmtv-android/4/%s/getVideosList?count=40&page=1&category=%s' % (get_token() ,show)).read()
+    jsonFile=urllib2.urlopen(urlVideoList[channel] % (get_token(channel) ,show)).read()
   jsonParser= json.loads(jsonFile)
   for video in jsonParser['videos'] :
     videoId=video['video']   

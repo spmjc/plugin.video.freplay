@@ -1,6 +1,9 @@
 Version 0.5.1
   -Added HD1
   -Added TV5 Monde + Afrique
+  -Added BFM Business
+  -Added LEquipe.fr
+  -Added Most viewed
   -Fixed ARTE (Thanks to Torok)
   -Fixed logo display issue
   -Added option to force HD on TF1, TMC, NT1, HD1

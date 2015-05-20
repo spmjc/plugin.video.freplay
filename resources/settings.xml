@@ -3,10 +3,12 @@
   <category label="30100">
     <setting label="[COLOR red]Favourites[/COLOR]" type="labelenum" id="dispfavourites" default="0" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="ARTE" type="labelenum" id="disparte" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
-    <setting label="BFM TV" type="labelenum" id="dispbfmtv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
+    <setting label="BFM TV" type="labelenum" id="dispbfmtv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/> 
+    <setting label="BFM Business" type="labelenum" id="dispbfmbusiness" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="Canal +" type="labelenum" id="dispcplus" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="D8" type="labelenum" id="dispd8" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="D17" type="labelenum" id="dispd17" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
+    <setting label="LEquipe.fr" type="labelenum" id="dispequipefr" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="France 1" type="labelenum" id="displa_1ere" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="France 2" type="labelenum" id="dispfrance2" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="France 3" type="labelenum" id="dispfrance3" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
