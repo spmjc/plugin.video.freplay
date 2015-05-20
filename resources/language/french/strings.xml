@@ -50,5 +50,7 @@
   <!--------------------------------------------------->
   <string id="33000">Par émission</string>
   <string id="33001">Tous les épisodes non vus</string>
+  <string id="33002">Reportages</string>
+  <string id="33003">Emissions</string>
 
 </strings>
