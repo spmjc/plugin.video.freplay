@@ -44,7 +44,8 @@
     <setting label="30333" type="labelenum" id="france3Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
     <setting label="30334" type="labelenum" id="france4Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
     <setting label="30335" type="labelenum" id="france5Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>  
-    <setting label="30336" type="labelenum" id="franceoQuality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>      
+    <setting label="30336" type="labelenum" id="franceoQuality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
+    <setting label="30340" type="enum" id="equipefrQuality" values="HD|MD|SD" default=0/>      
   </category>
   <category label="30400">
     <setting label="30402" type="slider" id="ctlgRefresh" default="60" range="0,5,100" option="int" /> 

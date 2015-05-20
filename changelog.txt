@@ -3,7 +3,7 @@ Version 0.5.1
   -Added TV5 Monde + Afrique
   -Added BFM Business
   -Added LCP
-  -Added LEquipe.fr
+  -Added L'Equipe.fr
   -Added Most viewed
   -Fixed ARTE (Thanks to Torok)
   -Fixed logo display issue

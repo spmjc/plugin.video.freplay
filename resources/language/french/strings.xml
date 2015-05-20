@@ -11,10 +11,10 @@
   <string id="30201">Sélectionner le dossier de téléchargement</string>
   
   <string id="30300">Divers</string>
-  <string id="30301">Afficher les bonus de TF1</string>
-  <string id="30302">Afficher les bonus de TMC</string>
-  <string id="30303">Afficher les bonus de NT1</string>
-  <string id="30304">Afficher les bonus de HD1</string>
+  <string id="30301">TF1 : Afficher les bonus</string>
+  <string id="30302">TMC : Afficher les bonus</string>
+  <string id="30303">NT1 : Afficher les bonus</string>
+  <string id="30304">HD1 : Afficher les bonus</string>
   <string id="30305">HD1/NT1/TF1/TMC : Forcer la qualité HD</string> 
   
   
@@ -29,6 +29,8 @@
   <string id="30334">France 4 - Qualité Vidéo</string>
   <string id="30335">France 5 - Qualité Vidéo</string>
   <string id="30336">France O - Qualité Vidéo</string>
+  
+  <string id="30340">L'Equipe - Qualité Vidéo</string>
   
   <string id="30400">Avancé</string>
   <string id="30401">Supprimer le cache des catalogues</string>
