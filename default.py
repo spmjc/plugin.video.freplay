@@ -33,8 +33,7 @@ def buildShowsList(videos):
         if video_mode=='play':
             li.setInfo( type='Video', infoLabels=infoLabels)            
             li.setProperty('IsPlayable', 'true')
-            li.addContextMenuItems([ ('Download', 'XBMC.RunPlugin(%s?mode=dl&channel=%s&param=%s&name=%s)' % (sys.argv[0],chan,urllib.quote_plus(video_url),urllib.quote_plus(video_title))),
-                     ], replaceItems=True)
+            li.addContextMenuItems([(globalvar.LANGUAGE(33020).encode('utf-8'), 'XBMC.RunPlugin(%s?mode=dl&channel=%s&param=%s&name=%s)' % (sys.argv[0],chan,urllib.quote_plus(video_url),urllib.quote_plus(video_title)))])
         url = build_url({'mode': video_mode, 'channel': chan, 'param':video_url,'name':video_title})
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=False)
         xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_NONE)
@@ -42,7 +41,7 @@ def buildShowsList(videos):
         xbmcplugin.setContent(addon_handle, 'episodes')
     xbmc.executebuiltin('Container.SetViewMode(' + globalvar.VIEWID + ')')
     if channel=='favourites' and param=='unseen':
-        notify('Check/Uncheck "Hide Watched" in the left panel',0)
+        notify(globalvar.LANGUAGE(33026).encode('utf-8'),0)
         
 def notify(text,channel):
     time = 3000  #in miliseconds 
@@ -56,7 +55,6 @@ utils.init()
 if mode is None: 
     for item in globalvar.ordered_channels:
       add_Channel(item[0],globalvar.channels[item[0]][0])
-    
     xbmcplugin.endOfDirectory(addon_handle)
 else:    
     channel = args['channel'][0]
@@ -66,15 +64,14 @@ else:
             url = build_url({'mode': mode, 'channel': chan, 'param':folder_param})
             li = xbmcgui.ListItem(folder_title, iconImage=folder_icon)
             #Contextual Menu
-            li.addContextMenuItems([], replaceItems=True)
             if mode=='shows' and channel!='favourites':
-                li.addContextMenuItems([ ('Add to FReplay Favourites', 'XBMC.RunPlugin(%s?mode=bkm&action=add&channel=%s&param=%s&display=%s)' % 
-                    (sys.argv[0],chan,urllib.quote_plus(folder_param),urllib.quote_plus(folder_title))),
-                         ], replaceItems=True)
+                li.addContextMenuItems([ (globalvar.LANGUAGE(33021).encode('utf-8'), 'XBMC.RunPlugin(%s?mode=bkm&action=add&channel=%s&param=%s&display=%s)' % 
+                                          (sys.argv[0],chan,urllib.quote_plus(folder_param),urllib.quote_plus(folder_title))),
+                                          ])
             if mode=='shows' and channel=='favourites':
-                li.addContextMenuItems([ ('Remove from Favourites', 'XBMC.RunPlugin(%s?mode=bkm&action=rem&channel=%s&param=%s&display=%s)' % 
-                (sys.argv[0],chan,urllib.quote_plus(folder_param),urllib.quote_plus(folder_title))),
-                         ], replaceItems=True)
+                li.addContextMenuItems([ (globalvar.LANGUAGE(33022).encode('utf-8'), 'XBMC.RunPlugin(%s?mode=bkm&action=rem&channel=%s&param=%s&display=%s)' % 
+                                        (sys.argv[0],chan,urllib.quote_plus(folder_param),urllib.quote_plus(folder_title))),
+                                        ])
             xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=True)
     elif mode[0]=='shows':     
         buildShowsList(globalvar.channels[channel][1].list_videos(channel,param))
@@ -85,7 +82,7 @@ else:
         item = xbmcgui.ListItem(path=url)
         xbmcplugin.setResolvedUrl(addon_handle, True, item)  
     elif mode[0]=='Search':      
-        keyboard = xbmc.Keyboard('','Enter the search text')
+        keyboard = xbmc.Keyboard('',globalvar.LANGUAGE(33023).encode('utf-8'))
         keyboard.doModal()
         if (keyboard.isConfirmed()):
             buildShowsList(globalvar.channels[channel][1].list_videos(channel,keyboard.getText()))
@@ -99,7 +96,7 @@ else:
         notify(result,channel)
     elif mode[0]=='dl':      
         if globalvar.dlfolder=='':
-            notify('You need to set the download folder first', channel)
+            notify(globalvar.LANGUAGE(33024).encode('utf-8'), channel)
         else:
             url=globalvar.channels[channel][1].getVideoURL(channel,param)
             extensionStart=url.rfind('.')
@@ -108,5 +105,5 @@ else:
                 fileName=utils.format_filename(args['name'][0]+'.mp4')
                 commondownloader.download(url, os.path.join(globalvar.dlfolder,fileName))
             else:
-                notify(extension + ' not supported', channel)
+                notify(extension + globalvar.LANGUAGE(33025).encode('utf-8'), channel)
     xbmcplugin.endOfDirectory( handle=int(addon_handle), succeeded=True, updateListing=False)

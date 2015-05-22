@@ -50,9 +50,23 @@
   <!--------------------------------------------------->
   <!--COMMON STRINGS USED IN ADDONS(33000 thru 33999)-->
   <!--------------------------------------------------->
+    <!--favourites channel text below-->
   <string id="33000">Par émission</string>
   <string id="33001">Tous les épisodes non vus</string>
-  <string id="33002">Reportages</string>
-  <string id="33003">Emissions</string>
-
+  <string id="33002">Récupération de la liste des épisodes</string>
+  <string id="33003">Vérification des émissions: </string>
+  <string id="33004">Emission déjà dans la liste</string>
+  <string id="33005">Emission ajoutée aux favoris FReplay</string>
+  <string id="33006">Emission supprimée des favoris FReplay</string>
+    <!--lcp channel text below-->
+  <string id="33010">Reportages</string>
+  <string id="33011">Emissions</string>
+    <!--default.py text below-->
+  <string id="33020">Télécharger</string>
+  <string id="33021">Ajouter aux favoris FReplay</string>
+  <string id="33022">Supprimer des favoris FReplay</string>
+  <string id="33023">Entrer le text à rechercher</string>
+  <string id="33024">Vous devez configurer votre répertoire de téléchargement en premier</string>
+  <string id="33025"> non supporté</string>
+  <string id="33026">Cocher/décocher "Masquer vue(s)" dans le panneau de gauche</string>
 </strings>

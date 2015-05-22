@@ -15,8 +15,8 @@ url_catalog = 'http://www.lcp.fr/spip.php?page=iphone-main'
 def list_shows(channel,folder):
     shows    = []
     if folder=='none' :
-        shows.append([channel,'shows',globalvar.LANGUAGE(33003),'','folder'])
-        shows.append([channel,'reportages',globalvar.LANGUAGE(33002),'','shows'])
+        shows.append([channel,'shows',globalvar.LANGUAGE(33011),'','folder'])
+        shows.append([channel,'reportages',globalvar.LANGUAGE(33010),'','shows'])
     else :
         filePath = utils.downloadCatalog(url_catalog,'%s.xml'%(channel),False)
         fileCat  = open(filePath).read().replace('\n','').decode('utf-8')

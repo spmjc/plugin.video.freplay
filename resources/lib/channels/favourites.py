@@ -4,9 +4,9 @@ import json
 import os
 import xbmcgui                         
 
-title=['[COLOR red]Favourites[/COLOR]']
-img=['favourites']
-readyForUse=True
+title       = ['[COLOR red]Favourites[/COLOR]']
+img         = ['favourites']
+readyForUse = True
 
 def list_shows(channel,folder):
     shows=[] 
@@ -32,11 +32,11 @@ def list_videos(channel,show_title):
             fileFav = open(globalvar.FAVOURITES_FILE)
             jsonfav = json.loads(fileFav.read())
             pDialog = xbmcgui.DialogProgress()
-            ret = pDialog.create( 'Getting list of episodes', '' )
+            ret = pDialog.create(globalvar.LANGUAGE(33002).encode('utf-8'),'')
             i=1
             for show_folder in  jsonfav['favourites']:
                 show_folder = [x.encode('utf-8') for x in show_folder]
-                pDialog.update((i-1)*100/len(jsonfav['favourites']), 'Checking shows: '+ show_folder[2] + ' - ' + str(i) + '/' +  str(len(jsonfav['favourites'])))
+                pDialog.update((i-1)*100/len(jsonfav['favourites']),globalvar.LANGUAGE(33003).encode('utf-8')+ show_folder[2] + ' - ' + str(i) + '/' +  str(len(jsonfav['favourites'])))
                 videos+=(list_videos(show_folder[0],show_folder[1]));
                 i+=1
             fileFav.close()
@@ -50,12 +50,12 @@ def add_favourite(channel,param,display):
     shows=list_shows('none','show_folder')
     for show in shows:
         if show[0]==channel and show[1]==param:
-            result='Show already in list'
+            result=globalvar.LANGUAGE(33004).encode('utf-8')
     if result=='':
         shows.append( [channel,param, display,'','shows'] )
         f1=open(globalvar.FAVOURITES_FILE, 'w+')
         print >>f1, json.dumps({'favourites': shows})
-        result='Show added to Favourites'
+        result=globalvar.LANGUAGE(33005).encode('utf-8')
     return result
 
 def rem_favourite(channel,param):
@@ -66,6 +66,6 @@ def rem_favourite(channel,param):
             shows.remove(show)
             f1=open(globalvar.FAVOURITES_FILE, 'w+')
             print >>f1, json.dumps({'favourites': shows})
-            result='Removed From Favourites'
+            result=globalvar.LANGUAGE(33006).encode('utf-8')
     return result
     

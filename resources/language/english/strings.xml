@@ -49,9 +49,23 @@
   <!--------------------------------------------------->
   <!--COMMON STRINGS USED IN ADDONS(33000 thru 33999)-->
   <!--------------------------------------------------->
+    <!--favourites channel text below-->
   <string id="33000">By Show</string>
   <string id="33001">All Unseen Episodes</string>
-  <string id="33002">Reportages</string>
-  <string id="33003">Shows</string>
-
+  <string id="33002">Getting list of episodes</string>
+  <string id="33003">Checking shows: </string>
+  <string id="33004">Show already in list</string>
+  <string id="33005">Show added to FReplay Favourites</string>
+  <string id="33006">Show removed from FReplay Favourites</string>
+    <!--lcp channel text below-->
+  <string id="33010">Reportages</string>
+  <string id="33011">Shows</string>
+    <!--default.py text below-->
+  <string id="33020">Download</string>
+  <string id="33021">Add to FReplay Favourites</string>
+  <string id="33022">Remove from FReplay Favourites</string>
+  <string id="33023">Enter the search text</string>
+  <string id="33024">You need to set the download folder first</string>
+  <string id="33025"> not supported</string>
+  <string id="33026">Check/Uncheck "Hide Watched" in the left panel</string>
 </strings>
