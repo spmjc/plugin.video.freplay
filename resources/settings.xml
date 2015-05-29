@@ -17,15 +17,15 @@
     <setting label="France 24" type="labelenum" id="dispfrance24" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="HD1" type="labelenum" id="disphd1" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="iTele" type="labelenum" id="dispitele" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>   
-    <setting label="Most Viewed" type="labelenum" id="dispmostviewed" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="L'Equipe.fr" type="labelenum" id="dispequipefr" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="LCP" type="labelenum" id="displcp" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
+    <setting label="Most Viewed" type="labelenum" id="dispmostviewed" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="NRJ12" type="labelenum" id="dispnrj12" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="NT1" type="labelenum" id="dispnt1" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="TF1" type="labelenum" id="disptf1" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="Tou.tv" type="labelenum" id="disptoutv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="TMC" type="labelenum" id="disptmc" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>    
-    <setting label="TM5 Monde" type="labelenum" id="disptv5monde" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
+    <setting label="TV5 Monde" type="labelenum" id="disptv5monde" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99" visible="false"/>
     <setting label="TV5+ Afrique" type="labelenum" id="disptv5af" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
   </category>
   <category label="30200">
