@@ -4,7 +4,7 @@ from resources.lib import utils
 
 title=['TV5 Monde']
 img=['tv5monde']
-readyForUse=True
+readyForUse=False
 
 def list_shows(channel,folder):
   shows=[]

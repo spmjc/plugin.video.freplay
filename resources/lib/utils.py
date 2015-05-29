@@ -12,6 +12,7 @@ def getOrderChannel(chanName):
   if globalvar.ADDON.getSetting('disp'+chanName):
     return int(globalvar.ADDON.getSetting('disp'+chanName))
   else:
+    print chanName
     return 20
 
 def init():

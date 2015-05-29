@@ -68,4 +68,9 @@
   <string id="33024">You need to set the download folder first</string>
   <string id="33025"> not supported</string>
   <string id="33026">Check/Uncheck "Hide Watched" in the left panel</string>
+    <!--Most Viewed channel text below-->      
+  <string id="33030">Most Viewed</string>
+  <string id="33031">Last Day</string>
+  <string id="33032">Last 7 Days</string>
+  <string id="33033">Last 30 Days</string>
 </strings>
