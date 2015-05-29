@@ -5,7 +5,7 @@ import re, urllib
 from resources.lib import globalvar 
 
 title       = ['L\'Equipe.fr']
-img         = ['equipefr']
+img         = ['lequipefr']
 readyForUse = True
 
 def list_shows(channel,param):  
@@ -63,7 +63,7 @@ def getVideoURL(channel,video_id):
     video_url     = ''
     video_url_len = len(video_urls)
     if video_url_len > 0:
-        q = globalvar.ADDON.getSetting('equipefrQuality')
+        q = globalvar.ADDON.getSetting('lequipefrQuality')
         if q == '0':
             # Highest Quality
             video_url = video_urls[0]
