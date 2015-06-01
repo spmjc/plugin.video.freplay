@@ -71,7 +71,7 @@
   <string id="33026">Cocher/décocher "Masquer vue(s)" dans le panneau de gauche</string>
     <!--Most Viewed channel text below-->         
   <string id="33030">Les Plus Vus</string>
-  <string id="33031">Precedent Jour</string>
-  <string id="33032">7 Precedents Jours</string>
-  <string id="33033">30 Precedents Jours</string>
+  <string id="33031">Dernier jour</string>
+  <string id="33032">7 derniers jours</string>
+  <string id="33033">30 derniers jours</string>
 </strings>
