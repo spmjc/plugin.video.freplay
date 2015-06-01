@@ -30,8 +30,8 @@ def list_videos(channel,param):
       pIndex=path.find('&amp;p=')  
       chan= path[3:pIndex]  
       url=path[pIndex+7:]
-      infoLabels={ "Title": cnt + 'x-' + title}
+      infoLabels={ "Title": title,"Plot":cnt + ' ' + globalvar.LANGUAGE(33039).encode('utf-8')}
       print cnt
-      videos.append( [chan, url, cnt + 'x-' + title, os.path.join( globalvar.MEDIA, chan +".png"),infoLabels,'play'] ) 
+      videos.append( [chan, url,title, os.path.join( globalvar.MEDIA, chan +".png"),infoLabels,'play'] ) 
     
   return videos  
