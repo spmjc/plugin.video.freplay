@@ -4,9 +4,10 @@ Version 0.5.1
   -Added BFM Business
   -Added LCP
   -Added L'Equipe.fr
-  -Added Most viewed
+  -Added Most viewed (Icon from Passion - Thanks)
   -Fixed ARTE (Thanks to Torok)
   -Fixed logo display issue
+  -Default Contextual menu re-enabled
   -Added option to force HD on TF1, TMC, NT1, HD1
   -Updated addon.xml : added BeautifulSoup4 import in required section (for LCP channel)
   -Updated catalog download. Use last modified date instead of creation date
