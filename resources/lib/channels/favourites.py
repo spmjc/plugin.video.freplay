@@ -4,7 +4,7 @@ import json
 import os
 import xbmcgui                         
 
-title       = ['[COLOR red]Favourites[/COLOR]']
+title       = [globalvar.LANGUAGE(33007).encode('utf-8')]
 img         = ['favourites']
 readyForUse = True
 

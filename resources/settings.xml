@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
   <category label="30100">
-    <setting label="[COLOR red]Favourites[/COLOR]" type="labelenum" id="dispfavourites" default="0" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
+    <setting label="33007" type="labelenum" id="dispfavourites" default="0" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
+    <setting label="33030" type="labelenum" id="dispmostviewed" default="0" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="ARTE" type="labelenum" id="disparte" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="BFM TV" type="labelenum" id="dispbfmtv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/> 
     <setting label="BFM Business" type="labelenum" id="dispbfmbusiness" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
@@ -19,7 +20,6 @@
     <setting label="iTele" type="labelenum" id="dispitele" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>   
     <setting label="L'Equipe.fr" type="labelenum" id="displequipefr" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="LCP" type="labelenum" id="displcp" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
-    <setting label="Most Viewed" type="labelenum" id="dispmostviewed" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="NRJ12" type="labelenum" id="dispnrj12" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="NT1" type="labelenum" id="dispnt1" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>
     <setting label="TF1" type="labelenum" id="disptf1" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|99"/>

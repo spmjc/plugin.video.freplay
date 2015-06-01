@@ -57,6 +57,7 @@
   <string id="33004">Show already in list</string>
   <string id="33005">Show added to FReplay Favourites</string>
   <string id="33006">Show removed from FReplay Favourites</string>
+  <string id="33007">[COLOR red]FReplay Favourites[/COLOR]</string>
     <!--lcp channel text below-->
   <string id="33010">Reportages</string>
   <string id="33011">Shows</string>
@@ -69,7 +70,7 @@
   <string id="33025"> not supported</string>
   <string id="33026">Check/Uncheck "Hide Watched" in the left panel</string>
     <!--Most Viewed channel text below-->      
-  <string id="33030">Most Viewed</string>
+  <string id="33030">[COLOR blue]Most Viewed[/COLOR]</string>
   <string id="33031">Last Day</string>
   <string id="33032">Last 7 Days</string>
   <string id="33033">Last 30 Days</string>

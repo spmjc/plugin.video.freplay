@@ -58,6 +58,7 @@
   <string id="33004">Emission déjà dans la liste</string>
   <string id="33005">Emission ajoutée aux favoris FReplay</string>
   <string id="33006">Emission supprimée des favoris FReplay</string>
+  <string id="33007">[COLOR red]Favoris FReplay[/COLOR]</string>
     <!--lcp channel text below-->
   <string id="33010">Reportages</string>
   <string id="33011">Emissions</string>
@@ -70,7 +71,7 @@
   <string id="33025"> non supporté</string>
   <string id="33026">Cocher/décocher "Masquer vue(s)" dans le panneau de gauche</string>
     <!--Most Viewed channel text below-->         
-  <string id="33030">Les Plus Vus</string>
+  <string id="33030">[COLOR blue]Les Plus Vus[/COLOR]</string>
   <string id="33031">Dernier jour</string>
   <string id="33032">7 derniers jours</string>
   <string id="33033">30 derniers jours</string>
