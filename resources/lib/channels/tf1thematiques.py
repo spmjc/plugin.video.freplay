@@ -6,7 +6,7 @@ common = CommonFunctions
 from resources.lib import utils     
 from resources.lib import globalvar
 
-title=['histoire','Ushuia TV', 'TV Breizh']
+title=['Histoire','Ushuaia TV', 'TV Breizh']
 img=['histoire','ushuaiatv','tvbreizh']
 readyForUse=True
 
