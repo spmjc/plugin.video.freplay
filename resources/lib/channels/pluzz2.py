@@ -45,6 +45,7 @@ def list_videos(channel,folder):
   for emission in emissions :           
     titre = emission['titre_programme'].encode('utf-8')
     if titre==folder: 
+      id_diffusion=emission['id_diffusion']
       filPrgm        = urllib2.urlopen(showInfo % (emission['id_diffusion'])).read()
       jsonParserShow = json.loads(filPrgm)       
       plot           = jsonParserShow['synopsis'].encode('utf-8')
@@ -54,15 +55,17 @@ def list_videos(channel,folder):
       titre          = jsonParserShow['titre'].encode('utf-8')
       if jsonParserShow['sous_titre']!='':
         titre+=' - ' + jsonParserShow['sous_titre'].encode('utf-8')
-      for video in jsonParserShow['videos']:
-        if video['format']==globalvar.ADDON.getSetting('%sQuality' % (channel)):
-          url = video['url']
       image      = imgURL % (jsonParserShow['image'])  
       infoLabels = { "Title": titre,"Plot":plot,"Aired":date,"Duration": duration, "Year":date[6:10]}
       if jsonParserShow['genre']!='':
           infoLabels['Genre']=jsonParserShow['genre'].encode('utf-8')
-      videos.append( [channel, url, titre, image,infoLabels,'play'] )    
+      videos.append( [channel, id_diffusion, titre, image,infoLabels,'play'] )    
   return videos    
   
-def getVideoURL(channel,video_URL):
-    return video_URL
+def getVideoURL(channel,id):          
+  filPrgm        = urllib2.urlopen(showInfo % (id)).read()
+  jsonParser = json.loads(filPrgm)   
+  for video in jsonParser['videos']:
+    if video['format']==globalvar.ADDON.getSetting('%sQuality' % (channel)):
+      url = video['url']
+  return url

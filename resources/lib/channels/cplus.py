@@ -38,6 +38,7 @@ def list_shows(channel,folder):
     return shows
 
 def getVideoURL(channel,video_URL):
+    video_URL=video_URL.replace('$$TOKEN$$',get_token())
     filPrgm=urllib2.urlopen(video_URL).read()
     jsoncat     = json.loads(filPrgm)
     return jsoncat['detail']['informations']['VoD']['videoURL'].encode('utf-8')
@@ -67,7 +68,7 @@ def list_videos(channel,show_URL):
                     break
     for content in contents:
 	    
-    	url=content['onClick']['URLPage'].encode('utf-8')
+        url=content['onClick']['URLPage'].encode('utf-8').replace(get_token(),'$$TOKEN$$')
         if 'title' in content:
             title=content['title'].encode('utf-8')
         if 'subtitle' in content:

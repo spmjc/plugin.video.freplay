@@ -33,14 +33,14 @@ def list_videos(channel,show_URL):
     jsonParser     = json.loads(filPrgm)
     
     url=''
-    title=''
+    title=jsonParser['Title'].encode('utf-8')
     icon=''
     
     if jsonParser['SeasonLineups']:
       for season in jsonParser['SeasonLineups'] :
         for item in season['LineupItems'] :
           url=item['Url']
-          title=item['Title'].encode('utf-8')
+          title+='-'.encode('utf-8') + item['Title'].encode('utf-8')
           icon=item['ImageUrl']
           desc=item['Details']['Description'].encode('utf-8')
           date=item['Details']['AirDate']

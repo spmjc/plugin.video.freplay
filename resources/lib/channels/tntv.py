@@ -32,18 +32,20 @@ def list_videos(channel,show):
     desc=item['summary'].encode('utf-8')
     duration=item['length']/60
     infoLabels={ "Title": title,"Plot":desc,"Duration": duration} 
-    videos.append( [channel, videoId, title, icon,infoLabels,'play'] )     
+    videos.append( [channel, show+'-'+videoId, title, icon,infoLabels,'play'] )     
     
   return videos
   
 def getVideoURL(channel,video_id):
   urlVideo=''
-  filePath=utils.downloadCatalog('http://tntv.goodbarber.com/apiv3/getLastItems/6833037/1/%s/' % (nbItems*4),'tntvall.json',False)
+  t=video_id.split('-')
+  print t[0]
+  print t[1]
+  filePath=utils.downloadCatalog('http://tntv.goodbarber.com/apiv3/getItemsByCategorie/6833037/%s/1/%s/' % (t[0],nbItems),'tntv%s.json' % (t[0]),False)
   
   jsonParser= json.loads(open(filePath).read())
   for item in jsonParser['items'] :
-    if video_id==str(item['id']):
-      print globalvar.ADDON.getSetting('tntvQuality')
+    if t[1]==str(item['id']):
       urlVideo=item['videoUrls'][globalvar.ADDON.getSetting('tntvQuality')]
          
   return urlVideo

@@ -61,7 +61,7 @@ else:
     param = args['param'][0]
     if mode[0]=='folder':        
         for chan,folder_param, folder_title, folder_icon, mode in globalvar.channels[channel][1].list_shows(channel,param):
-            url = build_url({'mode': mode, 'channel': chan, 'param':folder_param})
+            url = build_url({'mode': mode, 'channel': chan, 'param':folder_param ,'name' : folder_title})
             li = xbmcgui.ListItem(folder_title, iconImage=folder_icon)
             #Contextual Menu
             if mode=='shows' and channel!='favourites':
@@ -72,7 +72,13 @@ else:
                 li.addContextMenuItems([ (globalvar.LANGUAGE(33022).encode('utf-8'), 'XBMC.RunPlugin(%s?mode=bkm&action=rem&channel=%s&param=%s&display=%s)' % 
                                         (sys.argv[0],chan,urllib.quote_plus(folder_param),urllib.quote_plus(folder_title))),
                                         ])
-            xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=True)
+            
+            if mode=='play':
+                print 'play', folder_title
+                li.setInfo( type='Video', infoLabels={ "Title": folder_title})            
+                li.setProperty('IsPlayable', 'true')
+                li.addContextMenuItems([(globalvar.LANGUAGE(33020).encode('utf-8'), 'XBMC.RunPlugin(%s?mode=dl&channel=%s&param=%s&name=%s)' % (sys.argv[0],chan,urllib.quote_plus(folder_param),urllib.quote_plus(folder_title)))])
+            xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=mode!='play')
     elif mode[0]=='shows':     
         buildShowsList(globalvar.channels[channel][1].list_videos(channel,param))
     elif mode[0]=='play':   
