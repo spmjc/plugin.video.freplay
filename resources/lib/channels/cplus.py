@@ -17,23 +17,25 @@ def get_token():
 def list_shows(channel,folder):
     shows=[]
                     
-    filePath=utils.downloadCatalog('http://service.mycanal.fr/page/'+get_token()+'/1595.json','CPLUS.json',False)
-    filPrgm=open(filePath).read()
-    if folder=='none':                        
+    if folder=='none':    
+        filePath=utils.downloadCatalog('http://service.mycanal.fr/page/'+get_token()+'/1595.json','CPLUS.json',False)
+        filPrgm=open(filePath).read()                       
+        jsoncat     = json.loads(filPrgm)
+        strates  = jsoncat['strates']
+        for strate in strates :
+            if strate['type']=='links':
+              for content in strate['contents']:  
+                shows.append( [channel,content['onClick']['URLPage'].encode('utf-8'), content['onClick']['displayName'].encode('utf-8'),content['URLImage'].encode('utf-8'),'folder'] )
+    else:  
+        fileName=folder[folder.find('.json')-4:folder.find('.json')+5]
+        filePath=utils.downloadCatalog(folder,fileName,False)
+        filPrgm=open(filePath).read()
         jsoncat     = json.loads(filPrgm)
         strates  = jsoncat['strates']
         for strate in strates :
             if strate['type']=='contentGrid':
-                shows.append( [channel,strate['title'].encode('utf-8'), strate['title'].encode('utf-8'),'','folder'] )
-    else:
-        jsoncat     = json.loads(filPrgm)
-        strates  = jsoncat['strates']
-        for strate in strates :
-            if strate['type']!='carrousel':
-                if strate['title'].encode('utf-8')==folder:
-                    contents  = strate['contents']
-                    for content in contents:
-                        shows.append( [channel,content['onClick']['URLPage'].replace(get_token(),'$$TOKEN$$').encode('utf-8'), content['title'].encode('utf-8'),content['URLImage'],'shows'] )
+              for content in strate['contents']:   
+                  shows.append( [channel,content['onClick']['URLPage'].replace(get_token(),'$$TOKEN$$').encode('utf-8'), content['title'].encode('utf-8'),content['URLImage'],'shows'] )
     
     return shows
 
@@ -42,6 +44,7 @@ def getVideoURL(channel,video_URL):
     filPrgm=urllib2.urlopen(video_URL).read()
     jsoncat     = json.loads(filPrgm)
     return jsoncat['detail']['informations']['VoD']['videoURL'].encode('utf-8')
+    #return 'http:\/\/us-cplus-aka.canal-plus.com\/i\/1509\/14\/nip_NIP_64296_,200k,400k,800k,1500k,.mp4.csmil\/master.m3u8'
     
 def search(channel,keyWord):
     return list_shows(channel,keyWord)
