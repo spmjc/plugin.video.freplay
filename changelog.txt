@@ -1,3 +1,7 @@
+Version 0.5.2
+  -Added Allocine
+  -Fixed Canal +
+  
 Version 0.5.1
   -Added HD1
   -Added TV5 Monde + Afrique
