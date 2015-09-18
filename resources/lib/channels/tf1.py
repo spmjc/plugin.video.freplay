@@ -54,8 +54,7 @@ def list_shows(channel,folder):
             folder='999'
         for prgm in jsoncat :
             if str(prgm['genderId'])==folder:
-                if prgm['images']:
-                    img=prgm['images'][0]['url']
+                img=prgm['images'][0]['url'] if prgm['images'] else ''
                 shows.append( [channel,str(prgm['id']), prgm['shortTitle'].encode('utf-8'),img,'shows'] )
     return shows
 
