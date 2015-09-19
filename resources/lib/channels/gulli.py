@@ -1,34 +1,63 @@
 #-*- coding: utf-8 -*-
-import urllib
-import xml.dom.minidom    
+import urllib2
+import CommonFunctions
+common = CommonFunctions 
+from resources.lib import utils 
+import re
 
 title=['Gulli']
 img=['gulli']
-readyForUse=False
+readyForUse=True
 
-url_base='http://sslreplay.gulli.fr/replay/api?call=%7B%22api_key%22%3A%22andphone_72abef4bfc0c64d99b87b939ad32edf7%22%2C%22method%22%3A%22programme.getLatestEpisodes%22%2C%22params%22%3A%7B%22category_id%22%3A%22$$CATEG$$%22%2C%22episode_image_thumb%22%3A%5B285%2C213%5D%2C+%22episode_image_thumb_fiche%22%3A%5B0%2C0%5D%2C+%22program_image_thumb%22%3A%5B540%2C405%5D%2C+%22episode_image_fiche%22%3A%5B1080%2C810%5D%7D%7D'
-url_basf='http://sslreplay.gulli.fr/replay/api?call=%7B%22api_key%22%3A%22andphone_72abef4bfc0c64d99b87b939ad32edf7%22%2C%22method%22%3A%22programme.getLatestEpisodes%22%2C%22params%22%3A%7B%22category_id%22%3A%22emissions%22%2C%22episode_image_thumb%22%3A%5B285%2C213%5D%2C+%22episode_image_thumb_fiche%22%3A%5B0%2C0%5D%2C+%22program_image_thumb%22%3A%5B540%2C405%5D%2C+%22episode_image_fiche%22%3A%5B1080%2C810%5D%7D%7D'
-url_basd='http://sslreplay.gulli.fr/replay/api?call=%7B%22api_key%22%3A%22andphone_72abef4bfc0c64d99b87b939ad32edf7%22%2C%22method%22%3A%22programme.getLatestEpisodes%22%2C%22params%22%3A%7B%22category_id%22%3A%22series%22%2C%22episode_image_thumb%22%3A%5B285%2C213%5D%2C+%22episode_image_thumb_fiche%22%3A%5B0%2C0%5D%2C+%22program_image_thumb%22%3A%5B540%2C405%5D%2C+%22episode_image_fiche%22%3A%5B1080%2C810%5D%7D%7D'
+urlBase='http://replay.gulli.fr/replay/'
+
 def list_shows(channel,folder):
-    shows=[]
-    shows.append( [channel,'dessins-animes','Dessins Animes','','shows'] )
-    shows.append( [channel,'emissiions','Emissions','','shows'] )
-    shows.append( [channel,'series','Series et films','','shows'] )
+  shows=[]
+  
+  if folder=='none': 
+    shows.append( [channel,'dessins-animes','Dessins Animes','','folder'] )
+    shows.append( [channel,'emissions','Emissions','','folder'] )
+    shows.append( [channel,'series','Series et films','','folder'] )
+  else:           
+    d=dict()
+    filePath=utils.downloadCatalog(urlBase + folder,'gulli' + folder +'.html',False)    
+    html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a')
     
-    return shows
+    replays = common.parseDOM(html,"div",attrs={"class":"img"})
+    for replay in replays :
+      title = (common.parseDOM(replay,"span",attrs={"class":"tooltip_ctnt"}) [0]).encode("utf-8") 
+      if title not in d:     
+        img = re.findall('src="(.*?)"',replay) [0]
+        shows.append( [channel,folder + '$$' + title,title,img.encode("utf-8"),'shows'] )
+        d[title]=title
+    
+  return shows
 
-def getVideoURL(channel,url):
-    html=urllib.urlopen(url).read()
-    start=html.find('urlsVideoIPad: [')+17
-    end=html.find('.m3u8:',start)
+def getVideoURL(channel,id):
     return 'http://wat.tv/get/ipad/' + id + '.m3u8'
         
-def list_videos(channel,category):
-    videos=[] 
-    dom = xml.dom.minidom.parse(urllib.urlopen(url_base.replace('$$CATEG$$',category)).read())
-    ITEM=dom.getElementsByTagName('res')
-    for nodeITEM in ITEM:
-        title=nodeITEM.getElementsByTagName('program_title')
-        infoLabels={ "Title": title} 
-        videos.append( [channel,'url', title, '',infoLabels,'play'] )
-    return videos
+def list_videos(channel,param):
+  folder=param.split('$$')[0]  
+  category=param.split('$$')[1]
+  
+  videos=[] 
+  filePath=utils.downloadCatalog(urlBase + folder,'gulli' + folder +'.html',False)    
+  html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a').replace("\n", " ") 
+  html=' '.join([segment for segment in html.split()])
+  
+  uls = common.parseDOM(html,"ul",attrs={"class":"liste_resultats"})
+  for ul in uls:
+    replays = common.parseDOM(ul,"li")
+    for replay in replays :
+      title = (common.parseDOM(replay,"span",attrs={"class":"tooltip_ctnt"}) [0]).encode("utf-8") 
+      if title == category:
+        match = re.compile(r'<p> <strong>(.*?)</strong> <span>(.*?)<br/>(.*?)</span> </p>',re.DOTALL).findall(replay)            
+        if match:
+          for t,st,e in match:
+            title=t + '-' + e.replace('&nbsp;',' ')
+            print title.encode("utf-8") 
+        #<p> <strong>Atomic Betty</strong> <span> L'âge ingrat <br/> Saison 3&nbsp;Episode 135 </span> </p>     
+        img = re.findall('src="(.*?)"',replay) [0]       
+        infoLabels={ "Title": title}
+        videos.append( [channel, title.encode("utf-8") , title.encode("utf-8") , img,infoLabels,'play'] )
+  return videos

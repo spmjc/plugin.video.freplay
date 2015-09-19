@@ -86,7 +86,6 @@ def list_videos(channel,show_url):
 
 def getVideoURL(channel,idVideo):
   filePath=utils.downloadCatalog('http://www.allocine.fr/ws/AcVisiondataV4.ashx?media=%s' % (idVideo),'allocine%s.xml' % (idVideo),False) 
-  print 'http://www.allocine.fr/ws/AcVisiondataV4.ashx?media=%s' % (idVideo) 
   xml=open(filePath).read()
   
   
