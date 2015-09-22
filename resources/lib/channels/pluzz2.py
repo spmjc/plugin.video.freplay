@@ -23,16 +23,20 @@ def list_shows(channel,folder):
     for emission in emissions :           
       rubrique = emission['rubrique'].title().encode('utf-8')
       if rubrique not in uniqueItem:
-        uniqueItem[rubrique] = format
+        uniqueItem[rubrique] = rubrique
         shows.append( [channel,rubrique, rubrique,'','folder'] )
   else:
     for emission in emissions :           
       rubrique = emission['rubrique'].title().encode('utf-8')
       if rubrique==folder:        
         titre = emission['titre_programme'].encode('utf-8')
-        if titre not in uniqueItem:
-          uniqueItem[titre]=titre
-          shows.append( [channel,titre,titre,imgURL % (emission['image_large']),'shows'] )          
+        if titre!='':      
+          id = emission['id_programme'].encode('utf-8')
+          if id=='':
+            id = emission['id_emission'].encode('utf-8')        
+          if id not in uniqueItem:
+            uniqueItem[id]=id
+            shows.append( [channel,id,titre,imgURL % (emission['image_large']),'shows'] )     
   return shows
   
 def list_videos(channel,folder):
@@ -42,18 +46,25 @@ def list_videos(channel,folder):
   filPrgm    = open(filePath).read()
   jsonParser = json.loads(filPrgm)   
   emissions  = jsonParser['reponse']['emissions']  
-  for emission in emissions :           
-    titre = emission['titre_programme'].encode('utf-8')
-    if titre==folder: 
+  for emission in emissions :     
+    titre='' 
+    plot=''
+    duration='0'     
+    id = emission['id_programme'].encode('utf-8')
+    if id=='':
+      id = emission['id_emission'].encode('utf-8')
+    if id==folder: 
       id_diffusion=emission['id_diffusion']
       filPrgm        = urllib2.urlopen(showInfo % (emission['id_diffusion'])).read()
-      jsonParserShow = json.loads(filPrgm)       
-      plot           = jsonParserShow['synopsis'].encode('utf-8')
+      jsonParserShow = json.loads(filPrgm)
+      if jsonParserShow['synopsis']:        
+        plot           = jsonParserShow['synopsis'].encode('utf-8')
       date           = jsonParserShow['diffusion']['date_debut']
       if jsonParserShow['real_duration']!=None : 
           duration   = jsonParserShow['real_duration']/60
-      titre          = jsonParserShow['titre'].encode('utf-8')
-      if jsonParserShow['sous_titre']!='':
+      if jsonParserShow['titre']:
+        titre          = jsonParserShow['titre'].encode('utf-8')
+      if jsonParserShow['sous_titre']:
         titre+=' - ' + jsonParserShow['sous_titre'].encode('utf-8')
       image      = imgURL % (jsonParserShow['image'])  
       infoLabels = { "Title": titre,"Plot":plot,"Aired":date,"Duration": duration, "Year":date[6:10]}

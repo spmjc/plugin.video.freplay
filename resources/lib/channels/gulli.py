@@ -7,7 +7,7 @@ import re
 
 title=['Gulli']
 img=['gulli']
-readyForUse=True
+readyForUse=False
 
 urlBase='http://replay.gulli.fr/replay/'
 

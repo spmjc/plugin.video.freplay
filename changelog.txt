@@ -1,3 +1,9 @@
+Version 0.5.5
+ -Added Canal U
+ -Fixed NRJ12
+ -Fixed Pluzz
+ -Fixed NT1 (Thanks to vaurele)
+ 
 Version 0.5.4
  -Fixed NRJ12
 
