@@ -1,9 +1,10 @@
 #-*- coding: utf-8 -*-
-from pyamf.remoting.client import RemotingService
 from resources.lib import utils
 import re 
 import CommonFunctions
-common = CommonFunctions
+common = CommonFunctions   
+import base64   
+import urllib2
 
 title       = ['Chérie 25']
 img         = ['cherie25']
@@ -44,7 +45,6 @@ def list_shows(channel,folder):
                     titre       = titre_u.encode("utf-8")
                     video_url_u = url_root+common.parseDOM(titre_p,"a",ret="href")[0]
                     video_url   = video_url_u.encode("utf-8")
-                    print 'VIDEO_URL : '+video_url
                     shows.append([channel,video_url+'|'+titre,titre,image_url,'shows'])                     
     return shows
 
@@ -55,12 +55,10 @@ def list_videos(channel,params):
     if show.startswith(url_root):
         video_url = show
         titre     = fanart
-        mediaId = get_mediaId(video_url)
-        videos.append([channel,mediaId,titre,'',{'Title':titre},'play'])
+        videos.append([channel,video_url,titre,'',{'Title':titre},'play'])
     else :
         filePath    = utils.downloadCatalog(url_catalog,'cherie25.html',False)
         html        = open(filePath).read().decode("utf-8")
-        print html.encode('utf-8')
         line_replay = common.parseDOM(html,"div",attrs={"class":u"line replay magazines"})
         for line in line_replay :
             li_s = common.parseDOM(line,"li",attrs={"id":"liste_[0-9]"})
@@ -73,20 +71,11 @@ def list_videos(channel,params):
                         videos.extend(get_shows(show,li,fanart,channel))              
     return videos
 
-def getVideoURL(channel,mediaId):
-    cl = RemotingService(url_integra)
-    vi = cl.getService('Nrj_VideoInfos')
-    mi = vi.mediaInfo(mediaId)
-    return mi["url"]
-
-def get_mediaId(url) :
-    mediaId     = None
-    soup        = utils.get_webcontent(url)    
-    html        = soup.decode("utf-8")
-    mediaIdList = re.findall('mediaId_(.*?)"',html)
-    if mediaIdList :
-        mediaId = mediaIdList[0]
-    return mediaId
+def getVideoURL(channel,urlPage):
+  html=urllib2.urlopen(urlPage).read().replace('\xe9', 'e').replace('\xe0', 'a')
+  match = re.compile(r'data-url="(.*?)"',re.DOTALL).findall(html)
+  url=base64.b64decode(match[0] + '=')
+  return url
 
 def get_shows(emission,liste,fanart,channel):
     videos = []
@@ -102,11 +91,10 @@ def get_shows(emission,liste,fanart,channel):
             titre_p    = common.parseDOM(li,"p",attrs={"class":"titre"})[0]
             titre      = common.parseDOM(titre_p,"a")[0].encode("utf-8")
             video_url  = url_root+common.parseDOM(titre_p,"a",ret="href")[0].encode("utf-8")
-            mediaId    = get_mediaId(video_url)
             infoLabels['Thumb'] = image_url
             infoLabels['Plot']  = get_video_desc(video_url)
             infoLabels['Title'] = titre
-            videos.append([channel,mediaId,titre,image_url,infoLabels,'play'])
+            videos.append([channel,video_url,titre,image_url,infoLabels,'play'])
     return videos
     
 def get_video_desc(url):

@@ -29,14 +29,12 @@ def list_videos(channel,id):
   for i in range(0, len(items)):  
     if common.parseDOM(items[i], "enclosure", ret = "type")[0]=='video/mpeg':
       title          = common.parseDOM(items[i], "title")[0].encode('utf-8')
-      description    = common.parseDOM(items[i], "description")[0].encode('utf-8')
-      cleanHTML_desc = common.replaceHTMLCodes(description)
-      cleaned_desc   = common.stripTags(description)
+      description    = common.parseDOM(items[i], "description")[0] 
+      cleaned_desc   = common.stripTags(description).replace(']]>','')
       date           = common.parseDOM(items[i], "pubDate")[0][0:16].encode('utf-8')
       url            = common.parseDOM(items[i], "link")[0]      
       infoLabels     = { "Title": title,"Plot":cleaned_desc,"Aired":date, "Year":date[:4]}
       videos.append( [channel, url, title, '',infoLabels,'play'] )
-      print title,url
   return videos
 
 def getVideoURL(channel,url):
