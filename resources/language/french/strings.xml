@@ -75,9 +75,13 @@
   <string id="33025"> non supporté</string>
   <string id="33026">Cocher/décocher "Masquer vue(s)" dans le panneau de gauche</string>
     <!--Most Viewed channel text below-->         
-  <string id="33030">[COLOR blue]Les Plus Vus[/COLOR]</string>
+  <string id="33030">[COLOR blue]Les Plus Vues[/COLOR]</string>
   <string id="33031">Dernier jour</string>
   <string id="33032">7 derniers jours</string>
   <string id="33033">30 derniers jours</string>
-  <string id="33039">Lectures</string>
+  <string id="33039">Lectures</string> 
+    <!--wat.tv below-->         
+  <string id="33040">Chaines les plus suivies</string>
+  <string id="33041">Chaines recommandées</string>
+  <string id="33042">Chaines populaires</string>
 </strings>
