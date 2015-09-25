@@ -11,11 +11,15 @@ readyForUse = True
 def list_shows(channel,folder):
   shows=[]       
   if folder=='none':   
-    filePath = utils.downloadCatalog('http://www.wat.tv/v4/appmobile/index','wattv.json',False)
-    jsonFile     = open(filePath).read()
-    jsoncat     = json.loads(jsonFile)
-    for theme in jsoncat['themes'] :
-      shows.append( [channel,theme['link'], theme['name'].encode('utf-8'),'','folder'] ) 
+    shows.append( [channel,'http://www.wat.tv/v4/appmobile/theme/61', 'Replay TV','','folder'] ) 
+    shows.append( [channel,'http://www.wat.tv/v4/appmobile/theme/1', 'Musique','','folder'] )   
+    shows.append( [channel,'http://www.wat.tv/v4/appmobile/theme/101', 'Humour','','folder'] )  
+    shows.append( [channel,'http://www.wat.tv/v4/appmobile/theme/39', 'Cinema','','folder'] )  
+    shows.append( [channel,'http://www.wat.tv/v4/appmobile/theme/173', 'Actu','','folder'] )  
+    shows.append( [channel,'http://www.wat.tv/v4/appmobile/theme/213', 'Sport','','folder'] )  
+    shows.append( [channel,'http://www.wat.tv/v4/appmobile/theme/153', 'Manga','','folder'] )  
+    shows.append( [channel,'http://www.wat.tv/v4/appmobile/theme/127', 'Jeux Video','','folder'] )  
+    
     shows.append( [channel,'http://www.wat.tv/v4/appmobile/channel/mostFollowed', globalvar.LANGUAGE(33040).encode('utf-8'),'','folder'] )
     shows.append( [channel,'http://www.wat.tv/v4/appmobile/channel/recommendation', globalvar.LANGUAGE(33041).encode('utf-8'),'','folder'] ) 
     shows.append( [channel,'http://www.wat.tv/v4/appmobile/channel/popular', globalvar.LANGUAGE(33042).encode('utf-8'),'','folder'] )
@@ -43,19 +47,26 @@ def list_shows(channel,folder):
   
 def list_videos(channel,show_url):
     videos=[]    
-    fileVideos=urllib2.urlopen(show_url).read()
-    jsonvid     = json.loads(fileVideos)['results']['contents']
+    fileVideos=urllib2.urlopen(show_url).read()   
+    
+    jsonResult=json.loads(fileVideos)['results']           
+    if 'previousPage' in jsonResult:
+      infoLabels={}
+      videos.append( [channel, jsonResult['previousPage'], '<<<', '',infoLabels,'shows'] ) 
+    jsonvid     = jsonResult['contents']
     for video in jsonvid : 
         video_url=''
         id=str(video['id'])
         name=video['title'].encode('utf-8')
         image_url=video['pictures']['normal']
-        duration=int(video['duration']) / 60
-        views=''
+        duration=int(video['duration']) / 60          
         desc=video['description']
         rating=''
         infoLabels={ "Title": name,"Plot":desc,"Duration": duration}
         videos.append( [channel, id, name, image_url,infoLabels,'play'] )
+    if 'nextPage' in jsonResult:
+      infoLabels={}
+      videos.append( [channel, jsonResult['nextPage'], '>>>', '',infoLabels,'shows'] )  
     return videos   
 
 def getVideoURL(channel,idVideo):

@@ -30,16 +30,15 @@ def add_Channel(idChannel,nameChannel):
 def buildShowsList(videos):
     for chan,video_url, video_title, video_icon,infoLabels,video_mode in videos:
         li = xbmcgui.ListItem(video_title, iconImage=video_icon,thumbnailImage=video_icon,path=video_url)
+        url = build_url({'mode': video_mode, 'channel': chan, 'param':video_url,'name':video_title}) 
         if video_mode=='play':
             li.setInfo( type='Video', infoLabels=infoLabels)            
             li.setProperty('IsPlayable', 'true')
             li.addContextMenuItems([(globalvar.LANGUAGE(33020).encode('utf-8'), 'XBMC.RunPlugin(%s?mode=dl&channel=%s&param=%s&name=%s)' % (sys.argv[0],chan,urllib.quote_plus(video_url),urllib.quote_plus(video_title)))])
-        url = build_url({'mode': video_mode, 'channel': chan, 'param':video_url,'name':video_title})
-        xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=False)
-        xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_NONE)
-        xbmcplugin.setPluginCategory(addon_handle, 'episodes' )
-        xbmcplugin.setContent(addon_handle, 'episodes')
-    xbmc.executebuiltin('Container.SetViewMode(' + globalvar.VIEWID + ')')
+            xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_NONE)
+            xbmcplugin.setPluginCategory(addon_handle, 'episodes' )
+            xbmcplugin.setContent(addon_handle, 'episodes')
+        xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=video_mode!='play') 
     if channel=='favourites' and param=='unseen':
         notify(globalvar.LANGUAGE(33026).encode('utf-8'),0)
         
