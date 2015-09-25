@@ -1,3 +1,7 @@
+Version 0.5.6
+  -Added Cherie25
+  -Added Wat.tv
+  
 Version 0.5.5
  -Added Canal U
  -Fixed NRJ12
