@@ -22,7 +22,7 @@ def list_shows(channel,param):
 def list_videos(channel,show):
   videos=[] 
   
-  filePath=utils.downloadCatalog('http://tntv.goodbarber.com/apiv3/getItemsByCategorie/6833037/%s/1/%s/' % (show,nbItems),'tntv%s.json' % (show),False)
+  filePath=utils.downloadCatalog('http://tntv.goodbarber.com/apiv3/getItemsByCategorie/6833037/%s/1/%s/' % (show,nbItems),'tntv%s.json' % (show),False,{})
   
   jsonParser= json.loads(open(filePath).read())
   for item in jsonParser['items'] :
@@ -39,9 +39,7 @@ def list_videos(channel,show):
 def getVideoURL(channel,video_id):
   urlVideo=''
   t=video_id.split('-')
-  print t[0]
-  print t[1]
-  filePath=utils.downloadCatalog('http://tntv.goodbarber.com/apiv3/getItemsByCategorie/6833037/%s/1/%s/' % (t[0],nbItems),'tntv%s.json' % (t[0]),False)
+  filePath=utils.downloadCatalog('http://tntv.goodbarber.com/apiv3/getItemsByCategorie/6833037/%s/1/%s/' % (t[0],nbItems),'tntv%s.json' % (t[0]),False,{})
   
   jsonParser= json.loads(open(filePath).read())
   for item in jsonParser['items'] :

@@ -16,7 +16,7 @@ url_integra = 'http://prod-kernnrj12v5.integra.fr/videoinfo'
 
 def list_shows(channel,folder):
     shows    = []
-    filePath = utils.downloadCatalog(url_catalog,'cherie25.html',False)
+    filePath = utils.downloadCatalog(url_catalog,'cherie25.html',False,{})
     html     = open(filePath).read().decode("utf-8")
     line_s   = common.parseDOM(html,"div",attrs={"class":u"line replay magazines"})
     for line in line_s :
@@ -57,7 +57,7 @@ def list_videos(channel,params):
         titre     = fanart
         videos.append([channel,video_url,titre,'',{'Title':titre},'play'])
     else :
-        filePath    = utils.downloadCatalog(url_catalog,'cherie25.html',False)
+        filePath    = utils.downloadCatalog(url_catalog,'cherie25.html',False,{})
         html        = open(filePath).read().decode("utf-8")
         line_replay = common.parseDOM(html,"div",attrs={"class":u"line replay magazines"})
         for line in line_replay :

@@ -23,7 +23,7 @@ def list_shows(channel,folder):
   
 def list_videos(channel,id):
   videos=[]  
-  filePath=utils.downloadCatalog('http://www.canal-u.tv/themes/format.rss/theme.%s/podcast.1?xts=248546&xtor=RSS-1' % id, 'canalu%s.xml' % id,False)    
+  filePath=utils.downloadCatalog('http://www.canal-u.tv/themes/format.rss/theme.%s/podcast.1?xts=248546&xtor=RSS-1' % id, 'canalu%s.xml' % id,False,{})    
   xml=open(filePath).read() 
   items=common.parseDOM(xml, "item")
   for i in range(0, len(items)):  

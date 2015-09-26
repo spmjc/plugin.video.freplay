@@ -10,7 +10,7 @@ readyForUse=True
 def list_shows(channel,param):  
   shows=[]
   
-  filePath=utils.downloadCatalog('http://www.tou.tv/presentation/section/a-z?AkamaiDevice=phone&smallWidth=320&mediumWidth=640&largeWidth=640&isPhone=True','TouTV.json',False) 
+  filePath=utils.downloadCatalog('http://www.tou.tv/presentation/section/a-z?AkamaiDevice=phone&smallWidth=320&mediumWidth=640&largeWidth=640&isPhone=True','TouTV.json',False,{}) 
   filPrgm=open(filePath).read()
   jsonParser     = json.loads(filPrgm)
   

@@ -38,7 +38,11 @@
   
   <string id="30400">Avancé</string>
   <string id="30401">Supprimer le cache des catalogues</string>
-  <string id="30402">Rafraichissement des catalogues (min)</string>
+  <string id="30402">Rafraichissement des catalogues (min)</string>  
+  
+  <string id="30500">Comptes</string>
+  <string id="30501">Login Wat.tv</string>
+  <string id="30502">Mot de passe Wat.tv</string>
   
   
   <!------------------------------------>

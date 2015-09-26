@@ -17,7 +17,7 @@ def list_shows(channel,folder):
   dType=dict()
   dTitre=dict()
   
-  filePath=utils.downloadCatalog('http://www.tv5mondeplusafrique.com/dotscreen/exportAfrique.xml','TV5AF.XML',False)
+  filePath=utils.downloadCatalog('http://www.tv5mondeplusafrique.com/dotscreen/exportAfrique.xml','TV5AF.XML',False,{})
   xml = open(filePath).read()
   item=common.parseDOM(xml, "item")
   lids = common.parseDOM(xml, "item", ret = "lid")
@@ -51,7 +51,7 @@ def list_shows(channel,folder):
   
 def list_videos(channel,show_title):
   videos=[]                
-  filePath=utils.downloadCatalog('http://www.tv5mondeplusafrique.com/dotscreen/exportAfrique.xml','TV5AF.XML',False)
+  filePath=utils.downloadCatalog('http://www.tv5mondeplusafrique.com/dotscreen/exportAfrique.xml','TV5AF.XML',False,{})
   xml = open(filePath).read()
   item=common.parseDOM(xml, "item")
   lids = common.parseDOM(xml, "item", ret = "lid")
@@ -74,8 +74,6 @@ def list_videos(channel,show_title):
       durees=common.parseDOM(item[i], "duree")
       if len(durees)>0:
         sDuree=durees[0]
-        print sDuree[0:2]
-        print sDuree[3:5]
         duree=int(sDuree[0:2])*60+int(sDuree[3:5])
         
       dates=common.parseDOM(item[i], "dateCreation")

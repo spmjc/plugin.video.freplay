@@ -13,7 +13,7 @@ readyForUse=True
 def list_shows(channel,folder):
   shows=[]
   for i in range(0, int(globalvar.ADDON.getSetting('tf1ThemePages'))):
-    filePath=utils.downloadCatalog('http://www.%s.fr/videos?page=%s' % (channel,i),'%s%s.html' % (channel,i),False)    
+    filePath=utils.downloadCatalog('http://www.%s.fr/videos?page=%s' % (channel,i),'%s%s.html' % (channel,i),False,{})    
     html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a')
     
     items=re.findall(r'src="(.*?)"/> 	</a></div>       <div class="views-field views-field-title">        <span class="field-content"><a href="(.*?)">(.*?)</a></span>', html.replace('\n', ' ').replace('\r', ''))

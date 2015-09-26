@@ -13,7 +13,7 @@ readyForUse=True
 def list_shows(channel,folder):
     shows=[]
     
-    filePath=utils.downloadCatalog('http://www.nrj12.fr/replay-4203/collectionvideo/','NRJ12.html',False)    
+    filePath=utils.downloadCatalog('http://www.nrj12.fr/replay-4203/collectionvideo/','NRJ12.html',False,{})    
     html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a')
 
     if folder=='none':      
@@ -53,7 +53,7 @@ def getVideoURL(channel,urlPage):
 def list_videos(channel,show): 
     
     videos=[]                  
-    filePath=utils.downloadCatalog('http://www.nrj12.fr/replay-4203/collectionvideo/','NRJ12.html',False)    
+    filePath=utils.downloadCatalog('http://www.nrj12.fr/replay-4203/collectionvideo/','NRJ12.html',False,{})    
     html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a')
         
     line_replay_s = common.parseDOM(html,"div",attrs={"class":"line replay"})

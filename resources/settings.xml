@@ -58,6 +58,10 @@
     <setting label="30345" type="labelenum" id="tntvQuality" values="mp4|m3u8" default="mp4"/>            
     <setting label="30348" type="slider" id="tf1ThemePages" default="10" range="0,1,20" option="int"/>        
   </category>
+  <category label="30500">
+    <setting label="30501" type="text" id="watLogin"/> 
+    <setting label="30502" type="text" id="watPwd" option="hidden"/>      
+  </category> 
   <category label="30400">
     <setting label="30402" type="slider" id="ctlgRefresh" default="60" range="0,5,100" option="int" /> 
     <setting label="30401" type="action" action="RunScript($CWD/resources/lib/delete_catalog_cache.py)"/>      

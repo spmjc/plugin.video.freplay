@@ -18,7 +18,7 @@ def list_shows(channel,folder):
     shows=[]
     d=dict()
     
-    filePath=utils.downloadCatalog('http://www.arte.tv/papi/tvguide-flow/sitemap/feeds/videos/F.xml','ARTE.XML',False)
+    filePath=utils.downloadCatalog('http://www.arte.tv/papi/tvguide-flow/sitemap/feeds/videos/F.xml','ARTE.XML',False,{})
     if folder=='none':
         xml = open(filePath).read()
         url=common.parseDOM(xml, "url")
@@ -78,7 +78,7 @@ def getVideoURL(channel,video_id):
     
 def list_videos(channel,show_title):
     videos=[]                
-    filePath=utils.downloadCatalog('http://www.arte.tv/papi/tvguide-flow/sitemap/feeds/videos/F.xml','ARTE.XML',False)
+    filePath=utils.downloadCatalog('http://www.arte.tv/papi/tvguide-flow/sitemap/feeds/videos/F.xml','ARTE.XML',False,{})
     xml = open(filePath).read()	
     url=common.parseDOM(xml, "url")
     

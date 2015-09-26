@@ -37,7 +37,11 @@
   
   <string id="30400">Advanced</string>
   <string id="30401">Delete catalog cache</string> 
-  <string id="30402">Catalog refresh interval(min)</string>
+  <string id="30402">Catalog refresh interval(min)</string>   
+  
+  <string id="30500">Accounts</string>
+  <string id="30501">Wat.tv Login</string>
+  <string id="30502">Wat.tv Password</string>
   
   
   <!------------------------------------>

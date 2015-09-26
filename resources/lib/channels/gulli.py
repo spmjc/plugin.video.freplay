@@ -20,7 +20,7 @@ def list_shows(channel,folder):
     shows.append( [channel,'series','Series et films','','folder'] )
   else:           
     d=dict()
-    filePath=utils.downloadCatalog(urlBase + folder,'gulli' + folder +'.html',False)    
+    filePath=utils.downloadCatalog(urlBase + folder,'gulli' + folder +'.html',False,{})    
     html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a')
     
     replays = common.parseDOM(html,"div",attrs={"class":"img"})
@@ -41,7 +41,7 @@ def list_videos(channel,param):
   category=param.split('$$')[1]
   
   videos=[] 
-  filePath=utils.downloadCatalog(urlBase + folder,'gulli' + folder +'.html',False)    
+  filePath=utils.downloadCatalog(urlBase + folder,'gulli' + folder +'.html',False,{})    
   html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a').replace("\n", " ") 
   html=' '.join([segment for segment in html.split()])
   
@@ -55,7 +55,6 @@ def list_videos(channel,param):
         if match:
           for t,st,e in match:
             title=t + '-' + e.replace('&nbsp;',' ')
-            print title.encode("utf-8") 
         #<p> <strong>Atomic Betty</strong> <span> L'âge ingrat <br/> Saison 3&nbsp;Episode 135 </span> </p>     
         img = re.findall('src="(.*?)"',replay) [0]       
         infoLabels={ "Title": title}

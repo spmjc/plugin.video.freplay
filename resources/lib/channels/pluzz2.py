@@ -15,7 +15,7 @@ imgURL         = 'http://refonte.webservices.francetelevisions.fr%s'
 def list_shows(channel,folder):
   shows      = []
   uniqueItem = dict()  
-  filePath   = utils.downloadCatalog(channelCatalog % (channel),'%s.json' % (channel),False) 
+  filePath   = utils.downloadCatalog(channelCatalog % (channel),'%s.json' % (channel),False,{}) 
   filPrgm    = open(filePath).read()
   jsonParser = json.loads(filPrgm)   
   emissions  = jsonParser['reponse']['emissions']  
@@ -42,7 +42,7 @@ def list_shows(channel,folder):
 def list_videos(channel,folder):
   videos     = []    
   uniqueItem = dict()  
-  filePath   = utils.downloadCatalog(channelCatalog % (channel),'%s.json' % (channel),False) 
+  filePath   = utils.downloadCatalog(channelCatalog % (channel),'%s.json' % (channel),False,{}) 
   filPrgm    = open(filePath).read()
   jsonParser = json.loads(filPrgm)   
   emissions  = jsonParser['reponse']['emissions']  

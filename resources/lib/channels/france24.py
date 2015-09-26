@@ -10,7 +10,7 @@ readyForUse=True
 def list_shows(channel,param):  
   shows=[]
   
-  filePath=utils.downloadCatalog('http://api.france24.com/fr/services/json-rpc/emission_list?databases=f24fr&key=XXX&start=0&limit=30&edition_limit=8','France24.json',False) 
+  filePath=utils.downloadCatalog('http://api.france24.com/fr/services/json-rpc/emission_list?databases=f24fr&key=XXX&start=0&limit=30&edition_limit=8','France24.json',False,{}) 
   filPrgm=open(filePath).read()
   jsonParser = json.loads(filPrgm)
    
@@ -22,7 +22,7 @@ def list_shows(channel,param):
 def list_videos(channel,show):
   videos=[]
     
-  filePath=utils.downloadCatalog('http://api.france24.com/fr/services/json-rpc/emission_list?databases=f24fr&key=XXX&start=0&limit=30&edition_limit=8','France24.json',False) 
+  filePath=utils.downloadCatalog('http://api.france24.com/fr/services/json-rpc/emission_list?databases=f24fr&key=XXX&start=0&limit=30&edition_limit=8','France24.json',False,{}) 
   filPrgm=open(filePath).read()
   jsonParser = json.loads(filPrgm)
   

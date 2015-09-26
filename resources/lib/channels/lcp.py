@@ -18,7 +18,7 @@ def list_shows(channel,folder):
         shows.append([channel,'shows',globalvar.LANGUAGE(33011),'','folder'])
         shows.append([channel,'reportages',globalvar.LANGUAGE(33010),'','shows'])
     else :
-        filePath = utils.downloadCatalog(url_catalog,'%s.xml'%(channel),False)
+        filePath = utils.downloadCatalog(url_catalog,'%s.xml'%(channel),False,{})
         fileCat  = open(filePath).read().replace('\n','').decode('utf-8')
         cat      = re.findall('<key>'+folder+'</key> +<array> +(.+?) +</array>',fileCat)[0]
         shows_s  = re.findall('<dict> +(.+?) +</dict>',cat)
@@ -30,7 +30,7 @@ def list_shows(channel,folder):
 def list_videos(channel,params):
     videos     = []
     if params=='reportages' :
-        filePath = utils.downloadCatalog(url_catalog,'%s.xml'%(channel),False)
+        filePath = utils.downloadCatalog(url_catalog,'%s.xml'%(channel),False,{})
         fileCat  = open(filePath).read().replace('\n','').decode('utf-8')
         cat      = re.findall('<key>'+params+'</key> +<array> +(.+?) +</array>',fileCat)[0]
     else : 

@@ -33,7 +33,7 @@ def init():
     globalvar.ordered_channels.sort(key=lambda channel: channel[1])
     globalvar.dlfolder=globalvar.ADDON.getSetting('dlFolder')
         
-def downloadCatalog(url,fileName,force):  
+def downloadCatalog(url,fileName,force,dicPost):  
   bDLFile=True
   fileName=format_filename(fileName)
   iCtlgRefresh=int(globalvar.ADDON.getSetting('ctlgRefresh')) *60
@@ -43,11 +43,15 @@ def downloadCatalog(url,fileName,force):
   if os.path.exists(filePath):
     mtime = os.stat(filePath).st_mtime  
     bDLFile=(time.time()-mtime>iCtlgRefresh)
-    print fileName,time.time()-mtime
   else:
     bDLFile=True
   if bDLFile:
-    urllib.urlretrieve(url,filePath) 
+    if dicPost:
+      data = urllib.urlencode(dicPost)
+      print data
+      urllib.urlretrieve(url,filePath,None,data)
+    else:
+      urllib.urlretrieve(url,filePath) 
     log.logDLFile(url)
   return filePath
         

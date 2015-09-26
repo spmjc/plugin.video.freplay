@@ -9,7 +9,7 @@ img=['cplus']
 readyForUse=True
 
 def get_token():  
-  filePath=utils.downloadCatalog('http://service.mycanal.fr/authenticate.json/Android_Tab/1.1?highResolution=1','TokenCPlus.json',False) 
+  filePath=utils.downloadCatalog('http://service.mycanal.fr/authenticate.json/Android_Tab/1.1?highResolution=1','TokenCPlus.json',False,{}) 
   filPrgm=open(filePath).read()
   jsoncat     = json.loads(filPrgm)
   return jsoncat['token']
@@ -18,7 +18,7 @@ def list_shows(channel,folder):
     shows=[]
                     
     if folder=='none':    
-        filePath=utils.downloadCatalog('http://service.mycanal.fr/page/'+get_token()+'/1595.json','CPLUS.json',False)
+        filePath=utils.downloadCatalog('http://service.mycanal.fr/page/'+get_token()+'/1595.json','CPLUS.json',False,{})
         filPrgm=open(filePath).read()                       
         jsoncat     = json.loads(filPrgm)
         strates  = jsoncat['strates']
@@ -28,7 +28,7 @@ def list_shows(channel,folder):
                 shows.append( [channel,content['onClick']['URLPage'].encode('utf-8'), content['onClick']['displayName'].encode('utf-8'),content['URLImage'].encode('utf-8'),'folder'] )
     else:  
         fileName=folder[folder.find('.json')-4:folder.find('.json')+5]
-        filePath=utils.downloadCatalog(folder,fileName,False)
+        filePath=utils.downloadCatalog(folder,fileName,False,{})
         filPrgm=open(filePath).read()
         jsoncat     = json.loads(filPrgm)
         strates  = jsoncat['strates']

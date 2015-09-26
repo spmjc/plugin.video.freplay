@@ -8,9 +8,18 @@ title       = ['Wat.tv']
 img         = ['wattv']
 readyForUse = True
 
+def getToken():
+  login=globalvar.ADDON.getSetting('watLogin')
+  pwd=globalvar.ADDON.getSetting('watPwd')
+  filePath=utils.downloadCatalog('https://www.wat.tv/v4/appmobile/user/authentication','WatAuth.html',False,{'username':'julien.capestan@socgen.com','password':'prisju2306'})    
+  jsonFile=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a')
+  print jsonFile
+
 def list_shows(channel,folder):
   shows=[]       
   if folder=='none':   
+    getToken()
+    shows.append( [channel,'https://www.wat.tv/v4/appmobile/user/subscriptions/channel', 'My Channels','','folder'] ) 
     shows.append( [channel,'http://www.wat.tv/v4/appmobile/theme/61', 'Replay TV','','folder'] ) 
     shows.append( [channel,'http://www.wat.tv/v4/appmobile/theme/1', 'Musique','','folder'] )   
     shows.append( [channel,'http://www.wat.tv/v4/appmobile/theme/101', 'Humour','','folder'] )  
