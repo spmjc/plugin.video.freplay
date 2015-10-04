@@ -11,6 +11,7 @@ ADDON      = xbmcaddon.Addon(ADDON_NAME)
 SETTINGS   = ADDON
 LANGUAGE   = ADDON.getLocalizedString
 ADDON_DIR  = ADDON.getAddonInfo( "path" )
+ADDON_DATA =xbmc.translatePath( ADDON.getAddonInfo('profile') )
 VERSION = ADDON.getAddonInfo("version")
 RESOURCES  = os.path.join( ADDON_DIR, "resources" )   
 CHANNELS_DIR= os.path.join( RESOURCES, "lib","channels" ) 
@@ -30,4 +31,6 @@ QLTY='hd'
 dirCheckList        = (CACHE_DIR,)
 channels=dict()
 ordered_channels=[]
+hidden_channels=[] 
+hidden_channelsName=[]
 

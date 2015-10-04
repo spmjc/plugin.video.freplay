@@ -5,7 +5,11 @@
   <!--------------------------------------------------->
   <string id="30000">FReplay</string>
   
-  <string id="30100">Channels 99 to Hide</string>
+  <string id="30100">Channels 99 to Hide</string>  
+  <string id="30101">Move up</string>
+  <string id="30102">Move Down</string>
+  <string id="30103">Hide</string>
+  <string id="30104">Unhide</string>
   
   <string id="30200">Downloads</string>
   <string id="30201">Select Download Path</string>

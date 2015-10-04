@@ -5,7 +5,11 @@
   <!--------------------------------------------------->
   <string id="30000">FReplay</string>
   
-  <string id="30100">Chaînes 99 pour Cacher</string>
+  <string id="30100">Chaînes 99 pour Cacher</string>  
+  <string id="30101">Monter</string>
+  <string id="30102">Descendre</string>
+  <string id="30103">Masquer</string>
+  <string id="30104">Afficher</string>
   
   <string id="30200">Téléchargement</string>
   <string id="30201">Sélectionner le dossier de téléchargement</string>

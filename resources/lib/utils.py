@@ -6,7 +6,10 @@ import sys
 import urllib,urllib2
 import json
 import string  
-import log
+import log       
+from xml.dom import minidom   
+import CommonFunctions
+common = CommonFunctions
 
 def getOrderChannel(chanName):
   if globalvar.ADDON.getSetting('disp'+chanName):
@@ -27,10 +30,17 @@ def init():
             for i in range (0,len(channelModule.title)):
               order=getOrderChannel(channelModule.img[i])
               if order<>99:
-                globalvar.channels[channelModule.img[i]]=[channelModule.title[i], channelModule,getOrderChannel(channelModule.img[i])] 
+                globalvar.channels[channelModule.img[i]]=[channelModule.title[i], channelModule,order] 
                 globalvar.ordered_channels.append((channelModule.img[i],order))   
+              else:   
+                globalvar.hidden_channels.append(channelModule.title[i])
+                globalvar.hidden_channelsName.append(channelModule.img[i]) 
     globalvar.ordered_channels.sort(key=lambda channel: channel[0])
     globalvar.ordered_channels.sort(key=lambda channel: channel[1])
+    for i in range(len(globalvar.ordered_channels)):
+      if globalvar.ordered_channels[i][1]!=i:
+        globalvar.ordered_channels[i]=(globalvar.ordered_channels[i][0],i)
+        globalvar.ADDON.setSetting('disp'+globalvar.ordered_channels[i][0],str(i)) 
     globalvar.dlfolder=globalvar.ADDON.getSetting('dlFolder')
         
 def downloadCatalog(url,fileName,force,dicPost):  
@@ -70,4 +80,19 @@ def get_webcontent(url):
   req.add_header('Referer',url)
   webcontent = urllib2.urlopen(req).read()
   return webcontent
+  
+def move_up(order): 
+  globalvar.ADDON.setSetting('disp'+globalvar.ordered_channels[order][0],str(order-1)) 
+  globalvar.ADDON.setSetting('disp'+globalvar.ordered_channels[order-1][0],str(order)) 
+  
+def move_down(order): 
+  globalvar.ADDON.setSetting('disp'+globalvar.ordered_channels[order][0],str(order+1)) 
+  globalvar.ADDON.setSetting('disp'+globalvar.ordered_channels[order+1][0],str(order)) 
+  
+def hide(order): 
+  globalvar.ADDON.setSetting('disp'+globalvar.ordered_channels[order][0],'99')         
+  
+def unhide(order): 
+  globalvar.ADDON.setSetting('disp'+globalvar.hidden_channelsName[order],str(len(globalvar.ordered_channels))) 
+  
         

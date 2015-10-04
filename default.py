@@ -22,9 +22,19 @@ args = urlparse.parse_qs(sys.argv[2][1:])
 def build_url(query):
     return base_url + '?' + urllib.urlencode(query)
 
-def add_Channel(idChannel,nameChannel):
+def add_Channel(idChannel,nameChannel,order):
     url = build_url({'mode': 'folder', 'channel': idChannel, 'param':'none'})
     li = xbmcgui.ListItem(nameChannel, iconImage=os.path.join( globalvar.MEDIA, idChannel+".png"))
+    commands = []
+    if order!=0:
+      commands.append((globalvar.LANGUAGE(30101).encode('utf-8'), 'XBMC.RunPlugin(%s?mode=up&channel=%s&param=none&name=none)' % (sys.argv[0],order)))
+    if order!=len(globalvar.ordered_channels)-1: 
+      commands.append((globalvar.LANGUAGE(30102).encode('utf-8'), 'XBMC.RunPlugin(%s?mode=down&channel=%s&param=none&name=none)' % (sys.argv[0],order)))
+    commands.append((globalvar.LANGUAGE(30103).encode('utf-8'), 'XBMC.RunPlugin(%s?mode=hide&channel=%s&param=none&name=none)' % (sys.argv[0],order)))  
+    if len(globalvar.hidden_channels)>0:
+      commands.append((globalvar.LANGUAGE(30104).encode('utf-8') + ' (%s)' % len(globalvar.hidden_channels), 'XBMC.RunPlugin(%s?mode=unhide&channel=%s&param=none&name=none)' % (sys.argv[0],order)))  
+    li.addContextMenuItems( commands )
+            
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,listitem=li, isFolder=True)
 
 def buildShowsList(videos):
@@ -45,7 +55,7 @@ def buildShowsList(videos):
 def notify(text,channel):
     time = 3000  #in miliseconds 
     xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%('FReplay',text, time, os.path.join( globalvar.ADDON_DIR, "icon.png")))
-              
+
 log.logEvent(args)
 mode = args.get('mode', None)
 
@@ -53,7 +63,7 @@ utils.init()
 
 if mode is None: 
     for item in globalvar.ordered_channels:
-      add_Channel(item[0],globalvar.channels[item[0]][0])
+      add_Channel(item[0],globalvar.channels[item[0]][0],item[1])
     xbmcplugin.endOfDirectory(addon_handle)
 else:    
     channel = args['channel'][0]
@@ -110,5 +120,20 @@ else:
                 fileName=utils.format_filename(args['name'][0]+'.mp4')
                 commondownloader.download(url, os.path.join(globalvar.dlfolder,fileName))
             else:
-                notify(extension + globalvar.LANGUAGE(33025).encode('utf-8'), channel)
+                notify(extension + globalvar.LANGUAGE(33025).encode('utf-8'), channel)  
+    elif mode[0]=='up':
+      utils.move_up(int(channel))      
+      xbmc.executebuiltin("XBMC.Container.Refresh")                                   
+    elif mode[0]=='down':
+      utils.move_down(int(channel))      
+      xbmc.executebuiltin("XBMC.Container.Refresh")   
+    elif mode[0]=='hide':
+      utils.hide(int(channel))      
+      xbmc.executebuiltin("XBMC.Container.Refresh")
+    elif mode[0]=='unhide':
+      dialog = xbmcgui.Dialog()          
+      ret = dialog.select(globalvar.LANGUAGE(30104).encode('utf-8'), globalvar.hidden_channels)
+      if ret>=0:
+        utils.unhide(ret)       
+        xbmc.executebuiltin("XBMC.Container.Refresh")
     xbmcplugin.endOfDirectory( handle=int(addon_handle), succeeded=True, updateListing=False)

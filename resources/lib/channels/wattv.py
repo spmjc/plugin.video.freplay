@@ -17,8 +17,7 @@ def getToken():
 
 def list_shows(channel,folder):
   shows=[]       
-  if folder=='none':   
-    getToken()
+  if folder=='none':
     shows.append( [channel,'https://www.wat.tv/v4/appmobile/user/subscriptions/channel', 'My Channels','','folder'] ) 
     shows.append( [channel,'http://www.wat.tv/v4/appmobile/theme/61', 'Replay TV','','folder'] ) 
     shows.append( [channel,'http://www.wat.tv/v4/appmobile/theme/1', 'Musique','','folder'] )   
