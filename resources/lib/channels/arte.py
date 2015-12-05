@@ -71,9 +71,7 @@ def getVideoURL(channel,video_id):
       #SD RTMP   
       else:
           url=jsoncat['videoJsonPlayer']['VSR']['RTMP_MQ_1']['streamer'] + jsoncat['videoJsonPlayer']['VSR']['RTMP_MQ_1']['url']    
-
-    
-    url=jsoncat['videoJsonPlayer']['VSR']['HLS_SQ_1']['url']
+        
     return url
     
 def list_videos(channel,show_title):
