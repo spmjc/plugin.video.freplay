@@ -1,3 +1,7 @@
+Version 0.5.7
+  -Fixed Arte
+  -Added Menu to Organize Channels
+  
 Version 0.5.6
   -Added Cherie25
   -Added Wat.tv
