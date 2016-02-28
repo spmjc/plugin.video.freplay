@@ -1,3 +1,8 @@
+Version 0.5.8
+  -Fixed France TV
+  -Fixed NRJ12
+  -Fixed AlloCine
+  
 Version 0.5.7
   -Fixed Arte
   -Added Menu to Organize Channels

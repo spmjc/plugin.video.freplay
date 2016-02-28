@@ -36,20 +36,22 @@ def list_shows(channel,folder):
       pages=re.findall('<li><a href="(.*?)">(.*?)</a></li>', html)
       if pages:
         nbPages=len(pages)+1
-        
       for i in range(1, nbPages+1): 
         if folder.find('bandes-annonces')!=-1:          
           filePath=utils.downloadCatalog('http://www.allocine.fr/video%s?page=%s' % (folder,i),'allocine%s%s.html' % (folder,i),False,{}) 
         else:
           filePath=utils.downloadCatalog('http://www.allocine.fr/video/prgcat-%s/?page=%s' % (folder,i),'allocine%s%s.html' % (folder,i),False,{})
+        
         html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a').replace('\n', ' ').replace('\r', '')
         
         images=re.findall('<div class="pos_rel thumbs.*?" > <span class="(.*?)"> <img(.*?)src=\'(.*?)\' /> </span> </div>', html)
         
-        items=re.findall('<h. class="title "> <a href="(.*?)">(.*?)</a> </h.>', html)
+        items=re.findall('<h2 class="title "> <span > <a href="(.*?)">(.*?)</a>', html)
+        print html
         j=0
         image=''
         for item in items:
+          print item[0]
           if images[j][1]!=' ':
              image= images[j][1].replace(' data-attr=\'{"src":"','').replace('"}\'','')
           else:

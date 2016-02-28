@@ -46,8 +46,9 @@ def getVideoURL(channel,urlPage):
   if 'http://lesanges.nrj12.fr/' not in urlPage:
     urlPage='http://lesanges.nrj12.fr/' + urlPage
   html=urllib2.urlopen(urlPage).read().replace('\xe9', 'e').replace('\xe0', 'a')
-  match = re.compile(r'<img class="videoPlayerContainer" data-url="(.*?)=" id="',re.DOTALL).findall(html)
-  url=base64.b64decode(match[0] + '=')
+  print urlPage
+  match = re.compile(r'<link itemprop="contentUrl" href="(.*?)" />',re.DOTALL).findall(html)
+  url=match[0]
   return url
 
 def list_videos(channel,show): 

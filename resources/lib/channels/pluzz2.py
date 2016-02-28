@@ -8,9 +8,10 @@ title       = ['La 1ere','France 2', 'France 3', 'France 4', 'France 5', 'France
 img         = ['la_1ere' ,'france2','france3','france4','france5','franceo']
 readyForUse = True
 
-channelCatalog = 'http://pluzz.webservices.francetelevisions.fr/pluzz/liste/type/replay/nb/1000/chaine/%s'
+channelCatalog = 'http://pluzz.webservices.francetelevisions.fr/pluzz/liste/type/replay/nb/500/chaine/%s'
 showInfo       = 'http://webservices.francetelevisions.fr/tools/getInfosOeuvre/v2/?idDiffusion=%s&catalogue=Pluzz'
 imgURL         = 'http://refonte.webservices.francetelevisions.fr%s'
+tmpURL='http://pluzz.francetv.fr/appftv/webservices/video/getContenu.php?id-contenu-ext=%s'
 
 def list_shows(channel,folder):
   shows      = []
@@ -54,23 +55,24 @@ def list_videos(channel,folder):
     if id=='':
       id = emission['id_emission'].encode('utf-8')
     if id==folder: 
-      id_diffusion=emission['id_diffusion']
-      filPrgm        = urllib2.urlopen(showInfo % (emission['id_diffusion'])).read()
-      jsonParserShow = json.loads(filPrgm)
-      if jsonParserShow['synopsis']:        
-        plot           = jsonParserShow['synopsis'].encode('utf-8')
-      date           = jsonParserShow['diffusion']['date_debut']
-      if jsonParserShow['real_duration']!=None : 
-          duration   = jsonParserShow['real_duration']/60
-      if jsonParserShow['titre']:
-        titre          = jsonParserShow['titre'].encode('utf-8')
-      if jsonParserShow['sous_titre']:
-        titre+=' - ' + jsonParserShow['sous_titre'].encode('utf-8')
-      image      = imgURL % (jsonParserShow['image'])  
-      infoLabels = { "Title": titre,"Plot":plot,"Aired":date,"Duration": duration, "Year":date[6:10]}
-      if jsonParserShow['genre']!='':
-          infoLabels['Genre']=jsonParserShow['genre'].encode('utf-8')
-      videos.append( [channel, id_diffusion, titre, image,infoLabels,'play'] )    
+      id_diffusion=emission['id_diffusion']  
+      filPrgm=utils.get_webcontent(showInfo % (emission['id_diffusion'])) 
+      if(filPrgm!=''):
+        jsonParserShow = json.loads(filPrgm)
+        if jsonParserShow['synopsis']:        
+          plot           = jsonParserShow['synopsis'].encode('utf-8')
+        date           = jsonParserShow['diffusion']['date_debut']
+        if jsonParserShow['real_duration']!=None : 
+            duration   = jsonParserShow['real_duration']/60
+        if jsonParserShow['titre']:
+          titre          = jsonParserShow['titre'].encode('utf-8')
+        if jsonParserShow['sous_titre']:
+          titre+=' - ' + jsonParserShow['sous_titre'].encode('utf-8')
+        image      = imgURL % (jsonParserShow['image'])  
+        infoLabels = { "Title": titre,"Plot":plot,"Aired":date,"Duration": duration, "Year":date[6:10]}
+        if jsonParserShow['genre']!='':
+            infoLabels['Genre']=jsonParserShow['genre'].encode('utf-8')
+        videos.append( [channel, id_diffusion, titre, image,infoLabels,'play'] )    
   return videos    
   
 def getVideoURL(channel,id):          
