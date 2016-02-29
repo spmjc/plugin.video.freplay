@@ -8,7 +8,7 @@ title       = ['La 1ere','France 2', 'France 3', 'France 4', 'France 5', 'France
 img         = ['la_1ere' ,'france2','france3','france4','france5','franceo']
 readyForUse = True
 
-channelCatalog = 'http://pluzz.webservices.francetelevisions.fr/pluzz/liste/type/replay/nb/500/chaine/%s'
+channelCatalog = 'http://pluzz.webservices.francetelevisions.fr/pluzz/liste/type/replay/nb/1000/chaine/%s'
 showInfo       = 'http://webservices.francetelevisions.fr/tools/getInfosOeuvre/v2/?idDiffusion=%s&catalogue=Pluzz'
 imgURL         = 'http://refonte.webservices.francetelevisions.fr%s'
 tmpURL='http://pluzz.francetv.fr/appftv/webservices/video/getContenu.php?id-contenu-ext=%s'
@@ -56,6 +56,8 @@ def list_videos(channel,folder):
       id = emission['id_emission'].encode('utf-8')
     if id==folder: 
       id_diffusion=emission['id_diffusion']  
+      
+      tmp=utils.get_webcontent('http://pluzz.francetv.fr%s' % emission['url'])
       filPrgm=utils.get_webcontent(showInfo % (emission['id_diffusion'])) 
       if(filPrgm!=''):
         jsonParserShow = json.loads(filPrgm)

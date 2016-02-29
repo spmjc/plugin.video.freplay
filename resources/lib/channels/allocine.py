@@ -51,7 +51,6 @@ def list_shows(channel,folder):
         j=0
         image=''
         for item in items:
-          print item[0]
           if images[j][1]!=' ':
              image= images[j][1].replace(' data-attr=\'{"src":"','').replace('"}\'','')
           else:
@@ -78,8 +77,8 @@ def list_videos(channel,show_url):
   
   filePath=utils.downloadCatalog('http://www.allocine.fr%s' % (show_url),'allocine%s.html' % (show_url.replace('/','')),False,{}) 
   html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a').replace('\n', ' ').replace('\r', '')
-      
-  items=re.findall('<h3 class="title "> <a href="/video/video-(.*?)/" itemprop="url">(.*?)</a> </h3>', html)
+  
+  items=re.findall('<h3 class="title "> <span > <a href="/video/video-(.*?)/" itemprop="url">(.*?)</a>', html)
   for item in items:        
     infoLabels={ "Title": formatTitle(item[1])}
     videos.append( [channel, item[0], formatTitle(item[1]), '',infoLabels,'play'] )      
