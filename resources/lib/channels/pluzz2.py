@@ -1,6 +1,5 @@
 #-*- coding: utf-8 -*-
 import json       
-import urllib,urllib2
 import resources.lib.utils as utils 
 from resources.lib import globalvar          
 
@@ -11,7 +10,6 @@ readyForUse = True
 channelCatalog = 'http://pluzz.webservices.francetelevisions.fr/pluzz/liste/type/replay/nb/1000/chaine/%s'
 showInfo       = 'http://webservices.francetelevisions.fr/tools/getInfosOeuvre/v2/?idDiffusion=%s&catalogue=Pluzz'
 imgURL         = 'http://refonte.webservices.francetelevisions.fr%s'
-tmpURL='http://pluzz.francetv.fr/appftv/webservices/video/getContenu.php?id-contenu-ext=%s'
 
 def list_shows(channel,folder):
   shows      = []
@@ -56,8 +54,6 @@ def list_videos(channel,folder):
       id = emission['id_emission'].encode('utf-8')
     if id==folder: 
       id_diffusion=emission['id_diffusion']  
-      
-      tmp=utils.get_webcontent('http://pluzz.francetv.fr%s' % emission['url'])
       filPrgm=utils.get_webcontent(showInfo % (emission['id_diffusion'])) 
       if(filPrgm!=''):
         jsonParserShow = json.loads(filPrgm)
@@ -78,7 +74,7 @@ def list_videos(channel,folder):
   return videos    
   
 def getVideoURL(channel,id):          
-  filPrgm        = urllib2.urlopen(showInfo % (id)).read()
+  filPrgm    = utils.get_webcontent(showInfo % (id))
   jsonParser = json.loads(filPrgm)   
   for video in jsonParser['videos']:
     if video['format']==globalvar.ADDON.getSetting('%sQuality' % (channel)):
