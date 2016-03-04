@@ -1,3 +1,6 @@
+Version 0.5.10
+  -Added VTele
+  
 Version 0.5.9
   -Fixed France TV - New try
   -Fixed AlloCine
