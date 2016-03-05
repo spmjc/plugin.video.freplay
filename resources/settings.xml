@@ -19,6 +19,7 @@
     <setting label="France 5" type="labelenum" id="dispfrance5" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|99"/>
     <setting label="France O" type="labelenum" id="dispfranceo" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|99"/>
     <setting label="France 24" type="labelenum" id="dispfrance24" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|99"/>
+    <setting label="Gulli" type="labelenum" id="dispgulli" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|99"/>    
     <setting label="Histoire" type="labelenum" id="disphistoire" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|99"/>    
     <setting label="HD1" type="labelenum" id="disphd1" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|99"/>
     <setting label="iTele" type="labelenum" id="dispitele" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|99"/>   
@@ -34,6 +35,7 @@
     <setting label="TV5 Monde" type="labelenum" id="disptv5monde" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|99" visible="false"/>
     <setting label="TV5+ Afrique" type="labelenum" id="disptv5af" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|99"/>
     <setting label="Ushuaia TV" type="labelenum" id="dispushuaiatv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|99"/>  
+    <setting label="VTele" type="labelenum" id="dispvetele" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|99"/>  
     <setting label="Wat.tv" type="labelenum" id="dispwattv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|99"/>  
   </category>
   <category label="30200">

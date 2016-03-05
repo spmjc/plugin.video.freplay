@@ -7,9 +7,10 @@ import re
 
 title=['Gulli']
 img=['gulli']
-readyForUse=False
+readyForUse=True
 
 urlBase='http://replay.gulli.fr/replay/'
+urlVideo='http://replay.gulli.fr/replay/embed/%s?v=2.7'
 
 def list_shows(channel,folder):
   shows=[]
@@ -34,7 +35,9 @@ def list_shows(channel,folder):
   return shows
 
 def getVideoURL(channel,id):
-    return 'http://wat.tv/get/ipad/' + id + '.m3u8'
+    html=utils.get_webcontent(urlVideo % id) 
+    url= re.findall("file: '(.*?)',",html) [0]
+    return url
         
 def list_videos(channel,param):
   folder=param.split('$$')[0]  
@@ -54,9 +57,11 @@ def list_videos(channel,param):
         match = re.compile(r'<p> <strong>(.*?)</strong> <span>(.*?)<br/>(.*?)</span> </p>',re.DOTALL).findall(replay)            
         if match:
           for t,st,e in match:
-            title=t + '-' + e.replace('&nbsp;',' ')
-        #<p> <strong>Atomic Betty</strong> <span> L'âge ingrat <br/> Saison 3&nbsp;Episode 135 </span> </p>     
-        img = re.findall('src="(.*?)"',replay) [0]       
+            title=t + '-' + st + '-' + e.replace('&nbsp;',' ')
+        img = re.findall('src="(.*?)"',replay) [0]  
+        url= re.findall('href="(.*?)"',replay) [0]
+        iStart=url.find('VOD')
+        vodId= url[iStart:]       
         infoLabels={ "Title": title}
-        videos.append( [channel, title.encode("utf-8") , title.encode("utf-8") , img,infoLabels,'play'] )
+        videos.append( [channel, vodId.encode("utf-8") , title.encode("utf-8") , img,infoLabels,'play'] )
   return videos

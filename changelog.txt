@@ -1,3 +1,6 @@
+Version 0.6.0
+  -Added Gulli
+  
 Version 0.5.10
   -Added VTele
   
