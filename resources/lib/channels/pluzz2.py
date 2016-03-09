@@ -61,7 +61,7 @@ def list_videos(channel,folder):
           plot           = jsonParserShow['synopsis'].encode('utf-8')
         date           = jsonParserShow['diffusion']['date_debut']
         if jsonParserShow['real_duration']!=None : 
-            duration   = jsonParserShow['real_duration']/60
+            duration   = jsonParserShow['real_duration']/50
         if jsonParserShow['titre']:
           titre          = jsonParserShow['titre'].encode('utf-8')
         if jsonParserShow['sous_titre']:
