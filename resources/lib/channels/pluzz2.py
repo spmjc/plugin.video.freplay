@@ -3,7 +3,7 @@ import json
 import resources.lib.utils as utils 
 from resources.lib import globalvar          
 
-title       = ['La 1ere','France 2', 'France 3', 'France 4', 'France 5', 'France O']
+title       = ['La 1ère','France 2', 'France 3', 'France 4', 'France 5', 'France O']
 img         = ['la_1ere' ,'france2','france3','france4','france5','franceo']
 readyForUse = True
 
@@ -20,13 +20,13 @@ def list_shows(channel,folder):
   emissions  = jsonParser['reponse']['emissions']  
   if folder=='none':           
     for emission in emissions :           
-      rubrique = emission['rubrique'].title().encode('utf-8')
+      rubrique = nicer_rubrique_title(emission['rubrique'].encode('utf-8'))
       if rubrique not in uniqueItem:
         uniqueItem[rubrique] = rubrique
         shows.append( [channel,rubrique, rubrique,'','folder'] )
   else:
     for emission in emissions :           
-      rubrique = emission['rubrique'].title().encode('utf-8')
+      rubrique = nicer_rubrique_title(emission['rubrique'].encode('utf-8'))
       if rubrique==folder:        
         titre = emission['titre_programme'].encode('utf-8')
         if titre!='':      
@@ -37,6 +37,27 @@ def list_shows(channel,folder):
             uniqueItem[id]=id
             shows.append( [channel,id,titre,imgURL % (emission['image_large']),'shows'] )     
   return shows
+
+def nicer_rubrique_title(rubrique):
+  print rubrique
+  if rubrique == "sport":
+    return "Sport"
+  elif rubrique == "info":
+    return "Info"
+  elif rubrique == "documentaire":
+    return "Documentaire"
+  elif rubrique == "seriefiction":
+    return "Série & fiction"
+  elif rubrique == "magazine":
+    return "Magazine"
+  elif rubrique == "jeunesse":
+    return "Jeunesse"
+  elif rubrique == "divertissement":
+    return "Divertissement"
+  elif rubrique == "jeu":
+    return "Jeu"
+  else:
+    return rubrique.title()
   
 def list_videos(channel,folder):
   videos     = []    
@@ -71,7 +92,8 @@ def list_videos(channel,folder):
         if jsonParserShow['genre']!='':
             infoLabels['Genre']=jsonParserShow['genre'].encode('utf-8')
         videos.append( [channel, id_diffusion, titre, image,infoLabels,'play'] )    
-  return videos    
+  return videos
+  
   
 def getVideoURL(channel,id):          
   filPrgm    = utils.get_webcontent(showInfo % (id))
