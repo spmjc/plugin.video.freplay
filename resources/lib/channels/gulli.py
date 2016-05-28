@@ -5,6 +5,7 @@ common = CommonFunctions
 from resources.lib import utils
 import re
 from HTMLParser import HTMLParser
+import xbmc
 
 title=['Gulli']
 img=['gulli']
@@ -43,8 +44,11 @@ def list_shows(channel,folder):
   return shows
 
 def getVideoURL(channel,id):
+    #xbmc.log("channel:"+str(channel))
+    #xbmc.log("id:"+str(id))
     html=utils.get_webcontent(urlVideo % id)
-    url= re.findall("file: \"(.*\/"+id[3:len(id)]+"\/.*)\",",html) [0]
+    url= re.findall("file:\"(.*\/"+id[3:len(id)]+"\/.*)\"",html) [0]
+    #xbmc.log("url:"+str(url))
     return url
 
 def list_videos(channel,param):
