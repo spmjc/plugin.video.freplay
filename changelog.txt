@@ -1,3 +1,6 @@
+Version 0.6.2
+  -Fixed Chérie 25 replay
+
 Version 0.6.1
   -Added RTS (Maybe)
   
