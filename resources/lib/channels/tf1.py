@@ -49,6 +49,7 @@ def flatten(list_of_list):
 
 
 def list_shows(channel, folder):
+  print 'COUCOU'
   """Returns the programs of the given gender, or the list genders."""
 
   def list_genders():
@@ -137,7 +138,8 @@ def getVideoURL(channel, media_id):
     """Return the AuthKey to use to get the Video URL."""
     secret = base64.b64decode('VzNtMCMxbUZJ')
     string = '%s-%s-%s-%s-%d' % (media_id, secret, app_name, secret, timestamp)
-    auth_key = hashlib.md5(bytearray(string)).hexdigest() + '/' + str(timestamp)
+    #auth_key = hashlib.md5(bytearray(string)).hexdigest() + '/' + str(timestamp)
+    auth_key = hashlib.md5(string).hexdigest() + '/' + str(timestamp)
     return auth_key
 
   user_agent = 'myTF1/60010000.15040209 CFNetwork/609 Darwin/13.0.0'
