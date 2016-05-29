@@ -68,18 +68,24 @@ def list_videos(channel,params):
             url_video = common.parseDOM(thumbnail_infos, "a", ret="href")[0].encode("utf-8")
             image = common.parseDOM(thumbnail_infos, "img", ret="src")[0].encode("utf-8")
 
-            try:
-                date = common.parseDOM(caption, "time")[0].encode("utf-8")
-            except Exception:
-                date = ""
             titre = common.parseDOM(caption, "a")[0].encode("utf-8")
             titre = common.replaceHTMLCodes(titre)
             titre = titre.title()
-            videos.append([channel,url_video,titre,image,{'Title':titre+" - "+date},'play'])
+
+            titre_date = ""
+
+            try:
+                date = common.parseDOM(caption, "time")[0].encode("utf-8")
+                titre_date = titre+" - "+date
+            except Exception:
+                date = ""
+                titre_date = titre
+            
+            videos.append([channel,url_video,titre,image,{'Title':titre_date},'play'])
     else:
         player_video_title_header = common.parseDOM(html,"div",attrs={"class":"playerVideo-title-header"})
 
-        date = common.parseDOM(player_video_title_header, "small")[0].encode("utf-8")
+        date = common.parseDOM(player_video_title_header, "small", attrs={"class":"playerVideo-time"})[0].encode("utf-8")
         date = date.split()
         date_2 = ""
         for x in date:

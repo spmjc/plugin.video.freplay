@@ -10,76 +10,98 @@ title=['NRJ12']
 img=['nrj12']
 readyForUse=True
 
-def list_shows(channel,folder):
-    shows=[]
-    
-    filePath=utils.downloadCatalog('http://www.nrj12.fr/replay-4203/collectionvideo/','NRJ12.html',False,{})    
-    html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a')
 
-    if folder=='none':      
-        match = re.compile(r'<a href="#" rel="nofollow" class="nocursor">(.*?)</a>',re.DOTALL).findall(html)
-            
-        if match:
-            for title in match:
-                shows.append( [channel,title, title , '','folder'] )
-    else:
-        line_replay_s = common.parseDOM(html,"div",attrs={"class":"line replay"})
-        for line_replay in line_replay_s :
-            Categorie = common.parseDOM(line_replay,"a",attrs={"class":"nocursor"}) [0]
-            if Categorie.encode("utf-8") == folder:
-                li_s = common.parseDOM(line_replay,"li",attrs={"id":u"*"})
-                for li in li_s :
-                    replay_hover_s = common.parseDOM(li,"div",attrs={"class":u"replay_hover"})
-                    if replay_hover_s :
-                        image_div = common.parseDOM(li,"div",attrs={"class":"image"}) [0]
-                        image_a_u = common.parseDOM(image_div,"a") [0]
-                        image_url = re.findall(""".*src="(.*)">""",image_a_u) [0]
-                        titre_p   = common.parseDOM(li,"p",attrs={"class":"titre"}) [0]
-                        titre_u   = common.parseDOM(titre_p,"a") [0]
-                        titre     = titre_u.encode("utf-8")
-                        shows.append( [channel,titre, titre , image_url, 'shows'] )                            
-                     
+url_root    = 'http://www.nrj-play.fr'
+url_catalog = '%s/nrj12/replay'%url_root
+
+def list_shows(channel,folder):
+    shows    = []
+    filePath = utils.downloadCatalog(url_catalog,'nrj12.html',False,{})
+    html     = open(filePath).read().decode("utf-8")
+    line_s   = common.parseDOM(html,"li", attrs={"class": "subNav-menu-item"}) # Menu avec les différentes catégories (Magzines, Séries, Films ...)
+
+    for line in line_s:
+        categorie_name         = common.parseDOM(line,"a")[0].encode("utf-8")
+        categorie_link         = common.parseDOM(line,"a", ret="href")[0].encode("utf-8")
+        if folder=='none' :
+            shows.append([channel, categorie_link, categorie_name,'','folder']) 
+
+        elif folder==categorie_link : # On est rentré dans une catégorie
+            url_categorie = url_root+folder
+            filePath = utils.downloadCatalog(url_categorie,categorie_link+'.html',False,{}) # On télécharge la page de cette catéogrie
+            html     = open(filePath).read().decode("utf-8")
+            linkProgram_s = common.parseDOM(html,"div",attrs={"class":"linkProgram large"}) 
+            linkProgram_s = linkProgram_s + common.parseDOM(html,"div",attrs={"class":"linkProgram"}) # On a l'ensemble des programmes proposés dans cette catégorie
+            for linkProgram in linkProgram_s:
+                linkProgram_infos  = common.parseDOM(linkProgram_s,"div",attrs={"class":"linkProgram-infos"})
+                linkProgram_details  = common.parseDOM(linkProgram,"div",attrs={"class":"linkProgram-details"})
+                
+                image_a  = common.parseDOM(linkProgram_infos[linkProgram_s.index(linkProgram)],"a")[0]
+                image_url  = common.parseDOM(image_a,"img",ret="src")[0].encode("utf-8")
+                
+                titre_h2    = common.parseDOM(linkProgram_details,"h2")[0].encode("utf-8")
+                titre_h2 = common.replaceHTMLCodes(titre_h2)
+                titre_h2 = titre_h2.title()
+
+                url_program = common.parseDOM(linkProgram_details, "a", ret="href")[0].encode("utf-8")
+
+                shows.append([channel,url_program+'|'+titre_h2+'|'+image_url,titre_h2,image_url,'shows'])                   
     return shows
+
+def list_videos(channel,params):
+    videos      = []                  
+    program_url = params.split('|')[0]
+    titre_program      = params.split('|')[1]
+    image_url_show = params.split('|')[2]
+
+    program_url_page = url_root+program_url
+    filePath = utils.downloadCatalog(program_url_page,'nrj12_'+titre_program+'.html',False,{})
+    html     = open(filePath).read().decode("utf-8")
+
+    section_replay = common.parseDOM(html,"section",attrs={"class":"section-replay"}) # Carousel des replays
+    item_s = common.parseDOM(section_replay, "div", attrs={"class":"item"}) # Un item correspond à une video
+
+    if len(section_replay) > 0:
+        for item in item_s :
+            thumbnail_infos = common.parseDOM(item,"div", attrs={"class":"thumbnail-infos"})
+            caption = common.parseDOM(item,"div", attrs={"class":"caption"})
+
+            url_video = common.parseDOM(thumbnail_infos, "a", ret="href")[0].encode("utf-8")
+            image = common.parseDOM(thumbnail_infos, "img", ret="src")[0].encode("utf-8")
+
+            titre = common.parseDOM(caption, "a")[0].encode("utf-8")
+            titre = common.replaceHTMLCodes(titre)
+            titre = titre.title()
+
+            titre_date = ""
+
+            try:
+                date = common.parseDOM(caption, "time")[0].encode("utf-8")
+                titre_date = titre+" - "+date
+            except Exception:
+                date = ""
+                titre_date = titre
+            
+            videos.append([channel,url_video,titre,image,{'Title':titre_date},'play'])
+    else:
+        player_video_title_header = common.parseDOM(html,"div",attrs={"class":"playerVideo-title-header"})
+
+        date = common.parseDOM(player_video_title_header, "small", attrs={"class":"playerVideo-time"})[0].encode("utf-8")
+        date = date.split()
+        date_2 = ""
+        for x in date:
+            date_2 = date_2+" "+x
+        videos.append([channel,program_url,titre_program,image_url_show,{'Title':titre_program+" - "+date_2},'play'])
+      
+    return videos
+
 
 
 def getVideoURL(channel,urlPage):
-  if 'http://lesanges.nrj12.fr/' not in urlPage:
-    urlPage='http://lesanges.nrj12.fr/' + urlPage
-  html=urllib2.urlopen(urlPage).read().replace('\xe9', 'e').replace('\xe0', 'a')
-  print urlPage
-  match = re.compile(r'<link itemprop="contentUrl" href="(.*?)" />',re.DOTALL).findall(html)
-  url=match[0]
-  return url
+    url_page_video = url_root+urlPage
+    filePath = utils.downloadCatalog(url_page_video,urlPage+'.html',False,{}) 
+    html     = open(filePath).read().decode("utf-8")
+    player_video_wrapper = common.parseDOM(html,"div",attrs={"class":"playerVideo-wrapper"})
+    url = common.parseDOM(player_video_wrapper, "meta", attrs={"itemprop":"contentUrl"}, ret="content")[0].encode("utf-8")
+    return url
 
-def list_videos(channel,show): 
-    
-    videos=[]                  
-    filePath=utils.downloadCatalog('http://www.nrj12.fr/replay-4203/collectionvideo/','NRJ12.html',False,{})    
-    html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a')
-        
-    line_replay_s = common.parseDOM(html,"div",attrs={"class":"line replay"})
-    for line_replay in line_replay_s :
-        li_s = common.parseDOM(line_replay,"li",attrs={"id":u"*"})
-        for li in li_s :
-            replay_hover_s = common.parseDOM(li,"div",attrs={"class":u"replay_hover"})
-            if replay_hover_s :
-                titre_p   = common.parseDOM(li,"p",attrs={"class":"titre"}) [0]
-                titre_u   = common.parseDOM(titre_p,"a") [0]
-                titre     = titre_u.encode("utf-8")
-                if titre==show:
-                    replay_hover = replay_hover_s[0]
-                    content_ul   = common.parseDOM(replay_hover,"ul",attrs={"class":"content"}) [0]
-                    li_s         = common.parseDOM(content_ul,"li")
-                    for li in li_s :
-                        image_div   = common.parseDOM(li,"div",attrs={"class":"image"}) [0]
-                        url=  re.findall(""".*href="(.*)" title.*>""",image_div) [0]
-                        image_a_u   = common.parseDOM(image_div,"a") [0]
-                        image_url   = re.findall(""".*src="(.*)".*>""",image_a_u) [0]
-                        titre_p     = common.parseDOM(li,"p",attrs={"class":"titre"}) [0]
-                        titre_u     = common.parseDOM(titre_p,"a") [0]
-                        titre       = show+" : "+titre_u.encode("utf-8")
-                        date=common.parseDOM(li,"p",attrs={"class":"date"}) [0]
-                        infoLabels={ "Title": titre,"Aired":date, "Year":date[:4]}
-                        videos.append( [channel, url, titre, image_url,infoLabels,'play'] )
-             
-    return videos
