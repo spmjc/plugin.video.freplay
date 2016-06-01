@@ -82,9 +82,7 @@ def getVideoURL(channel,params):
 
     wid_line = re.search(r'wid:.*',html.encode('utf-8'),flags=0)
     wid_line = wid_line.group()
-    wid = re.search(r'\".*\"',wid_line,flags=0)
-    wid = wid.group()
-    wid_number = re.search(r'\d+',wid,flags=0)
+    wid_number = re.search(r'\d+',wid_line,flags=0)
     wid_number = wid_number.group()
 
     entry_id_line = re.search(r'entry_id:.*',html.encode('utf-8'),flags=0)
