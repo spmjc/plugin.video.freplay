@@ -5,7 +5,6 @@ common = CommonFunctions
 from resources.lib import utils
 import re
 from HTMLParser import HTMLParser
-import xbmc
 
 title=['Gulli']
 img=['gulli']

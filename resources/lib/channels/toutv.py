@@ -10,7 +10,7 @@ readyForUse=True
 urlCatalog='http://ici.tou.tv/presentation/section/rattrapage?v=2&d=ipad&includePartnerTeaser=false'
 
 def canPlay(item):
-  if item['IsFree'] and item['IsActive'] and not item['IsGeolocalized']:
+  if item['IsFree'] and item['IsActive']:
     return True
 
 def list_shows(channel,param):  
