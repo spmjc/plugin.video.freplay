@@ -1,9 +1,13 @@
 Version 0.6.2
+<<<<<<< HEAD
   -Added BeCurious TV
   -Updated TouTV
   -Fixed NRJ12 & Cherie25
   -Fixed Gully (Thanks to mperreir)
   -Fixed TF1 (thanks vaurele)      
+=======
+  -Fixed Chérie 25 replay
+>>>>>>> origin/master
 
 Version 0.6.1
   -Added RTS (Maybe)
