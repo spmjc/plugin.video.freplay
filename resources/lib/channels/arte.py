@@ -10,22 +10,37 @@ from resources.lib import globalvar
 title=['ARTE']
 img=['arte']
 readyForUse=True
+url_xml = 'http://www.arte.tv/papi/tvguide-flow/sitemap/feeds/videos/F.xml'
 
 def fix_text(text): 
   return text.replace('&amp;','&').encode('utf-8').replace('&#039;',' ')
+
+def typo_correction(original_name):
+  Dic = {"musique"              :"Musique",
+         "serie-fiction"        :"Série fiction",
+         "serie-documentaire"   :"Série documentaire",
+         "documentaire"         :"Documentaire",
+         "film"                 :"Film",
+         "reportage"            :"Reportage",
+         "magazine"             :"Magazine"
+         }
+  for key,value in Dic.iteritems():
+      if original_name==key : return value
+  return original_name
+
 
 def list_shows(channel,folder):
     shows=[]
     d=dict()
     
-    filePath=utils.downloadCatalog('http://www.arte.tv/papi/tvguide-flow/sitemap/feeds/videos/F.xml','ARTE.XML',False,{})
+    filePath=utils.downloadCatalog(url_xml,'ARTE.XML',False,{})
     if folder=='none':
         xml = open(filePath).read()
         url=common.parseDOM(xml, "url")
         for i in range(0, len(url)):
             categoryTab=common.parseDOM(url[i], "video:category")
             if len(categoryTab)>0:
-                category=fix_text(categoryTab[0])
+                category=typo_correction(fix_text(categoryTab[0]))
                 if category not in d:
                     shows.append( [channel,category,category,'','folder'] )
                     d[category]=category
@@ -33,60 +48,35 @@ def list_shows(channel,folder):
         xml = open(filePath).read()
         url=common.parseDOM(xml, "url")
         for i in range(0, len(url)):
-            titleTab=common.parseDOM(url[i], "video:title")
-            if len(titleTab)>0:
-                title=fix_text(titleTab[0])
+            show_titleTab=common.parseDOM(url[i], "video:show_title")
+            if len(show_titleTab)>0:
+                title=fix_text(show_titleTab[0])
             categoryTab=common.parseDOM(url[i], "video:category")
             if globalvar.ADDON.getSetting('arteFull')=='true':
               videoTag=common.parseDOM(url[i], "video:tag")[0]
             else:
               videoTag='ARTE+7'  
             if len(categoryTab)>0:
-                if(fix_text(categoryTab[0])==folder and title not in d and videoTag=='ARTE+7'):                   
+                if(typo_correction(fix_text(categoryTab[0]))==folder and title not in d and videoTag=='ARTE+7'):                   
                     shows.append( [channel,title,title,'','shows'] )
                     d[title]=title
     return shows
 
-def getVideoURL(channel,video_id):
-    #Get JSON file
-    jsonFile=urllib2.urlopen('http://arte.tv/papi/tvguide/videos/stream/player/F/'+ video_id + '/ALL/ALL.json').read()
-    #Parse JSON to
-    jsoncat = json.loads(jsonFile)
-    
-    url=''
-    if globalvar.ADDON.getSetting('%sQuality' % (channel))=='HD':
-      #HD HTTP
-      if 'HTTP_MP4_SQ_1' in jsoncat['videoJsonPlayer']['VSR']:
-        url=jsoncat['videoJsonPlayer']['VSR']['HTTP_MP4_SQ_1']['url']
-      
-      #HD RTMP
-      else:
-        url=jsoncat['videoJsonPlayer']['VSR']['RTMP_SQ_1']['streamer'] + jsoncat['videoJsonPlayer']['VSR']['RTMP_SQ_1']['url']
-		
-    if globalvar.ADDON.getSetting('%sQuality' % (channel))=='SD' or url=='':
-      #SD HTTP
-      if 'HLS_SQ_1':
-          url=jsoncat['videoJsonPlayer']['VSR']['HLS_SQ_1']['url']
-          
-      #SD RTMP   
-      else:
-          url=jsoncat['videoJsonPlayer']['VSR']['RTMP_MQ_1']['streamer'] + jsoncat['videoJsonPlayer']['VSR']['RTMP_MQ_1']['url']    
-        
-    return url
     
 def list_videos(channel,show_title):
     videos=[]                
-    filePath=utils.downloadCatalog('http://www.arte.tv/papi/tvguide-flow/sitemap/feeds/videos/F.xml','ARTE.XML',False,{})
-    xml = open(filePath).read()	
+    filePath=utils.downloadCatalog(url_xml,'ARTE.XML',False,{})
+    xml = open(filePath).read() 
     url=common.parseDOM(xml, "url")
     
     for i in range(0, len(url)):   
 
-        titleTab=common.parseDOM(url[i], "video:title")
+        titleTab=common.parseDOM(url[i], "video:show_title")
         if len(titleTab)>0:
             title=fix_text(titleTab[0])
         if(title==show_title):       
 
+            title = ''
             name=''
             image_url=''
             date=''
@@ -94,6 +84,10 @@ def list_videos(channel,show_title):
             views=''
             desc=''
             rating=''
+
+            titleTab=common.parseDOM(url[i], "video:title")
+            if len(titleTab)>0:
+                title=fix_text(titleTab[0])
             tmpTab=common.parseDOM(url[i], "video:publication_date")
             if len(tmpTab)>0:
                 date=tmpTab[0][:10]
@@ -124,12 +118,40 @@ def list_videos(channel,show_title):
                     video_id=tmpTab[0][start+16:end]
                     if video_id.find("EXTRAIT")>0 :
                         name="Extrait-" + name
+            
             videoTag=common.parseDOM(url[i], "video:tag")[0]
             picTab=common.parseDOM(url[i], "video:thumbnail_loc")
             if len(picTab)>0:
                 image_url=picTab[0]
 
-            infoLabels={ "Title": name,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}
+            infoLabels={ "Title": title,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}
             if not(globalvar.ADDON.getSetting('arteFull')=='true' and videoTag!='ARTE+7'):   
-              videos.append( [channel, video_id, name, image_url,infoLabels,'play'] )
+              videos.append( [channel, video_id, title, image_url,infoLabels,'play'] )
     return videos
+
+def getVideoURL(channel,video_id):
+    #Get JSON file
+    jsonFile=urllib2.urlopen('http://arte.tv/papi/tvguide/videos/stream/player/F/'+ video_id + '/ALL/ALL.json').read()
+    #Parse JSON to
+    jsoncat = json.loads(jsonFile)
+    
+    url=''
+    if globalvar.ADDON.getSetting('%sQuality' % (channel))=='HD':
+      #HD HTTP
+      if 'HTTP_MP4_SQ_1' in jsoncat['videoJsonPlayer']['VSR']:
+        url=jsoncat['videoJsonPlayer']['VSR']['HTTP_MP4_SQ_1']['url']
+      
+      #HD RTMP
+      else:
+        url=jsoncat['videoJsonPlayer']['VSR']['RTMP_SQ_1']['streamer'] + jsoncat['videoJsonPlayer']['VSR']['RTMP_SQ_1']['url']
+		
+    if globalvar.ADDON.getSetting('%sQuality' % (channel))=='SD' or url=='':
+      #SD HTTP
+      if 'HLS_SQ_1':
+          url=jsoncat['videoJsonPlayer']['VSR']['HLS_SQ_1']['url']
+          
+      #SD RTMP   
+      else:
+          url=jsoncat['videoJsonPlayer']['VSR']['RTMP_MQ_1']['streamer'] + jsoncat['videoJsonPlayer']['VSR']['RTMP_MQ_1']['url']    
+        
+    return url
