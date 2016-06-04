@@ -33,6 +33,8 @@ def list_shows(channel,folder):
       match = re.compile(r'<div class="linkProgram-infos">(.*?)<a href="(.*?)" class="linkProgram-thumbnail embed-responsive embed-responsive-16by9">(.*?)<img src="(.*?)" class="program-img embed-responsive-item" alt="(.*?)"',re.DOTALL).findall(html)
       if match:
         for empty,link,empty2,img,title in match:
+          title = common.replaceHTMLCodes(title)
+          title = title.capitalize()
           shows.append( [channel,link, title.encode("utf-8") , img,'shows'] )                           
                      
     return shows
