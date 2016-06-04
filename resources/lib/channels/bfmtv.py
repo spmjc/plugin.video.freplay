@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 import urllib,urllib2
 import json
+from datetime import datetime
 
 title=['BFM TV','BFM Business']
 img=['bfmtv','bfmbusiness']
@@ -65,7 +66,9 @@ def list_videos(channel,show):
     icon=video['image'].encode('utf-8')
     desc=video['description'].encode('utf-8')
     duration=video['video_duration_ms']/1000
-    infoLabels={ "Title": title,"Plot":desc,"Duration": duration} 
+    timestamp = video['begin_date']
+    date = datetime.fromtimestamp(timestamp).strftime('%Y/%m/%d')
+    infoLabels = {"Title": title,"Plot":desc,"Aired":date,"Duration": duration, "Year":date[:4]}
     videos.append( [channel, videoId, title, icon,infoLabels,'play'] )     
     
   return videos
