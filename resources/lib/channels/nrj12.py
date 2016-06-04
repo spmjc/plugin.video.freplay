@@ -25,17 +25,19 @@ def list_shows(channel,folder):
             for empty,link,empty2,title in match:
                 if 'active' not in empty2:
                   shows.append( [channel,link, title , '','folder'] )
+    
     else:                                                                                     
       print 'http://www.nrj-play.fr%s' % (folder)
       filePath=utils.downloadCatalog('http://www.nrj-play.fr%s' % (folder),channel + folder +'.html',False,{})  
       html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a').replace("\n", "")
       
-      match = re.compile(r'<div class="linkProgram-infos">(.*?)<a href="(.*?)" class="linkProgram-thumbnail embed-responsive embed-responsive-16by9">(.*?)<img src="(.*?)" class="program-img embed-responsive-item" alt="(.*?)"',re.DOTALL).findall(html)
+      match = re.compile(r'<p class="linkProgram-quantity">(.*?)<span(.*?)<div class="linkProgram-infos">(.*?)<a href="(.*?)" class="linkProgram-thumbnail embed-responsive embed-responsive-16by9">(.*?)<img src="(.*?)" class="program-img embed-responsive-item" alt="(.*?)"',re.DOTALL).findall(html)
+
       if match:
-        for empty,link,empty2,img,title in match:
+        for quantity,empty, empty1,link,empty2,img,title in match:
           title = common.replaceHTMLCodes(title)
           title = title.capitalize()
-          shows.append( [channel,link, title.encode("utf-8") , img,'shows'] )                           
+          shows.append( [channel,link+'|'+quantity, title.encode("utf-8") , img,'shows'] )                           
                      
     return shows
 
@@ -55,9 +57,10 @@ def getVideoURL(channel,urlPage):
 
 def list_videos(channel,show): 
     
-    videos=[]  
-    full_url='http://www.nrj-play.fr' + show
-    print full_url                                            
+    videos=[]
+    program_url = show.split('|')[0]
+    quantity = int(show.split('|')[1])
+    full_url='http://www.nrj-play.fr' + program_url
 
     opener = urllib2.build_opener()
     f = opener.open(full_url)
@@ -67,22 +70,38 @@ def list_videos(channel,show):
     
     k = full_url.rfind("/")
     base_url= full_url[:k+1]   
-    print base_url                
+    print base_url
+
+    if quantity == 1:
+      match = re.compile(r'<meta itemprop="thumbnailUrl" content="(.*?)" alt="(.*?)"/>',re.DOTALL).findall(html)
+      
+      for img, title in match:
+        title = common.replaceHTMLCodes(title)
+        title = title.capitalize()        
+        infoLabels={ "Title": title}
+        videos.append( [channel, full_url, title, img,infoLabels,'play'] )           
     
-    match = re.compile(r'<img class="itemprop" itemprop="thumbnailUrl" src="(.*?)" alt="(.*?)" />',re.DOTALL).findall(html)
-    for img,title in match:          
-      infoLabels={ "Title": title}
-      videos.append( [channel, full_url, title, img,infoLabels,'play'] )
-    
-    match = re.compile(r'<div class="col-md-4">(.*?)<a href="(.*?)">(.*?)src="(.*?)" />(.*?)<h3><img src="(.*?)/>(.*?)</h3>',re.DOTALL).findall(html)
-    for empty,link,empty2,img,empty3,empty4,title in match:          
-      infoLabels={ "Title": title}
-      videos.append( [channel, base_url + link, title, img,infoLabels,'play'] )
-    
-    match = re.compile(r'<div class="thumbnail-infos">(.*?)<a href="(.*?)" class="thumbnail-visual embed-responsive embed-responsive-16by9">(.*?)src="(.*?)" class="thumbnail-img embed-responsive-item" alt="(.*?)"/>',re.DOTALL).findall(html)
-    for empty,link,empty2,img,title in match:          
-      infoLabels={ "Title": title}
-      videos.append( [channel, 'http://www.nrj-play.fr' + link, title, img,infoLabels,'play'] )  
+    else:
+      match = re.compile(r'<img class="itemprop" itemprop="thumbnailUrl" src="(.*?)" alt="(.*?)" />',re.DOTALL).findall(html)
+      for img,title in match:
+        title = common.replaceHTMLCodes(title)
+        title = title.capitalize()        
+        infoLabels={ "Title": title}
+        videos.append( [channel, full_url, title, img,infoLabels,'play'] )
+      
+      match = re.compile(r'<div class="col-md-4">(.*?)<a href="(.*?)">(.*?)src="(.*?)" />(.*?)<h3><img src="(.*?)/>(.*?)</h3>',re.DOTALL).findall(html)
+      for empty,link,empty2,img,empty3,empty4,title in match:          
+        title = common.replaceHTMLCodes(title)
+        title = title.capitalize() 
+        infoLabels={ "Title": title}
+        videos.append( [channel, base_url + link, title, img,infoLabels,'play'] )
+      
+      match = re.compile(r'<div class="thumbnail-infos">(.*?)<a href="(.*?)" class="thumbnail-visual embed-responsive embed-responsive-16by9">(.*?)src="(.*?)" class="thumbnail-img embed-responsive-item" alt="(.*?)"/>',re.DOTALL).findall(html)
+      for empty,link,empty2,img,title in match:          
+        title = common.replaceHTMLCodes(title)
+        title = title.capitalize()       
+        infoLabels={ "Title": title}
+        videos.append( [channel, 'http://www.nrj-play.fr' + link, title, img,infoLabels,'play'] )  
     
       
     return videos
