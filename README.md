@@ -38,7 +38,7 @@ FReplay est une extension pour le media center Kodi (ex XBMC) permettant de réc
 - BeCuriousTV
 
 
-## Canadian channels
+### Canadian channels
 - Vtele
 
 ### International channels
