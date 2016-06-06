@@ -39,22 +39,33 @@ def list_shows(channel,folder):
 def list_videos(channel,show): 
     
     videos=[]
-    link = show.split('|')[0]
+    url_list = show.split('|')[0]
     title = show.split('|')[1]                                                                               
-    filePath=utils.downloadCatalog(link ,channel +'_'+ title +'.html',False,{})  
-    html=open(filePath).read()
+    
+    another_page = True
+    current_page = 1
+    while another_page == True:
+        url_page = url_list+'?&page='+str(current_page)
+        filePath=utils.downloadCatalog(url_page ,channel +'_'+ title +'_'+str(current_page)+'.html',False,{})  
+        html=open(filePath).read()
+
+        if 'document.documentSelection.page.value='+str(current_page+1) in html:
+            current_page += 1
+        else:
+            another_page = False
+
                                                        # empty         # year        #empty1        # duration     #empty2 #empty3 #title   #empty4 #desc      #empty5       #link       #empty6 
-    match = re.compile(r'<div class="bloc_gauche_titre"(.*?)Date :</span>(.*?)</div>(.*?)Durée : </span>(.*?):(.*?):(.*?)</div>(.*?)<span(.*?)>(.*?)</span>(.*?)>(.*?)</span>(.*?)<a href="(.*?)" class=(.*?)<img src="(.*?)" border=(.*?)',re.DOTALL).findall(html)
+        match = re.compile(r'<div class="bloc_gauche_titre"(.*?)Date :</span>(.*?)</div>(.*?)Durée : </span>(.*?):(.*?):(.*?)</div>(.*?)<span(.*?)>(.*?)</span>(.*?)>(.*?)</span>(.*?)<a href="(.*?)" class=(.*?)<img src="(.*?)" border=(.*?)',re.DOTALL).findall(html)
 
-    if match:
-        for empty, year, empty1, hour, minutes, seconds, empty2, empty3, title, empty4, desc, empty5, link, empty6, img, empty7 in match:
-            link = url_root+"/"+link
+        if match:
+            for empty, year, empty1, hour, minutes, seconds, empty2, empty3, title, empty4, desc, empty5, link, empty6, img, empty7 in match:
+                link = url_root+"/"+link
 
-            duration = int(hour)*3600 + int(minutes)*60 + int(seconds)
-            #desc = " ".join(desc.split())
-            date = "01/01/"+year
-            infoLabels={ "Title": title, "Plot":desc, "Year":year, "Aired":date}
-            videos.append( [channel, link, title, img,infoLabels,'play'] ) 
+                duration = int(hour)*3600 + int(minutes)*60 + int(seconds)
+                #desc = " ".join(desc.split())
+                date = "01/01/"+year
+                infoLabels={ "Title": title, "Plot":desc, "Year":year, "Aired":date}
+                videos.append( [channel, link, title, img,infoLabels,'play'] ) 
 
     return videos
 
