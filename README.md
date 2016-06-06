@@ -54,3 +54,4 @@ FReplay est une extension pour le media center Kodi (ex XBMC) permettant de réc
 - L'Équipe
 - Tou.tv
 - Wat.tv
+- CNES
