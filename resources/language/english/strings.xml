@@ -18,7 +18,8 @@
   <string id="30301">TF1 : Show Bonus</string>
   <string id="30302">TMC : Show Bonus</string>
   <string id="30303">NT1 : Show Bonus</string> 
-  <string id="30304">HD1 : Show Bonus</string>
+  <string id="30304">HD1 : Show Bonus</string>                  
+  <string id="30306">XTRA : Show Bonus</string>
   <string id="30305">HD1/NT1/TF1/TMC : Force HD quality</string>
   
   <string id="30324">France 24 - Video Quality</string> 

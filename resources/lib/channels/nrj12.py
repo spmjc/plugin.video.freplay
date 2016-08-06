@@ -25,8 +25,7 @@ def list_shows(channel,folder):
             for empty,link,empty2,title in match:
                 if 'active' not in empty2:
                   shows.append( [channel,link, title , '','folder'] )
-    else:                                                                                     
-      print 'http://www.nrj-play.fr%s' % (folder)
+    else:                                            
       filePath=utils.downloadCatalog('http://www.nrj-play.fr%s' % (folder),channel + folder +'.html',False,{})  
       html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a').replace("\n", "")
       
@@ -45,19 +44,16 @@ def getVideoURL(channel,urlPage):
   
   match = re.compile(r'<link itemprop="contentUrl" href="(.*?)" />',re.DOTALL).findall(html)
   if not match:
-    print 'hi'
     match = re.compile(r'<meta itemprop="contentUrl" content="(.*?)" alt="',re.DOTALL).findall(html)
   
   url=match[0]
-  
   
   return url
 
 def list_videos(channel,show): 
     
     videos=[]  
-    full_url='http://www.nrj-play.fr' + show
-    print full_url                                            
+    full_url='http://www.nrj-play.fr' + show               
 
     opener = urllib2.build_opener()
     f = opener.open(full_url)
@@ -83,6 +79,5 @@ def list_videos(channel,show):
     for empty,link,empty2,img,title in match:          
       infoLabels={ "Title": title}
       videos.append( [channel, 'http://www.nrj-play.fr' + link, title, img,infoLabels,'play'] )  
-    
       
     return videos

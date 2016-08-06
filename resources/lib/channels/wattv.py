@@ -6,7 +6,7 @@ from resources.lib import utils
 
 title       = ['Wat.tv']
 img         = ['wattv']
-readyForUse = True
+readyForUse = False
 
 def getToken():
   login=globalvar.ADDON.getSetting('watLogin')
