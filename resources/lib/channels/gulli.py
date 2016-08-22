@@ -5,6 +5,7 @@ common = CommonFunctions
 from resources.lib import utils
 import re
 from HTMLParser import HTMLParser
+#import xbmc
 
 title=['Gulli']
 img=['gulli']
@@ -32,7 +33,7 @@ def list_shows(channel,folder):
         for replay in replays :
           title = (htmlParser.unescape(common.parseDOM(replay,"span",attrs={"class":"title"}) [0])).encode("utf-8")
           if title not in d:
-            img = 'http://' +  re.findall('src="//(.*?)"',replay) [0]
+            img = 'http://' +  re.findall('src="http://(.*?)"',replay) [0]
             shows.append( [channel,folder + '$$' + title,title,img.encode("utf-8"),'shows'] )
             d[title]=title
         if len(replays) != 0:
@@ -69,7 +70,7 @@ def list_videos(channel,param):
           if title == category:
             cpt=-1
             title=(htmlParser.unescape(common.parseDOM(replay,"span",attrs={"class":"episode_title"}) [0])).encode("utf-8")
-            img = 'http://' + re.findall('src="//(.*?)"',replay) [0]
+            img = 'http://' + re.findall('src="http://(.*?)"',replay) [0]
             url= re.findall('href="(.*?)"',replay) [0]
             iStart=url.find('VOD')
             vodId= url[iStart:]
