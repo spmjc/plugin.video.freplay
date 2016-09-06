@@ -46,8 +46,9 @@ def list_videos(channel, id):
     if vid['programId'] ==id:
       if globalvar.ADDON.getSetting(channel + 'Bonus')=='true' or vid['videoType']['type']=='replay' or vid['videoType']['type']=='video':
         title=vid['title'].encode('utf-8')         
-        plot=vid['summary'].encode('utf-8')       
-        duration=vid['length']/60 
+        plot, duration = '', ''
+        if 'summary' in vid : plot=vid['summary'].encode('utf-8')       
+        if 'length' in vid  :duration=vid['length']/60 
         infoLabels = { "Title": title,"Plot":plot,"Duration": duration}
         videos.append( [channel, vid['streamId'], title, '',infoLabels,'play'] )
           
