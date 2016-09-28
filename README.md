@@ -11,10 +11,10 @@ FReplay est une extension pour le media center Kodi (ex XBMC) permettant de réc
 - Arte
 - BFM TV
 - BFM Business
-- Chérie 25
+- C8
 - Canal +
-- D8
-- D17
+- Chérie 25
+- CStar
 - France 2
 - France 3
 - France 4
