@@ -6,7 +6,7 @@ import base64
 common = CommonFunctions 
 from resources.lib import utils
 
-title=['NRJ12','Ch?rie 25']
+title=['NRJ12','Chérie 25']
 img=['nrj12','cherie25']
 
 readyForUse=True
