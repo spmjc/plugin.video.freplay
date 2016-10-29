@@ -5,11 +5,15 @@ from resources.lib import utils
 
 from multiprocessing.dummy import Pool as ThreadPool 
 from operator import itemgetter
+import time
 
-
-title=['INA']
-img=['INA']
+channel = 'INA'
+title=[channel]
+img=[channel]
 readyForUse=True
+
+
+bypass_cache = True
 
 root_url="http://m.ina.fr"
 url_byletter=root_url + "/layout/set/ajax/listes/emissions?classObject=ina_emission&letter="
@@ -18,28 +22,38 @@ detail_re = re.compile(r'recherche.initialise\("(.*?)","(.*?)"\)')
 emission_json_re = re.compile(r'<h2>.*?<a href="(.*?)">(.*?)</a>', re.DOTALL)
 emission_url_re = re.compile(r'<video controls src=(.*?) ', re.DOTALL)
 
-thread_count = 10
-showstore = []
+thread_count = len(ascii_lowercase)
 
 def list_shows(channel,folder):
-   
-    pool = ThreadPool(thread_count);
-    pool.map(loadEmissionsForLetter, ascii_lowercase)
+    begin = time.time()
+    
+    print "Thread pool size: " + thread_count
+    pool = ThreadPool(thread_count);    
+        
+    allshows = pool.map(loadEmissionsForLetter, ascii_lowercase)
     pool.close()
     pool.join()
+
+    #flatten list
+    allshows = [val for sublist in allshows for val in sublist]
+       
+    #list is populated by several threads in random order, order by name
+    allshows = sorted(allshows, key=itemgetter(2))
     
-    #for letter in ascii_lowercase:
-    #    allshows.extend(loadEmissionsForLetter(letter,title[0]))
-        
-    return sorted(showstore, key=itemgetter(2))
+    print "{}: took {}s to list all shows".format(channel, time.time() - begin)
+    
+    return allshows
 
 def list_videos(channel, emissionPage):
-    print "list videos INA"    
+    print "{}: list videos  for emission {}".format(channel, emissionPage)    
     
     shows = []
     
     ajaxcall = getSearchUrlForEmission(channel, emissionPage)
-    filePath=utils.downloadCatalog(ajaxcall, channel+"_"+emissionPage+ ".json", False,{})    
+    
+    tempfile = "{}_listvideos_{}.json".format(channel, emissionPage)
+    
+    filePath=utils.downloadCatalog(ajaxcall, tempfile, bypass_cache,{})    
     raw=open(filePath).read()
     jsoncontent=json.loads(raw)    
     htmlcontent = jsoncontent["content"].encode("UTF-8")
@@ -47,13 +61,12 @@ def list_videos(channel, emissionPage):
     match = emission_json_re.findall(str(htmlcontent), re.DOTALL)
     
     if match:
-        print "match"
         for url, title in match:
             #TODO: unescape string (HTML entities)
             shows.append( [channel,url,title , '', {},'play'] )
     else:
-        print "no match !"
-    
+        print "no regexp match found in emission data !"
+            
     #TODO load image
     #TODO info labels
     
@@ -61,23 +74,31 @@ def list_videos(channel, emissionPage):
     
 
 def getVideoURL(channel,assetId): 
-    print "get video URL INA: " + assetId
+    print "INA get video URL: " + assetId
+    
     url = root_url + assetId    
-    #<video controls src=http://mp4.ina.fr/lecture/lire/site/visio:1/securekey/7TXDOVAnIRqSVPd9Bv-ugNawzw2cIUmheIORopVgjFi-B38H-dhgVrEl-Al-fitMoFtmWpJesQotXqKpDELYV571vlLMo8a-h6WAEmtGt40.mp4 poster="" />
-    filePath=utils.downloadCatalog(url, channel + "_" + assetId, False,{})
+    
+    tempfile = "{}_videourl_{}.html".format(channel, assetId)
+    
+    filePath=utils.downloadCatalog(url, tempfile, False,{})
     raw=open(filePath).read()    
     
     videolink = emission_url_re.search(raw).group(1)
-    print "VIDEO :" + videolink
+    print "{}: Video link for asset {} : {}".format(channel, assetId, videolink)
     return videolink
     
 
 def loadEmissionsForLetter(letter):
-    print "Loading emissions for letter " + letter
+    start = time.time()
+    
     shows=[]
+        
+    print "Loading emissions for letter  " + letter
+    
+    tempfile = "{}_emissionletter_{}.html".format(channel, letter)
     
     #Load json result (ajax call from mobile app
-    filePath=utils.downloadCatalog(url_byletter + letter, letter, False,{})    
+    filePath=utils.downloadCatalog(url_byletter + letter, tempfile, bypass_cache,{})    
     raw=open(filePath).read()
     
     #Treat as json, extract content field
@@ -90,13 +111,18 @@ def loadEmissionsForLetter(letter):
     #Convert regexp groups to array of values
     if match:
         for url, title, img in match:
-            shows.append( ["INA",url, title , root_url + img,'shows'] )
+            shows.append( [channel, url, title , root_url + img,'shows'] )
     
-    showstore.extend(shows)   
+    print "took {}s to load emissions for letter {}".format(time.time() - start, letter)
+    
+    return shows  
  
 def getSearchUrlForEmission(channel, emissionPage):
     emissionPage = root_url + emissionPage
-    filePath=utils.downloadCatalog(emissionPage, channel + '_details_' + emissionPage + '.html', False,{})    
+    
+    tempfile = "{}_details_{}.html ".format(channel, emissionPage)
+    
+    filePath=utils.downloadCatalog(emissionPage, tempfile, bypass_cache,{})    
     raw=open(filePath).read()
     
     result = detail_re.search(raw)
