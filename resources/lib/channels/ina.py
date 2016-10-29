@@ -13,7 +13,7 @@ img=[channel]
 readyForUse=True
 
 
-bypass_cache = True
+bypass_cache = False
 
 root_url="http://m.ina.fr"
 url_byletter=root_url + "/layout/set/ajax/listes/emissions?classObject=ina_emission&letter="
