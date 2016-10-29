@@ -27,7 +27,7 @@ thread_count = len(ascii_lowercase)
 def list_shows(channel,folder):
     begin = time.time()
     
-    print "Thread pool size: " + thread_count
+    print "Thread pool size: {}".format(thread_count)
     pool = ThreadPool(thread_count);    
         
     allshows = pool.map(loadEmissionsForLetter, ascii_lowercase)
