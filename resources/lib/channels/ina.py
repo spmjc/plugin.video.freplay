@@ -12,6 +12,7 @@ url_byletter=root_url + "/layout/set/ajax/listes/emissions?classObject=ina_emiss
 emissions_re = re.compile(r'<a href="(.*?)"><img .* alt="(.*?)" src="(.*?)".*</a>')
 detail_re = re.compile(r'recherche.initialise\("(.*?)","(.*?)"\)')
 emission_json_re = re.compile(r'<h2>.*?<a href="(.*?)">(.*?)</a>', re.DOTALL)
+emission_url_re = re.compile(r'<video controls src=(.*?) ', re.DOTALL)
 
 def list_shows(channel,folder):
     allshows = []
@@ -48,7 +49,16 @@ def list_videos(channel, emissionPage):
     
 
 def getVideoURL(channel,assetId): 
-    print "get video URL INA"    
+    print "get video URL INA: " + assetId
+    url = root_url + assetId    
+    #<video controls src=http://mp4.ina.fr/lecture/lire/site/visio:1/securekey/7TXDOVAnIRqSVPd9Bv-ugNawzw2cIUmheIORopVgjFi-B38H-dhgVrEl-Al-fitMoFtmWpJesQotXqKpDELYV571vlLMo8a-h6WAEmtGt40.mp4 poster="" />
+    filePath=utils.downloadCatalog(url, channel + "_" + assetId, False,{})
+    raw=open(filePath).read()    
+    
+    videolink = emission_url_re.search(raw).group(1)
+    print "VIDEO :" + videolink
+    return videolink
+    
 
 def loadEmissionsForLetter(letter, channel):
     shows=[]
