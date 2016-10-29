@@ -3,6 +3,10 @@ import re
 from string import ascii_lowercase
 from resources.lib import utils 
 
+from multiprocessing.dummy import Pool as ThreadPool 
+from operator import itemgetter
+
+
 title=['INA']
 img=['INA']
 readyForUse=True
@@ -14,12 +18,20 @@ detail_re = re.compile(r'recherche.initialise\("(.*?)","(.*?)"\)')
 emission_json_re = re.compile(r'<h2>.*?<a href="(.*?)">(.*?)</a>', re.DOTALL)
 emission_url_re = re.compile(r'<video controls src=(.*?) ', re.DOTALL)
 
+thread_count = 10
+showstore = []
+
 def list_shows(channel,folder):
-    allshows = []
-    for letter in ascii_lowercase:
-        allshows.extend(loadEmissionsForLetter(letter,title[0]))
+   
+    pool = ThreadPool(thread_count);
+    pool.map(loadEmissionsForLetter, ascii_lowercase)
+    pool.close()
+    pool.join()
+    
+    #for letter in ascii_lowercase:
+    #    allshows.extend(loadEmissionsForLetter(letter,title[0]))
         
-    return allshows
+    return sorted(showstore, key=itemgetter(2))
 
 def list_videos(channel, emissionPage):
     print "list videos INA"    
@@ -37,8 +49,8 @@ def list_videos(channel, emissionPage):
     if match:
         print "match"
         for url, title in match:
-            print "title: " + title
-            shows.append( [channel,url, title , '', {},'play'] )
+            #TODO: unescape string (HTML entities)
+            shows.append( [channel,url,title , '', {},'play'] )
     else:
         print "no match !"
     
@@ -60,7 +72,8 @@ def getVideoURL(channel,assetId):
     return videolink
     
 
-def loadEmissionsForLetter(letter, channel):
+def loadEmissionsForLetter(letter):
+    print "Loading emissions for letter " + letter
     shows=[]
     
     #Load json result (ajax call from mobile app
@@ -77,9 +90,9 @@ def loadEmissionsForLetter(letter, channel):
     #Convert regexp groups to array of values
     if match:
         for url, title, img in match:
-            shows.append( [channel,url, title , root_url + img,'shows'] )
+            shows.append( ["INA",url, title , root_url + img,'shows'] )
     
-    return shows      
+    showstore.extend(shows)   
  
 def getSearchUrlForEmission(channel, emissionPage):
     emissionPage = root_url + emissionPage
