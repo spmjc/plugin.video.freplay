@@ -27,11 +27,7 @@ thread_count = len(ascii_lowercase)
 def list_shows(channel,folder):
     begin = time.time()
     
-<<<<<<< HEAD
     print "Thread pool size: {}".format(thread_count)
-=======
-    print "Thread pool size: " + thread_count
->>>>>>> branch 'master' of https://github.com/gdusart/plugin.video.freplay
     pool = ThreadPool(thread_count);    
         
     allshows = pool.map(loadEmissionsForLetter, ascii_lowercase)
