@@ -2,6 +2,7 @@
 import globalvar
 import shutil
 import xbmcgui
+import os
 
 def delete_catalog_cache() :
     if os.path.exists(globalvar.CACHE_DIR) :
