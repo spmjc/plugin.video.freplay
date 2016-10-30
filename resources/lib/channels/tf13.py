@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-        
+#-*- coding: utf-8 -*-
 from resources.lib import utils
 import base64
 import hashlib
@@ -134,23 +134,9 @@ def list_videos(channel, id):
     return videos
 
 
-def getVideoURLSimple(channel, id):
-    VideoURL = 'http://wat.tv/get/ipad/' + id
-    if globalvar.ADDON.getSetting('tf1ForceHD') == 'true' and isHD(VideoURL):
-        VideoURL += '?bwmin=2000000'
-    return VideoURL
-
-
-def isHD(VideoURL):
-    m3u8 = utils.get_webcontent(VideoURL)
-    if '1280x720' in m3u8:
-        return True
-    else:
-        return False
-
-
 def getVideoURL(channel, media_id):
     videoHtml = urllib2.urlopen(urlRoot + media_id).read()
+
     media_id = re.findall(
         r'data-src="http://www.wat.tv/embedframe/(.+?)"',
         videoHtml)
@@ -159,8 +145,10 @@ def getVideoURL(channel, media_id):
         media_id = re.findall(
             r'data-src="//www.wat.tv/embedframe/(.+?)"',
             videoHtml)
-
     media_id = media_id[0]
+
+    if '?noExport=1' in media_id or '?noExport=0' in media_id:
+        media_id = media_id[:-11]
 
     media_id = media_id[-8:]
 
@@ -197,10 +185,10 @@ def getVideoURL(channel, media_id):
     req = urllib2.Request('http://api.wat.tv/services/Delivery')
     req.add_header('User-Agent', user_agent)
     req.add_data(
-            ('appName=%s&method=%s&mediaId=%s&authKey=%s&version=%s'
-             '&hostingApplicationName=%s&hostingApplicationVersion=%s')
-            % (app_name, method, media_id, auth_key, version,
-                 hosting_application_name, hosting_application_version))
+        ('appName=%s&method=%s&mediaId=%s&authKey=%s&version=%s'
+         '&hostingApplicationName=%s&hostingApplicationVersion=%s')
+        % (app_name, method, media_id, auth_key, version,
+           hosting_application_name, hosting_application_version))
     print 'Loading ' + req.get_full_url() + ' ' + req.get_data()
     data = json.loads(urllib2.urlopen(req).read())
     print 'Response: ' + repr(data)
@@ -211,12 +199,19 @@ def getVideoURL(channel, media_id):
     m3u8_url = data['message']
 
     if globalvar.ADDON.getSetting('tf1ForceHD') == 'true':
-        scheme, netloc, path, query_string, fragment = urlparse.urlsplit(m3u8_url)
+        (scheme,
+         netloc,
+         path,
+         query_string,
+         fragment) = urlparse.urlsplit(m3u8_url)
         query_params = urlparse.parse_qs(query_string)
         query_params.pop('bwmax', None)
         new_query_string = urllib.urlencode(query_params, doseq=True)
-        m3u8_url = urlparse.urlunsplit((scheme, netloc, path, new_query_string,
-                                                                        fragment))
+        m3u8_url = urlparse.urlunsplit((scheme,
+                                        netloc,
+                                        path,
+                                        new_query_string,
+                                        fragment))
 
     # The URL returned by '/services/Delivery' will return a 302 and this seems
     # to confuse the media player. So we first follow and 302 chain and return
