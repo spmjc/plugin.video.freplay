@@ -4,8 +4,8 @@ import urllib2
 from resources.lib import utils
 import json
 
-title = ['M6']
-img = ['m6']
+title = ['M6', 'W9']
+img = ['m6', 'w9']
 readyForUse = True
 
 urlRoot = 'http://pc.middleware.6play.fr/6play/v1/platforms/' \
@@ -147,12 +147,14 @@ def list_videos(channel, id):
         dateDiffusion = video['last_diffusion'].encode('utf-8')
         dateDiffusion = dateDiffusion[:10]
         year = dateDiffusion[:4]
-        clip_has_images = video['clip_has_images']
         img = ''
-        for array in clip_has_images:
-            if array['image']['external_key']:
-                external_key = array['image']['external_key'].encode('utf-8')
-                img = urlImg % (external_key)
+
+        if 'clip_has_images' in video:
+            clip_has_images = video['clip_has_images']
+            for array in clip_has_images:
+                if array['image']['external_key']:
+                    external_key = array['image']['external_key'].encode('utf-8')
+                    img = urlImg % (external_key)
 
         infoLabels = {
             "Title": title,
@@ -190,10 +192,11 @@ def getVideoURL(channel, media_id):
     for asset in videoAssets:
         if 'ism' in asset['video_container'].encode('utf-8'):
             url = asset['full_physical_path'].encode('utf-8')
-        if 'mp4' in asset['video_container'].encode('utf-8') and 'hd' in asset['video_quality'].encode('utf-8'):
-            url2 = asset['full_physical_path'].encode('utf-8')
+        if 'mp4' in asset['video_container'].encode('utf-8'):
+            if 'hd' in asset['video_quality'].encode('utf-8'):
+                url2 = asset['full_physical_path'].encode('utf-8')
 
-    if url == '':
-        url = url2
-
-    return url
+    if url:
+        return url
+    else:
+        return url2
