@@ -33,6 +33,7 @@ FReplay est une extension pour le media center Kodi (ex XBMC) permettant de réc
 - TMC
 - TV Breizh
 - Ushuaïa TV
+- W9
 
 ### Swiss channels
 - RTS
