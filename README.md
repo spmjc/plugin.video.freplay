@@ -26,6 +26,7 @@ FReplay est une extension pour le media center Kodi (ex XBMC) permettant de réc
 - Histoire
 - iTélé
 - LCP
+- M6
 - NRJ12
 - NT1
 - TF1
