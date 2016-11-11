@@ -4,8 +4,8 @@ import urllib2
 from resources.lib import utils
 import json
 
-title = ['M6', 'W9']
-img = ['m6', 'w9']
+title = ['M6', 'W9', '6ter']
+img = ['m6', 'w9', '6ter']
 readyForUse = True
 
 urlRoot = 'http://pc.middleware.6play.fr/6play/v1/platforms/' \

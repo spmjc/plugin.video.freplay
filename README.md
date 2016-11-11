@@ -8,6 +8,7 @@ FReplay est une extension pour le media center Kodi (ex XBMC) permettant de réc
 ## Channels — Websites
 
 ### French channels
+- 6ter
 - Arte
 - BFM TV
 - BFM Business
