@@ -3,13 +3,13 @@ import urllib2
 import simplejson as json
 from resources.lib import utils
 
-title       = ['D8','D17']
-img         = ['d8','d17']
+title       = ['C8','CStar']
+img         = ['c8','cstar']
 readyForUse = True
 
 url_lab_api   = 'http://lab.canal-plus.pro/web/app_prod.php/api'
 url_pg_infos  = '%s/pfv' %(url_lab_api)
-channel_index = {'d8':1,'d17':2}
+channel_index = {'c8':1,'cstar':2}
 
 def list_shows(channel,folder):
     shows      = []

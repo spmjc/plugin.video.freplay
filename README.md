@@ -8,13 +8,14 @@ FReplay est une extension pour le media center Kodi (ex XBMC) permettant de réc
 ## Channels — Websites
 
 ### French channels
+- 6ter
 - Arte
 - BFM TV
 - BFM Business
-- Chérie 25
+- C8
 - Canal +
-- D8
-- D17
+- Chérie 25
+- CStar
 - France 2
 - France 3
 - France 4
@@ -26,12 +27,14 @@ FReplay est une extension pour le media center Kodi (ex XBMC) permettant de réc
 - Histoire
 - iTélé
 - LCP
+- M6
 - NRJ12
 - NT1
 - TF1
 - TMC
 - TV Breizh
 - Ushuaïa TV
+- W9
 
 ### Swiss channels
 - RTS

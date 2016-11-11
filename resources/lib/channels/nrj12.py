@@ -6,7 +6,7 @@ import base64
 common = CommonFunctions 
 from resources.lib import utils
 
-title=['NRJ12','Chérie 25']
+title=['NRJ12','ChÃ©rie 25']
 img=['nrj12','cherie25']
 
 readyForUse=True
@@ -81,7 +81,7 @@ def list_videos(channel,show):
         videos.append( [channel, base_url + link, title, img,infoLabels,'play'] )
         d[title] = title 
     
-    # S'il y a plusieurs vidéos pour ce programme
+    # S'il y a plusieurs vid?os pour ce programme
     match = re.compile(r'<div class="thumbnail-infos">(.*?)<a href="(.*?)" class="thumbnail-visual embed-responsive embed-responsive-16by9">(.*?)src="(.*?)" class="thumbnail-img embed-responsive-item" alt="(.*?)"/>(.*?)class="thumbnail-time">Le (.*?)/(.*?)/(.*?)</time>',re.DOTALL).findall(html)
     for empty,link,empty2,img,title, empty3, day, mounth, years in match:          
       title = common.replaceHTMLCodes(title)
@@ -93,7 +93,7 @@ def list_videos(channel,show):
         d[title] = title 
 
 
-    # S'il n'y a qu'une seule vidéo pour ce programme
+    # S'il n'y a qu'une seule vid?o pour ce programme
     match = re.compile(r'<meta itemprop="thumbnailUrl" content="(.*?)" alt="(.*?)"/>(.*?)<p>(.*?)</p>',re.DOTALL).findall(html)
     for img, title, empty, desc in match:
       title = common.replaceHTMLCodes(title)

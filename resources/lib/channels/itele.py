@@ -34,7 +34,7 @@ def list_videos(channel,url):
             video_infos['Plot']  = item['description'].encode('utf-8')
             video_infos['Genre'] = item['category'].encode('utf-8')
             video_infos['Thumb'] = item['preview']
-            videos.append([channel,item['video_url'],video_infos['Title'],video_infos['Thumb'],video_infos,'play'])
+            videos.append([channel,item['video_url'].encode('utf-8'),video_infos['Title'],video_infos['Thumb'],video_infos,'play'])
     return videos
     
 def getVideoURL(channel,video_url):

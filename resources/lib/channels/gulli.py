@@ -32,7 +32,7 @@ def list_shows(channel,folder):
         for replay in replays :
           title = (htmlParser.unescape(common.parseDOM(replay,"span",attrs={"class":"title"}) [0])).encode("utf-8")
           if title not in d:
-            img = 'http://' +  re.findall('src="//(.*?)"',replay) [0]
+            img = 'http://' +  re.findall('src="http://(.*?)"',replay) [0]
             shows.append( [channel,folder + '$$' + title,title,img.encode("utf-8"),'shows'] )
             d[title]=title
         if len(replays) != 0:
@@ -43,11 +43,8 @@ def list_shows(channel,folder):
   return shows
 
 def getVideoURL(channel,id):
-    #xbmc.log("channel:"+str(channel))
-    #xbmc.log("id:"+str(id))
     html=utils.get_webcontent(urlVideo % id)
     url= re.findall("file:\"(.*\/"+id[3:len(id)]+"\/.*)\"",html) [0]
-    #xbmc.log("url:"+str(url))
     return url
 
 def list_videos(channel,param):
@@ -69,7 +66,7 @@ def list_videos(channel,param):
           if title == category:
             cpt=-1
             title=(htmlParser.unescape(common.parseDOM(replay,"span",attrs={"class":"episode_title"}) [0])).encode("utf-8")
-            img = 'http://' + re.findall('src="//(.*?)"',replay) [0]
+            img = 'http://' + re.findall('src="http://(.*?)"',replay) [0]
             url= re.findall('href="(.*?)"',replay) [0]
             iStart=url.find('VOD')
             vodId= url[iStart:]

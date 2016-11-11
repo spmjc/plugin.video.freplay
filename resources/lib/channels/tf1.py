@@ -10,7 +10,7 @@ from resources.lib import globalvar
 # Channels Parameters
 title = ['HD1', 'NT1', 'TF1', 'TMC']
 img = ['hd1', 'nt1', 'tf1', 'tmc']
-readyForUse = True
+readyForUse = False
 
 # Channels Settings
 BONUS = {'hd1': globalvar.ADDON.getSetting('hd1Bonus'),
