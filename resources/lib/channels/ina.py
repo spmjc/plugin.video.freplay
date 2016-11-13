@@ -20,7 +20,7 @@ root_url="http://m.ina.fr"
 url_byletter=root_url + "/layout/set/ajax/listes/emissions?classObject=ina_emission&letter="
 emissions_re = re.compile(r'<a href="(.*?)"><img .* alt="(.*?)" src="(.*?)".*</a>')
 detail_re = re.compile(r'recherche.initialise\("(.*?)","(.*?)"\)')
-emission_json_re = re.compile(r'<h2>.*?<a href="(.*?)">(.*?)</a>', re.DOTALL)
+emission_json_re = re.compile(r'<img .*? src="(.*?)".*?<h2>.*?<a href="(.*?)">(.*?)</a>', re.DOTALL)
 emission_url_re = re.compile(r'<video controls src=(.*?) ', re.DOTALL)
 
 thread_count = len(ascii_lowercase)
@@ -63,8 +63,8 @@ def list_videos(channel, emission_page):
     parser = HTMLParser();
     
     if match:
-        for url, title in match:
-            shows.append( [channel,url,parser.unescape(title.decode("UTF-8")).encode("UTF-8") , '', {},'play'] )
+        for img, url, title in match:
+            shows.append( [channel,url,parser.unescape(title.decode("UTF-8")).encode("UTF-8") , img, {},'play'] )
     else:
         print("no regexp match found in emission data !")
             
