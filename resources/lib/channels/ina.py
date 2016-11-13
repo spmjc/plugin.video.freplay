@@ -2,6 +2,7 @@ import json
 import re
 from string import ascii_lowercase
 from resources.lib import utils 
+from HTMLParser import HTMLParser
 
 from multiprocessing.dummy import Pool as ThreadPool 
 from operator import itemgetter
@@ -59,11 +60,11 @@ def list_videos(channel, emission_page):
     htmlcontent = jsoncontent["content"].encode("UTF-8")
             
     match = emission_json_re.findall(str(htmlcontent), re.DOTALL)
+    parser = HTMLParser();
     
     if match:
         for url, title in match:
-            #TODO: unescape string (HTML entities)
-            shows.append( [channel,url,title , '', {},'play'] )
+            shows.append( [channel,url,parser.unescape(title.decode("UTF-8")).encode("UTF-8") , '', {},'play'] )
     else:
         print("no regexp match found in emission data !")
             
