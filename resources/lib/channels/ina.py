@@ -9,10 +9,8 @@ title       = ['INA']
 img         = ['INA']
 readyForUse = True
 
-allShows     = []
 bypass_cache = False
 lsLowercase  = list(ascii_lowercase)
-thread_count = len(ascii_lowercase)
 
 detail_re        = re.compile(r'recherche.initialise\("(.*?)","(.*?)"\)')
 emissions_re     = re.compile(r'<a href="(.*?)"><img .* alt="(.*?)" src="(.*?)".*</a>')
@@ -24,18 +22,24 @@ url_byletter     = root_url + "/layout/set/ajax/listes/emissions?classObject=ina
 def list_shows(channel,folder):
     allshows = []
     begin = time.time()        
-    print("Thread pool size: %s"%(thread_count))    
-    n = 0
-    while n<thread_count :
-        letter = lsLowercase[n]
-        setShows(letter).start()
-        n+=1
+    
+    #launch 1 thread for each letter
+    threads = [];
+    for letter in lsLowercase:
+        thread = ShowLoadingThread(letter, allshows)
+        threads.append(thread)
+        thread.start()
+        
+    #wait for all threads to complete
+    for thread in threads:
+        thread.join()    
+    
     #flatten list 
-    allshows = [val for sublist in allShows for val in sublist]
+    allshows = [val for sublist in allshows for val in sublist]
     #list is populated by several threads in random order, order by name
     allshows = sorted(allshows, key=itemgetter(2))
     print("%s: took %ss to list all shows"%(channel, time.time()-begin))
-    print str(allshows)
+    
     return allshows
 
 def list_videos(channel, emission_page):
@@ -96,15 +100,15 @@ def get_search_url_for_emission(channel, emission_page):
     result        = detail_re.search(raw)
     return root_url + result.group(1) + '?' + result.group(2)
     
-class setShows(threading.Thread):
+class ShowLoadingThread(threading.Thread):
     
-    def __init__(self, letter):
+    def __init__(self, letter, dest):
         threading.Thread.__init__(self)
         self.letter = letter
-        self.shows  = None        
+        self.shows  = dest        
         
     def run(self):
-        self.shows = load_emissions_for_letter(self.letter)
-        allShows.append(self.shows)
+        results = load_emissions_for_letter(self.letter)
+        self.shows.append(results)
      
       
