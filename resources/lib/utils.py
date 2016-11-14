@@ -9,6 +9,7 @@ import string
 import log       
 from xml.dom import minidom   
 import CommonFunctions
+import logging
 common = CommonFunctions
 
 def getOrderChannel(chanName):
@@ -25,7 +26,11 @@ def init():
         extension=file[extensionStart:len(file)].upper()
         if extension=='.PY' and file!='__init__.py':
           f, filename, description = imp.find_module(file[:-3],[globalvar.CHANNELS_DIR])
-          channelModule = imp.load_module(file[:-3], f, filename, description) 
+          try:
+            channelModule = imp.load_module(file[:-3], f, filename, description)
+          except Exception, e:
+            logging.exception("Error loading channel module " + filename)
+               
           if channelModule.readyForUse :
             for i in range (0,len(channelModule.title)):
               order=getOrderChannel(channelModule.img[i])
