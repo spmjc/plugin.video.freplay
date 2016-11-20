@@ -1,3 +1,7 @@
+Version 0.6.5
+  -Added M6 group channels
+  -Added INA (Thanks Gdusart)
+  
 Version 0.6.4
   -D8/D17 -> C8/CStar
   -Fix TF1 when duration is empty
