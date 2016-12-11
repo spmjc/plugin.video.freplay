@@ -4,7 +4,7 @@
   <!--- Chaînes -->
   <category label="30100">
 
-    <setting label="/!\ Numéro 99 pour cacher /!\" type="lsep"/>
+    <setting label="30119" type="lsep"/>
     <setting type="sep"/>
 
     <setting label="33007" type="number" id="dispfavourites" default="0"/>
@@ -76,9 +76,14 @@
     </category>
 
 
+
+    <!--- Téléchargement -->
     <category label="30200">
         <setting label="30201" type="folder" id="dlFolder" source="auto" option="writeable"/>
     </category>
+
+    
+    <!--- Divers -->
     <category label="30300">
         <setting label="30304" type="bool" id="hd1Bonus" default="true"/>  
         <setting label="30303" type="bool" id="nt1Bonus" default="true"/>
@@ -99,12 +104,18 @@
         <setting label="30345" type="labelenum" id="tntvQuality" values="mp4|m3u8" default="mp4"/>            
         <setting label="30348" type="slider" id="tf1ThemePages" default="10" range="0,1,20" option="int"/>        
     </category>
+
+
+    <!--- Comptes -->
     <category label="30500">
         <setting label="30501" type="text" id="watLogin"/> 
         <setting label="30502" type="text" id="watPwd" option="hidden"/>      
     </category> 
+
+    <!--- Avancé -->
     <category label="30400">
         <setting label="30402" type="slider" id="ctlgRefresh" default="60" range="0,5,100" option="int" /> 
         <setting label="30401" type="action" action="RunScript($CWD/resources/lib/delete_catalog_cache.py)"/>      
-    </category>    
+    </category> 
+
 </settings>

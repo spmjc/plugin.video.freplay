@@ -16,6 +16,7 @@
   <string id="30112">Chaînes canadiennes</string>
   <string id="30113">Chaînes internationales</string>
   <string id="30114">Sites internet</string>
+  <string id="30119">___ Numéro 99 pour cacher ___</string>
   
   <string id="30200">Téléchargement</string>
   <string id="30201">Sélectionner le dossier de téléchargement</string>
@@ -96,6 +97,7 @@
   <string id="33033">30 derniers jours</string>
   <string id="33039">Lectures</string> 
     <!--wat.tv below-->         
+  
   <string id="33040">Chaines les plus suivies</string>
   <string id="33041">Chaines recommandées</string>
   <string id="33042">Chaines populaires</string>
