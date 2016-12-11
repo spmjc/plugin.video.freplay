@@ -1,81 +1,110 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
+  
+  <!--- Chaînes -->
   <category label="30100">
-    <setting label="33007" type="labelenum" id="dispfavourites" default="0" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="33030" type="labelenum" id="dispmostviewed" default="0" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="6ter" type="labelenum" id="disp6ter" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="Allocine" type="labelenum" id="dispallocine" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="ARTE" type="labelenum" id="disparte" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="BeCurious TV" type="labelenum" id="dispbecurioustv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="BFM TV" type="labelenum" id="dispbfmtv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/> 
-    <setting label="BFM Business" type="labelenum" id="dispbfmbusiness" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="C8" type="labelenum" id="dispc8" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="Canal +" type="labelenum" id="dispcplus" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="Canal U" type="labelenum" id="dispcanalu" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="Chérie 25" type="labelenum" id="dispcherie25" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="CNES" type="labelenum" id="dispcnes" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="CSTAR" type="labelenum" id="dispcstar" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="France 1" type="labelenum" id="displa_1ere" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="France 2" type="labelenum" id="dispfrance2" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="France 3" type="labelenum" id="dispfrance3" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="France 4" type="labelenum" id="dispfrance4" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="France 5" type="labelenum" id="dispfrance5" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="France O" type="labelenum" id="dispfranceo" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="France 24" type="labelenum" id="dispfrance24" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="Gulli" type="labelenum" id="dispgulli" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>    
-    <setting label="Histoire" type="labelenum" id="disphistoire" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>    
-    <setting label="HD1" type="labelenum" id="disphd1" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="INA" type="labelenum" id="dispina" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="iTele" type="labelenum" id="dispitele" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>   
-    <setting label="L'Equipe.fr" type="labelenum" id="displequipefr" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="LCP" type="labelenum" id="displcp" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="M6" type="labelenum" id="dispm6" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="Nanarland" type="labelenum" id="dispnanarland" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="NRJ12" type="labelenum" id="dispnrj12" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="NT1" type="labelenum" id="dispnt1" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="TF1" type="labelenum" id="disptf1" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="RTS" type="labelenum" id="disprts" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="Tou.tv" type="labelenum" id="disptoutv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>      
-    <setting label="TMC" type="labelenum" id="disptmc" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>    
-    <setting label="TNTV" type="labelenum" id="disptntv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>  
-    <setting label="TV Breizh" type="labelenum" id="disptvbreizh" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>  
-    <setting label="TV5 Monde" type="labelenum" id="disptv5monde" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="TV5+ Afrique" type="labelenum" id="disptv5af" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="Ushuaia TV" type="labelenum" id="dispushuaiatv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>  
-    <setting label="VTele" type="labelenum" id="dispvetele" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="W9" type="labelenum" id="dispw9" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>
-    <setting label="Wat.tv" type="labelenum" id="dispwattv" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>  
-    <setting label="XTra" type="labelenum" id="dispxtra" default="1" values="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|99"/>  
-  </category>
-  <category label="30200">
-    <setting label="30201" type="folder" id="dlFolder" source="auto" option="writeable"/>
-  </category>
-  <category label="30300">
-    <setting label="30304" type="bool" id="hd1Bonus" default="true"/>  
-    <setting label="30303" type="bool" id="nt1Bonus" default="true"/>
-    <setting label="30302" type="bool" id="tmcBonus" default="true"/>
-    <setting label="30301" type="bool" id="tf1Bonus" default="true"/>
-    <setting label="30306" type="bool" id="xtraBonus" default="true"/>  
-    <setting label="30305" type="bool" id="tf1ForceHD" default="false"/>
-    <setting label="30324" type="labelenum" id="france24Quality" default="mp4-mbr" values="flv|mp4|mp4-mbr"/>     
-    <setting label="30325" type="labelenum" id="arteQuality" default="HD" values="HD|SD"/>
-    <setting label="30326" type="bool" id="arteFull" default="false"/>       
-    <setting label="30331" type="labelenum" id="la_1ereQuality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>  
-    <setting label="30332" type="labelenum" id="france2Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
-    <setting label="30333" type="labelenum" id="france3Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
-    <setting label="30334" type="labelenum" id="france4Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
-    <setting label="30335" type="labelenum" id="france5Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>  
-    <setting label="30336" type="labelenum" id="franceoQuality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
-    <setting label="30340" type="enum" id="lequipefrQuality" values="HD|MD|SD" default="HD"/>          
-    <setting label="30345" type="labelenum" id="tntvQuality" values="mp4|m3u8" default="mp4"/>            
-    <setting label="30348" type="slider" id="tf1ThemePages" default="10" range="0,1,20" option="int"/>        
-  </category>
-  <category label="30500">
-    <setting label="30501" type="text" id="watLogin"/> 
-    <setting label="30502" type="text" id="watPwd" option="hidden"/>      
-  </category> 
-  <category label="30400">
-    <setting label="30402" type="slider" id="ctlgRefresh" default="60" range="0,5,100" option="int" /> 
-    <setting label="30401" type="action" action="RunScript($CWD/resources/lib/delete_catalog_cache.py)"/>      
-  </category>    
+
+    <setting label="/!\ Numéro 99 pour cacher /!\" type="lsep"/>
+    <setting type="sep"/>
+
+    <setting label="33007" type="number" id="dispfavourites" default="0"/>
+    <setting label="33030" type="number" id="dispmostviewed" default="0"/>
+
+    <!--- Chaînes françaises -->
+    <setting type="sep"/>
+    <setting label="30110" type="lsep"/>
+        <setting label="TF1" type="number" id="disptf1" default="1"/>
+        <setting label="France 2" type="number" id="dispfrance2" default="2"/>
+        <setting label="France 3" type="number" id="dispfrance3" default="3"/>
+        <setting label="Canal +" type="number" id="dispcplus" default="4"/>
+        <setting label="France 5" type="number" id="dispfrance5" default="5"/>
+        <setting label="M6" type="number" id="dispm6" default="6"/>
+        <setting label="ARTE" type="number" id="disparte" default="7"/>
+        <setting label="C8" type="number" id="dispc8" default="8"/>
+        <setting label="W9" type="number" id="dispw9" default="9"/>
+        <setting label="TMC" type="number" id="disptmc" default="10"/>
+        <setting label="NT1" type="number" id="dispnt1" default="11"/>
+        <setting label="NRJ12" type="number" id="dispnrj12" default="12"/>
+        <setting label="LCP" type="number" id="displcp" default="13"/>
+        <setting label="France 4" type="number" id="dispfrance4" default="14"/>
+        <setting label="BFM TV" type="number" id="dispbfmtv" default="15"/>
+        <setting label="iTele" type="number" id="dispitele" default="16"/>
+        <setting label="CSTAR" type="number" id="dispcstar" default="17"/>
+        <setting label="Gulli" type="number" id="dispgulli" default="18"/>
+        <setting label="France Ô" type="number" id="dispfranceo" default="19"/>
+        <setting label="HD1" type="number" id="disphd1" default="20"/>
+        <setting label="6ter" type="number" id="disp6ter" default="21"/> 
+        <setting label="Chérie 25" type="number" id="dispcherie25" default="22"/>
+        <setting label="France 1" type="number" id="displa_1ere" default="23"/>
+        <setting label="France 24" type="number" id="dispfrance24" default="24"/>   
+        <setting label="L'Equipe.fr" type="number" id="displequipefr" default="25"/>
+        <setting label="TV Breizh" type="number" id="disptvbreizh" default="26"/> 
+        <setting label="Histoire" type="number" id="disphistoire" default="27"/> 
+        <setting label="TNTV" type="number" id="disptntv" default="28"/>
+        <setting label="Ushuaia TV" type="number" id="dispushuaiatv" default="29"/>  
+
+    <!--- Chaînes suisses -->
+    <setting type="sep"/>
+    <setting label="30111" type="lsep"/>
+        <setting label="RTS" type="number" id="disprts" default="40"/>
+        <setting label="BeCurious TV" type="number" id="dispbecurioustv" default="41"/>
+
+    <!--- Chaînes canadiennes -->
+    <setting type="sep"/>
+    <setting label="30112" type="lsep"/>
+        <setting label="VTele" type="number" id="dispvtele" default="50"/>
+
+    <!--- Chaînes internationnales -->
+    <setting type="sep"/>
+    <setting label="30113" type="lsep"/>
+        <setting label="TV5 Monde" type="number" id="disptv5monde" default="60"/>
+        <setting label="TV5+ Afrique" type="number" id="disptv5af" default="61"/>
+
+    <!--- Sites internet -->
+    <setting type="sep"/>
+    <setting label="30114" type="lsep"/>
+        <setting label="Allocine" type="number" id="dispallocine" default="70"/>
+        <setting label="Canal U" type="number" id="dispcanalu" default="71"/>
+        <setting label="CNES" type="number" id="dispcnes" default="72"/>
+        <setting label="INA" type="number" id="dispina" default="73"/>
+        <setting label="Nanarland" type="number" id="dispnanarland" default="74"/>
+        <setting label="Tou.tv" type="number" id="disptoutv" default="75"/>
+        <setting label="Wat.tv" type="number" id="dispwattv" default="76"/>  
+        <setting label="XTra" type="number" id="dispxtra" default="77"/>
+        <setting label="BFM Business" type="number" id="dispbfmbusiness" default="78"/>
+
+    </category>
+
+
+    <category label="30200">
+        <setting label="30201" type="folder" id="dlFolder" source="auto" option="writeable"/>
+    </category>
+    <category label="30300">
+        <setting label="30304" type="bool" id="hd1Bonus" default="true"/>  
+        <setting label="30303" type="bool" id="nt1Bonus" default="true"/>
+        <setting label="30302" type="bool" id="tmcBonus" default="true"/>
+        <setting label="30301" type="bool" id="tf1Bonus" default="true"/>
+        <setting label="30306" type="bool" id="xtraBonus" default="true"/>  
+        <setting label="30305" type="bool" id="tf1ForceHD" default="false"/>
+        <setting label="30324" type="labelenum" id="france24Quality" default="mp4-mbr" values="flv|mp4|mp4-mbr"/>     
+        <setting label="30325" type="labelenum" id="arteQuality" default="HD" values="HD|SD"/>
+        <setting label="30326" type="bool" id="arteFull" default="false"/>       
+        <setting label="30331" type="labelenum" id="la_1ereQuality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>  
+        <setting label="30332" type="labelenum" id="france2Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
+        <setting label="30333" type="labelenum" id="france3Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
+        <setting label="30334" type="labelenum" id="france4Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
+        <setting label="30335" type="labelenum" id="france5Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>  
+        <setting label="30336" type="labelenum" id="franceoQuality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
+        <setting label="30340" type="enum" id="lequipefrQuality" values="HD|MD|SD" default="HD"/>          
+        <setting label="30345" type="labelenum" id="tntvQuality" values="mp4|m3u8" default="mp4"/>            
+        <setting label="30348" type="slider" id="tf1ThemePages" default="10" range="0,1,20" option="int"/>        
+    </category>
+    <category label="30500">
+        <setting label="30501" type="text" id="watLogin"/> 
+        <setting label="30502" type="text" id="watPwd" option="hidden"/>      
+    </category> 
+    <category label="30400">
+        <setting label="30402" type="slider" id="ctlgRefresh" default="60" range="0,5,100" option="int" /> 
+        <setting label="30401" type="action" action="RunScript($CWD/resources/lib/delete_catalog_cache.py)"/>      
+    </category>    
 </settings>

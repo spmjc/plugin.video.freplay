@@ -5,11 +5,17 @@
   <!--------------------------------------------------->
   <string id="30000">FReplay</string>
   
-  <string id="30100">Chaînes 99 pour Cacher</string>  
+  <string id="30100">Chaînes</string>  
   <string id="30101">Monter</string>
   <string id="30102">Descendre</string>
   <string id="30103">Masquer</string>
   <string id="30104">Afficher</string>
+
+  <string id="30110">Chaînes françaises</string>
+  <string id="30111">Chaînes suisses</string>
+  <string id="30112">Chaînes canadiennes</string>
+  <string id="30113">Chaînes internationales</string>
+  <string id="30114">Sites internet</string>
   
   <string id="30200">Téléchargement</string>
   <string id="30201">Sélectionner le dossier de téléchargement</string>

@@ -6,7 +6,7 @@ from HTMLParser import HTMLParser
 from operator import itemgetter
 
 title       = ['INA']
-img         = ['INA']
+img         = ['ina']
 readyForUse = True
 
 bypass_cache = False
