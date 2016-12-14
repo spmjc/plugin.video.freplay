@@ -8,7 +8,7 @@ from resources.lib import globalvar
 
 title=['Allocine']
 img=['allocine']
-readyForUse=True
+readyForUse=False
 
 def list_shows(channel,folder):
   shows=[]
