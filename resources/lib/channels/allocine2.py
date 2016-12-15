@@ -5,6 +5,7 @@ import CommonFunctions as common
 from resources.lib import utils
 from resources.lib import globalvar
 from bs4 import BeautifulSoup as bs
+from random import randint
 
 
 title = ['Allocine']
@@ -110,12 +111,16 @@ subcategories = {
 
 }
 
-hdr = {
-    # 'Referer': url_refer,
-    # 'Upgrade-Insecure-Requests': '  1',
-    # 'Accept': ' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'User-Agent': 'Mozilla/5.0'
-}
+url_refer = 'http://www.allocine.fr'
+
+user_agents = [
+    'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A',
+    'Opera/9.80 (X11; Linux i686; Ubuntu/14.10) Presto/2.12.388 Version/12.16',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/602.2.14 (KHTML, like Gecko) Version/10.0.1 Safari/602.2.14'
+]
+
 
 def debug_url(url):
     elts = ['/pays-5000', '/decennie-0000', '/genre-13000']
@@ -129,9 +134,10 @@ def debug_url(url):
 
 
 
-
 def list_shows(channel, param):
     shows = []
+
+    #url_refer = 'http://www.allocine.fr'
 
     if param == 'none':
         for category in categories:
@@ -188,7 +194,16 @@ def list_shows(channel, param):
         #root_or_add = param_list[3]
         url = param_list[4]
         url = debug_url(url)
-
+        url_refer = 'http://www.allocine.fr/video/bandes-annonces/'
+        print 'REFER : ' + url_refer
+        ua = user_agents[randint(0, len(user_agents) - 1)]
+        hdr = {
+            #'Referer': url_refer,
+            'DNT': '1',
+            'Upgrade-Insecure-Requests': '  1',
+            'Accept': ' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'User-Agent': user_agents
+        }
         req = urllib2.Request(url, headers=hdr)
         html = urllib2.urlopen(req).read()
         # filePath = utils.downloadCatalog(
@@ -222,15 +237,12 @@ def list_shows(channel, param):
                     '',
                     'shows'])
 
+    
     return shows
 
 
 def list_videos(channel, show_url):
     videos = []
-
-    # url = url_root + show_url.split('|')[1]
-    # page_type = param.split('|')[2]
-    
     param_list = show_url.split('|')
     print repr(param_list)
     # depth = param_list[0]
@@ -269,8 +281,15 @@ def list_videos(channel, show_url):
                 img = soup_film.find('img')['src'].encode('utf-8')
             url = soup_film.find('a')['href'].encode('utf-8')
 
+            description = ''
+            sortie = soup_film.find(
+                'span',
+                attrs={'itemprop': 'datePublished'}).get_text().encode('utf-8')
+            description += 'Date de sortie : ' + sortie
+
             infoLabels = {
                 "Title": title,
+                "Plot": description
             }
 
             videos.append([
@@ -289,10 +308,83 @@ def list_videos(channel, show_url):
             poster = soup_film.find('div', attrs={'class': 'poster'})
             title = poster.find('img')['title'].encode('utf-8')
             img = poster.find('img')['src'].encode('utf-8')
-            url = soup_film.find('a', attrs={'class': 'btn-primary'})['href'].encode('utf-8')
+
+            try:
+                url = soup_film.find('a', attrs={'class': 'btn-primary'})['href'].encode('utf-8')
+            except:
+                url = ''
+
+            description = ''
+
+            try:
+                sortie = soup_film.find(
+                    'span',
+                    attrs={'itemprop': 'datePublished'}).get_text().encode('utf-8')
+                description += 'Date de sortie : ' + sortie
+            except:
+                pass
+
+            lighten = soup_film.find_all(
+                'span',
+                attrs={'class': 'lighten'})
+
+            tr_real = ''
+            tr_acteur = ''
+            for item in lighten:
+                if 'Réalisateur' in item.get_text().encode('utf-8'):
+                    tr_real = item.parent.parent
+                elif 'Avec' in item.get_text().encode('utf-8'):
+                    tr_acteur = item.parent.parent
+
+            if tr_real:
+                description += '\nRéalisateur(s) :'
+                tr_real2 = tr_real.find('td').find_all(
+                    'span')
+                tr_real2.extend(tr_real.find('td').find_all(
+                    'a'))
+                for real in tr_real2:
+                    description += ' ' + real.get_text().encode('utf-8') + ','
+                description = description[:-1]
+
+            if tr_acteur:
+                description += '\nActeur(s) :'
+                tr_acteur2 = tr_acteur.find('td').find_all(
+                    'a')
+                tr_acteur2.extend(tr_acteur.find('td').find_all(
+                    'span'))
+                for act in tr_acteur2:
+                    description += ' ' + real.get_text().encode('utf-8') + ','
+                description = description[:-1]
+
+            description += '\nGenre : '
+            genre = soup_film.find(
+                'span',
+                attrs={'itemprop': 'genre'}).get_text().encode('utf-8')
+            description += genre
+
+            stars = soup_film.find_all(
+                'span',
+                attrs={'class': 'stareval'})
+
+            starts_press = stars[0].find(
+                'span',
+                attrs={'class': 'note'}).get_text().encode('utf-8')
+            description += '\nNote presse : ' + starts_press + '/5'
+
+            starts_spact = stars[1].find(
+                'span',
+                attrs={'class': 'note'}).get_text().encode('utf-8')
+            description += '\nNote spectateurs : ' + starts_spact + '/5'
+
+            syn = soup_film.find(
+                'p',
+                attrs={'class': 'margin_5t'}).get_text().encode('utf-8')
+
+            description += '\n' + syn
 
             infoLabels = {
                 "Title": title,
+                "Plot": description
             }
 
             videos.append([
@@ -339,63 +431,4 @@ def getVideoURL(channel, url_video):
                 return urls[1]
     else:
         return ''
-
-
-
-    # soup_pager = soup.find_all(
-    #     'div',
-    #     attr={'class': 'pager'})
-
-    # if len(soup_pager) > 0:
-    #     soup_pager_li = soup_pager.find('ul').find_all('li')
-    #     current_page = ''
-    #     last_page = li.get_text().encode('utf-8')
-
-    #     for li in soup_pager_li:
-    #         if li.has_attr('span'):
-    #             current_page = li['span'].get_text().encode('utf-8')
-
-    #     if current_page == '1':
-    #         pass
-
-
-
-
-
-# sub_sub_categories = {
-#     '/video/bandes-annonces': [
-#         ('Bandes-annonces', '/video/bandes-annonces', '99'),
-#         ('Extraits', '/video/extraits', '99'),
-#         ('Vidéos Bonus', '/video/bonus', '99')
-#     ],
-
-#     '/film/meilleurs': [
-#         ('Selon les spectateurs', '/film/meilleurs', '1'),
-#         ('Selon la presse', '/film/meilleurs/presse', '1'),
-#         ('Au box-office', '/film/meilleurs/boxoffice', '1'),
-#         ('Les pires films', '/film/meilleurs/dupire', '1')
-#     ]
-# }
-
-
-
-
-# sub_sub_sub_categories = {
-#     '/video/bandes-annonces': [
-#         ('À ne pas manquer', '/video/bandes-annonces', '0'),
-#         ('Les plus récentes', '/video/bandes-annonces/plus-recentes', '0'),
-#         ('Binetôt au cinéma', '/video/bandes-annonces/prochainement', '0')
-#     ],
-
-#     '/video/extraits': [
-#         ('Les plus consultés', '/video/extraits', '1'),
-#         ('Date d\'ajout', '/video/extraits/date-ajout', '1')
-#     ],
-
-#     '/video/bonus': [
-#         ('Les plus consultées', '/video/bonus', '2'),
-#         ('Date d\'ajout', '/video/bonus/date-ajout', '2')
-#     ]
-
-# }
 
