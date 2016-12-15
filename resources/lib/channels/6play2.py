@@ -36,19 +36,12 @@ urlVideos = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
             'csa=6&with=clips,freemiumpacks&type=vi,vc,playlist&limit=9999'\
             '&offset=0&subcat=%s&sort=subcat'
 
-# PAs sur que ce soit encore utile .. à voir
-urlOtherVideos = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
-                 'm6group_web/services/6play/programs/%s/videos?' \
-                 'limit=999'
 
 # Pour aller sur la page de la video
 urlJsonVideo = 'https://pc.middleware.6play.fr/6play/v2/platforms/' \
                'm6group_web/services/6play/videos/%s'\
                '?csa=9&with=clips,freemiumpacks'
 
-
-urlVideo = 'http://www.6play.fr/%s-p_%s/%s-c_%s'
-            #  program;code  program;id.   episode;code.   episode;id
 
 urlImg = 'https://images.6play.fr/v1/images/%s/raw'
 
@@ -98,8 +91,6 @@ def list_shows(channel, folder):
                     external_key = img['external_key'].encode('utf-8')
                     programImg = urlImg % (external_key)
 
-            print 'programTitle ' + programTitle
-
             shows.append([
                 channel,
                 'subCategory|' + programId + '|' + programImg,
@@ -126,13 +117,6 @@ def list_shows(channel, folder):
                 programImg,
                 'shows'])
 
-        shows.append([
-            channel,
-            programId + '|other',
-            'Les autres vidéos',
-            programImg,
-            'shows'])
-
     return shows
 
 
@@ -141,40 +125,31 @@ def list_videos(channel, id):
 
     programId = id.split('|')[0]
     subCategoryId = id.split('|')[1]
-
-    if subCategoryId == 'other':
-        req = urllib2.Request(
-            urlOtherVideos % (programId),
-            headers=hdr)
-        programJson = urllib2.urlopen(req).read()
-        print urlOtherVideos % (programId)
-
-    else:
-        req = urllib2.Request(
-            urlVideos % (programId, subCategoryId),
-            headers=hdr)
-        programJson = urllib2.urlopen(req).read()
-        print urlVideos % (programId, subCategoryId)
+    req = urllib2.Request(
+        urlVideos % (programId, subCategoryId),
+        headers=hdr)
+    programJson = urllib2.urlopen(req).read()
+    print urlVideos % (programId, subCategoryId)
     jsonParser = json.loads(programJson)
 
     for video in jsonParser:
-
-        programCode = video['program']['code'].encode('utf-8')
-        programId = str(video['program']['id'])
-        videoCode = video['code'].encode('utf-8')
         videoId = str(video['id'])
 
         title = video['title'].encode('utf-8')
         duration = video['clips'][0]['duration']
-        print repr(duration)
         description = video['description'].encode('utf-8')
-        dateDiffusion = video['clips'][0]['product']['last_diffusion'].encode('utf-8')
+        dateDiffusion = video['clips'][0]['product']['last_diffusion']
+        dateDiffusion = dateDiffusion.encode('utf-8')
         dateDiffusion = dateDiffusion[:10]
         year = dateDiffusion[:4]
         img = ''
 
-        external_key = video['images'][0]['external_key'].encode('utf-8')
-        img = urlImg % (external_key)
+        programImgs = video['clips'][0]['images']
+        programImg = ''
+        for img in programImgs:
+                if img['role'].encode('utf-8') == 'vignette':
+                    external_key = img['external_key'].encode('utf-8')
+                    programImg = urlImg % (external_key)
 
         infoLabels = {
             "Title": title,
@@ -183,13 +158,11 @@ def list_videos(channel, id):
             "Aired": dateDiffusion,
             "Year": year}
 
-        arg = programCode + '|' + programId + '|' + videoCode + '|' + videoId
-
         videos.append([
             channel,
-            arg,
+            videoId,
             title,
-            img,
+            programImg,
             infoLabels,
             'play'])
 
@@ -198,15 +171,9 @@ def list_videos(channel, id):
 
 def getVideoURL(channel, media_id):
 
-    programCode = media_id.split('|')[0]
-    programId = media_id.split('|')[1]
-    videoCode = media_id.split('|')[2]
-    videoId = media_id.split('|')[3]
-    print 'getVideoURL : ' + urlJsonVideo % (videoId)
-
     req = urllib2.Request(
-            urlJsonVideo % (videoId),
-            headers=hdr)
+        urlJsonVideo % (media_id),
+        headers=hdr)
     videoJson = urllib2.urlopen(req).read()
     jsonParser = json.loads(videoJson)
 
