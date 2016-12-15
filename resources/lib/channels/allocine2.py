@@ -50,8 +50,8 @@ subcategories = {
         '/film/meilleurs': [
             ('Selon les spectateurs', '/film/meilleurs', '3', 'root'),
             ('Selon la presse', '/film/meilleurs/presse', '3', 'root'),
-            ('Au box-office', '/film/meilleurs/boxoffice', '3', 'root'),
-            ('Les pires films', '/film/meilleurs/dupire', '3', 'root')
+            ('Au box-office', '/film/meilleurs/boxoffice', '99', 'root', '4'),
+            ('Les pires films', '/film/meilleurs/dupire', '99', 'root', '3')
         ]
     },
 
@@ -217,27 +217,23 @@ def list_shows(channel, param):
 
         if len(soup_pager) > 0:
             soup_pager_li = soup_pager.find('ul').find_all('li')
+            last_page = soup_pager_li[len(soup_pager_li) - 1]
+            if last_page.find('span'):
+                last_page = last_page.find('span')
+                last_page = current_page.get_text().encode('utf-8')
+            elif last_page.find('a'):
+                last_page = last_page.find('a').get_text().encode('utf-8')
 
-            for li in soup_pager_li:
-                url_page = ''
-                current_page = ''
-
-                if li.find('span'):
-                    current_page = li.find('span')
-                    current_page = current_page.get_text().encode('utf-8')
-                elif li.find('a'):
-                    current_page = li.find('a').get_text().encode('utf-8')
-
-                url_page = url + '/?page=' + current_page
+            for k in range(0, int(last_page)):
+                url_page = url + '/?page=' + str(k + 1)
                 print 'URL : ' + url_page
                 shows.append([
                     channel,
                     'shows|' + url_page + '|' + page_type,
-                    'Page ' + current_page,
+                    'Page ' + str(k + 1),
                     '',
                     'shows'])
 
-    
     return shows
 
 
@@ -300,13 +296,18 @@ def list_videos(channel, show_url):
                 infoLabels,
                 'play'])
 
-    elif page_type == '3':
+    elif page_type == '3' or page_type == '4':
+        added_films = []
         soup_films = soup.find_all(
             'div',
             attrs={'class': 'data_box'})
         for soup_film in soup_films:
             poster = soup_film.find('div', attrs={'class': 'poster'})
             title = poster.find('img')['title'].encode('utf-8')
+            if title in added_films:
+                continue
+            else:
+                added_films.append(title)
             img = poster.find('img')['src'].encode('utf-8')
 
             try:
@@ -315,6 +316,12 @@ def list_videos(channel, show_url):
                 url = ''
 
             description = ''
+
+            if page_type == '4':
+                box_office = soup_film.find(
+                    'div',
+                    attrs={'class': 'entries_inner'}).get_text().encode('utf-8')
+                description += box_office
 
             try:
                 sortie = soup_film.find(
@@ -366,21 +373,31 @@ def list_videos(channel, show_url):
                 'span',
                 attrs={'class': 'stareval'})
 
-            starts_press = stars[0].find(
-                'span',
-                attrs={'class': 'note'}).get_text().encode('utf-8')
-            description += '\nNote presse : ' + starts_press + '/5'
+            try:
+                starts_press = stars[0].find(
+                    'span',
+                    attrs={'class': 'note'}).get_text().encode('utf-8')
+                description += '\nNote presse : ' + starts_press + '/5'
+            except:
+                pass
 
-            starts_spact = stars[1].find(
-                'span',
-                attrs={'class': 'note'}).get_text().encode('utf-8')
-            description += '\nNote spectateurs : ' + starts_spact + '/5'
+            try:
+                starts_spact = stars[1].find(
+                    'span',
+                    attrs={'class': 'note'}).get_text().encode('utf-8')
+                description += '\nNote spectateurs : ' + starts_spact + '/5'
+            except:
+                pass
 
-            syn = soup_film.find(
-                'p',
-                attrs={'class': 'margin_5t'}).get_text().encode('utf-8')
+            try:
+                syn = soup_film.find(
+                    'p',
+                    attrs={'class': 'margin_5t'}).get_text().encode('utf-8')
 
-            description += '\n' + syn
+                description += '\n' + syn
+            except:
+                pass
+
 
             infoLabels = {
                 "Title": title,
@@ -400,7 +417,7 @@ def list_videos(channel, show_url):
 
 def getVideoURL(channel, url_video):
     url = url_root + url_video
-    print 'URL_VIDEO : '+url
+    print 'URL_VIDEO : ' + url
     html = urllib2.urlopen(url).read()
     soup = bs(html, "html.parser")
 
