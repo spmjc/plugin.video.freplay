@@ -6,34 +6,56 @@ import json
 
 title = ['M6', 'W9', '6ter']
 img = ['m6', 'w9', '6ter']
-readyForUse = False
+readyForUse = True
 
-urlRoot = 'http://pc.middleware.6play.fr/6play/v1/platforms/' \
-          'm6group_web/folders?serviceCode=%sreplay'
+# Pour connaitre les catégories de la chaine
+# (Info, Divertissement, Séries ...)
+# On récuère un id
+urlRoot = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
+          'm6group_web/services/%sreplay/folders?limit=10000&offset=0'
 
-urlCategory = 'http://pc.middleware.6play.fr/6play/v1/platforms/' \
+# Pour connaitre les programmes de cette catégorie
+# (Le meilleur patissier, La france à un incroyable talent, ...)
+# On récupère un id
+urlCategory = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
               'm6group_web/services/6play/folders/%s/programs' \
-              '?limit=999&offset=0'
+              '?limit=1000&offset=0&csa=9&with=parentcontext'
 
-urlSubcategory = 'http://pc.middleware.6play.fr/6play/v1/platforms/' \
-                 'm6group_web/services/6play/programs/%s'
+# Pour connaitres les dossiers de ce programme
+# (Saison 5, Les meilleurs moments, les recettes pas à pas, ...)
+# On récupère un id
+urlSubcategory = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
+                 'm6group_web/services/6play/programs/%s' \
+                 '?with=links,subcats,rights'
 
-urlVideos = 'http://pc.middleware.6play.fr/6play/v1/platforms/' \
+
+# Pour connaitre les videos de ce dossier
+# (Episode 1, Episode 2, ...)
+urlVideos = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
             'm6group_web/services/6play/programs/%s/videos?' \
-            'subcatId=%s&limit=999'
+            'csa=6&with=clips,freemiumpacks&type=vi,vc,playlist&limit=9999'\
+            '&offset=0&subcat=%s&sort=subcat'
 
-urlOtherVideos = 'http://pc.middleware.6play.fr/6play/v1/platforms/' \
+# PAs sur que ce soit encore utile .. à voir
+urlOtherVideos = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
                  'm6group_web/services/6play/programs/%s/videos?' \
                  'limit=999'
 
+# Pour aller sur la page de la video
 urlJsonVideo = 'https://pc.middleware.6play.fr/6play/v2/platforms/' \
-               'm6group_web/services/6play/videos/clip_%s'\
-               '?csa=6&with=clips,freemiumpacks'
+               'm6group_web/services/6play/videos/%s'\
+               '?csa=9&with=clips,freemiumpacks'
+
 
 urlVideo = 'http://www.6play.fr/%s-p_%s/%s-c_%s'
             #  program;code  program;id.   episode;code.   episode;id
 
 urlImg = 'https://images.6play.fr/v1/images/%s/raw'
+
+
+hdr = {
+    'User-Agent': 'Mozilla/5.0'
+}
 
 
 def list_shows(channel, folder):
@@ -61,19 +83,15 @@ def list_shows(channel, folder):
 
     elif 'category' in folder:
         category = folder.split('|')[1]
-        filePath = utils.downloadCatalog(
-            urlCategory % (category),
-            '%s_%s.json' % (channel, category),
-            False,
-            {})
-        filPrgm = open(filePath).read()
+        req = urllib2.Request(urlCategory % (category), headers=hdr)
+        filPrgm = urllib2.urlopen(req).read()
         jsonParser = json.loads(filPrgm)
 
         for array in jsonParser:
             programTitle = array['title'].encode('utf-8')
             programId = str(array['id'])
             programDesc = array['description'].encode('utf-8')
-            programImgs = array['_embedded']['images']
+            programImgs = array['images']
             programImg = ''
             for img in programImgs:
                 if img['role'].encode('utf-8') == 'vignette':
@@ -92,10 +110,12 @@ def list_shows(channel, folder):
     elif 'subCategory' in folder:
         programId = folder.split('|')[1]
         programImg = folder.split('|')[2]
-        programJson = urllib2.urlopen(urlSubcategory % (programId)).read()
+        req = urllib2.Request(urlSubcategory % (programId), headers=hdr)
+        print urlSubcategory % (programId)
+        programJson = urllib2.urlopen(req).read()
 
         jsonParser = json.loads(programJson)
-        for subCategory in jsonParser['programsubcats']:
+        for subCategory in jsonParser['program_subcats']:
             subCategoryId = str(subCategory['id'])
             subCategoryTitle = subCategory['title'].encode('utf-8')
 
@@ -123,16 +143,19 @@ def list_videos(channel, id):
     subCategoryId = id.split('|')[1]
 
     if subCategoryId == 'other':
-        programJson = urllib2.urlopen(
-            urlOtherVideos % (programId)).read()
+        req = urllib2.Request(
+            urlOtherVideos % (programId),
+            headers=hdr)
+        programJson = urllib2.urlopen(req).read()
         print urlOtherVideos % (programId)
 
     else:
-        programJson = urllib2.urlopen(
-            urlVideos % (programId, subCategoryId)).read()
+        req = urllib2.Request(
+            urlVideos % (programId, subCategoryId),
+            headers=hdr)
+        programJson = urllib2.urlopen(req).read()
         print urlVideos % (programId, subCategoryId)
     jsonParser = json.loads(programJson)
-
 
     for video in jsonParser:
 
@@ -142,19 +165,16 @@ def list_videos(channel, id):
         videoId = str(video['id'])
 
         title = video['title'].encode('utf-8')
-        duration = video['duration']
+        duration = video['clips'][0]['duration']
+        print repr(duration)
         description = video['description'].encode('utf-8')
-        dateDiffusion = video['last_diffusion'].encode('utf-8')
+        dateDiffusion = video['clips'][0]['product']['last_diffusion'].encode('utf-8')
         dateDiffusion = dateDiffusion[:10]
         year = dateDiffusion[:4]
         img = ''
 
-        if 'clip_has_images' in video:
-            clip_has_images = video['clip_has_images']
-            for array in clip_has_images:
-                if array['image']['external_key']:
-                    external_key = array['image']['external_key'].encode('utf-8')
-                    img = urlImg % (external_key)
+        external_key = video['images'][0]['external_key'].encode('utf-8')
+        img = urlImg % (external_key)
 
         infoLabels = {
             "Title": title,
@@ -182,10 +202,13 @@ def getVideoURL(channel, media_id):
     programId = media_id.split('|')[1]
     videoCode = media_id.split('|')[2]
     videoId = media_id.split('|')[3]
-
-    videoJson = urllib2.urlopen(urlJsonVideo % (videoId)).read()
-    jsonParser = json.loads(videoJson)
     print 'getVideoURL : ' + urlJsonVideo % (videoId)
+
+    req = urllib2.Request(
+            urlJsonVideo % (videoId),
+            headers=hdr)
+    videoJson = urllib2.urlopen(req).read()
+    jsonParser = json.loads(videoJson)
 
     videoAssets = jsonParser['clips'][0]['assets']
     url = ''
