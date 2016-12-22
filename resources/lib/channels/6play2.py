@@ -174,19 +174,26 @@ def getVideoURL(channel, media_id):
     req = urllib2.Request(
         urlJsonVideo % (media_id),
         headers=hdr)
+    print 'getVideoURL URL : ' + urlJsonVideo % (media_id)
     videoJson = urllib2.urlopen(req).read()
     jsonParser = json.loads(videoJson)
 
     videoAssets = jsonParser['clips'][0]['assets']
     url = ''
+    url2 = ''
+    url3 = ''
     for asset in videoAssets:
         if 'ism' in asset['video_container'].encode('utf-8'):
             url = asset['full_physical_path'].encode('utf-8')
         if 'mp4' in asset['video_container'].encode('utf-8'):
             if 'hd' in asset['video_quality'].encode('utf-8'):
                 url2 = asset['full_physical_path'].encode('utf-8')
+        else:
+            url3 = asset['full_physical_path'].encode('utf-8')
 
     if url:
         return url
-    else:
+    elif url2:
         return url2
+    else:
+        return url3
