@@ -457,7 +457,8 @@ def getVideoURL(channel, url_video):
         else:
             return url_default
 
-    else:
+    elif 'embedCode' in html:
+        
         embed_code = re.compile(
             r'"embedCode":"(.*?)",', re.DOTALL).findall(html)[0]
 
@@ -468,6 +469,7 @@ def getVideoURL(channel, url_video):
                 embed_code_2 = embed_code_2 + obf[two]
             except:
                 print 'Erreur désobfuscation URL (dict incomplet)'
+        print 'LAAA : ' + embed_code_2
 
         url = re.compile(
             r'src="(.*?)"', re.DOTALL).findall(embed_code_2)[0]
@@ -487,4 +489,62 @@ def getVideoURL(channel, url_video):
             # quality is 0=SD, 1=720p, 2=1080p and is a maximum
             return vid.streamURL()
             #  This is what Kodi (XBMC) will play
+        return ''
+
+    elif 'html5Path' in html:
+        if 'html5PathHD' in html:
+            html5PathHD = re.compile(
+                r'"html5PathHD":"(.*?)",', re.DOTALL).findall(html)[0]
+
+            html5PathHD = re.findall('..', html5PathHD)
+            url_hd = ''
+            for two in html5PathHD:
+                try:
+                    url_hd = url_hd + obf[two]
+                except:
+                    print 'Erreur désobfuscation URL (dict incomplet)'
+            print 'LAAA : ' + url_hd
+
+        if 'html5PathM' in html:
+            html5PathM = re.compile(
+                r'"html5PathM":"(.*?)",', re.DOTALL).findall(html)[0]
+
+            html5PathM = re.findall('..', html5PathM)
+            url_sd = ''
+            for two in html5PathM:
+                try:
+                    url_sd = url_sd + obf[two]
+                except:
+                    print 'Erreur désobfuscation URL (dict incomplet)'
+            print 'LAAA : ' + url_sd
+
+        else:
+            html5PathL = re.compile(
+                r'"html5PathL":"(.*?)",', re.DOTALL).findall(html)[0]
+
+            html5PathL = re.findall('..', html5PathL)
+            url_default = ''
+            for two in html5PathL:
+                try:
+                    url_default = url_default + obf[two]
+                except:
+                    print 'Erreur désobfuscation URL (dict incomplet)'
+            print 'LAAA : ' + url_default
+
+        if globalvar.ADDON.getSetting('allocineQuality') == 'sd':
+            if url_sd != '':
+                return url_sd
+            else:
+                return url_default
+
+        elif globalvar.ADDON.getSetting('allocineQuality') == 'hd':
+            if url_hd != '':
+                return url_hd
+            else:
+                return url_default
+        else:
+            return url_default
+
+    else:
+        print 'Erreur : provider vidéo inconnu'
         return ''
