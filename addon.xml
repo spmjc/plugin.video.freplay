@@ -9,6 +9,7 @@
     <import addon="script.module.parsedom" version="0.9.1"/>
     <import addon="script.module.requests" version="1.1.0"/>
     <import addon="script.module.simplejson"/>
+    <import addon="script.module.youtube.dl" version="16.327.0"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>video</provides>

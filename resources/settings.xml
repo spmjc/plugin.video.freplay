@@ -64,14 +64,15 @@
     <setting type="sep"/>
     <setting label="30114" type="lsep"/>
         <setting label="Allocine Cinéma" type="number" id="dispallocinecinema" default="70"/>
-        <setting label="Canal U" type="number" id="dispcanalu" default="71"/>
-        <setting label="CNES" type="number" id="dispcnes" default="72"/>
-        <setting label="INA" type="number" id="dispina" default="73"/>
-        <setting label="Nanarland" type="number" id="dispnanarland" default="74"/>
-        <setting label="Tou.tv" type="number" id="disptoutv" default="75"/>
-        <setting label="Wat.tv" type="number" id="dispwattv" default="76"/>  
-        <setting label="XTra" type="number" id="dispxtra" default="77"/>
-        <setting label="BFM Business" type="number" id="dispbfmbusiness" default="78"/>
+        <setting label="Allocine Émissions" type="number" id="dispallocineemissions" default="71"/>
+        <setting label="Canal U" type="number" id="dispcanalu" default="72"/>
+        <setting label="CNES" type="number" id="dispcnes" default="73"/>
+        <setting label="INA" type="number" id="dispina" default="74"/>
+        <setting label="Nanarland" type="number" id="dispnanarland" default="75"/>
+        <setting label="Tou.tv" type="number" id="disptoutv" default="76"/>
+        <setting label="Wat.tv" type="number" id="dispwattv" default="77"/>  
+        <setting label="XTra" type="number" id="dispxtra" default="78"/>
+        <setting label="BFM Business" type="number" id="dispbfmbusiness" default="79"/>
 
     </category>
 
