@@ -63,7 +63,7 @@
     <!--- Sites internet -->
     <setting type="sep"/>
     <setting label="30114" type="lsep"/>
-        <setting label="Allocine" type="number" id="dispallocine" default="70"/>
+        <setting label="Allocine Cinéma" type="number" id="dispallocinecinema" default="70"/>
         <setting label="Canal U" type="number" id="dispcanalu" default="71"/>
         <setting label="CNES" type="number" id="dispcnes" default="72"/>
         <setting label="INA" type="number" id="dispina" default="73"/>

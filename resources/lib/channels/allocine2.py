@@ -10,7 +10,7 @@ from random import randint
 
 title = ['Allocine']
 img = ['allocine']
-readyForUse = True
+readyForUse = False
 
 url_root = 'http://www.allocine.fr'
 
@@ -33,10 +33,18 @@ subcategories = {
     '1': {
         '/film': [
             ('Bandes-annonces', '/video/bandes-annonces', '2', 'root'),  # Fait
-            ('Meilleurs films', '/film/meilleurs', '2', 'root'),  # Non fait
+            ('Meilleurs films', '/film/meilleurs', '2', 'root'),  # Fait à moitié
             ('Films à l\'affiche', '/film/aucinema', '2', 'root'),  # Non fait
             ('Prochainement', '/film/attendus', '2', 'root'),  # Non fait
             ('Films pour enfants', '/film/enfants/aucinema', '2', 'root')  # Non fait
+        ],
+
+        '/video': [
+            ('Webséries', '/prgcat-158001', '2', 'add'),  # Fait
+            ('Mangas', '/prgcat-158002/alpha', '89', 'add', '5'),  # Non fait
+            ('Parodis', '/prgcat-158003/alpha', '89', 'add', '5'),  # Non fait
+            ('Émissions d\'Actu', '/prgcat-158004/alpha', '89', 'add', '5'),  # Non fait
+            ('Émissions Bonus', '/prgcat-158005/alpha', '89', 'add', '5')  # Non fait
         ]
     },
 
@@ -52,12 +60,19 @@ subcategories = {
             ('Selon la presse', '/film/meilleurs/presse', '3', 'root'),
             ('Au box-office', '/film/meilleurs/boxoffice', '99', 'root', '4'),
             ('Les pires films', '/film/meilleurs/dupire', '99', 'root', '3')
+        ],
+
+        '/prgcat-158001': [
+            ('Action', '/scat-159004/alpha', '89', 'add', '5'),
+            ('Comédie', '/scat-159001/alpha', '89', 'add', '5'),
+            ('Drame', '/scat-159002/alpha', '89', 'add', '5'),
+            ('Science-fiction', '/scat-159003/alpha', '89', 'add', '5')
         ]
     },
 
     '3': {
         '/video/bandes-annonces': [
-            ('À ne pas manquer', '', '99', 'add', '0'),
+            ('À ne pas manquer', '', '99', 'add', '0', 'pages'),
             ('Les plus récentes', '/plus-recentes', '99', 'add', '0'),
             ('Binetôt au cinéma', '/prochainement', '99', 'add', '0')
         ],
@@ -132,12 +147,8 @@ def debug_url(url):
     return url
 
 
-
-
 def list_shows(channel, param):
     shows = []
-
-    #url_refer = 'http://www.allocine.fr'
 
     if param == 'none':
         for category in categories:
@@ -146,94 +157,206 @@ def list_shows(channel, param):
             cond = category[1]
             shows.append([
                 channel,
-                'sub|' + depth + '|' + cond + '|root' + '|' + url_long,
+                'sub|' + depth + '|' + cond + '|' + url_long,
                 category[0],
                 '',
                 'folder'])
+
     elif 'sub' in param:
         param_list = param.split('|')
-        print repr(param_list)
+        print 'PARAM : ' + repr(param_list)
         depth = param_list[1]
+        try:
+            depth_dict = subcategories[depth]
+        except:
+            print 'CEST LA FIN'
+            param_list = last_param
+        print 'PARAM : ' + repr(param_list)
         cond = param_list[2]
-        root_or_add = param_list[3]
-        long_url = param_list[4]
-        depth_dict = subcategories[depth]
+        long_url = param_list[3]
+
+
+        pages = False
+        if len(param_list) > 4:
+            pages = True
+
         sub_categories = ''
         for key, value in depth_dict.iteritems():
-            print 'COND : ' + cond + ' KEY : ' + key
             if cond in key or key in cond:
                 sub_categories = depth_dict[key]
                 break
 
         for sub_category in sub_categories:
-            title = sub_category[0]
-            cond = sub_category[1]
-            next_type = 'sub'
-            long_url = param_list[4]
-            if sub_category[3] == 'root':
-                long_url = url_root + cond
+            next_title = sub_category[0]
+            next_cond = sub_category[1]
+            next_depth = sub_category[2]
+            next_root_or_add = sub_category[3]
+            if next_root_or_add == 'root':
+                next_long_url = url_root + next_cond
             else:  # add
-                long_url = long_url + cond
+                next_long_url = long_url + next_cond
 
-            if sub_category[2] == '99':
-                next_type = 'page'
-                cond = sub_category[4]
-            print 'LONG_URL ' + long_url
-            shows.append([
-                channel,
-                next_type + '|' + sub_category[2] + '|' + cond + '|' + sub_category[3] + '|' + long_url,
-                title,
-                '',
-                'folder'])
+            # On regarde si on peut etre en présence de pages
+            next_pages = ''
+            if len(sub_category) > 4:
+                next_pages = '|pages'
 
-    elif 'page' in param:
-        param_list = param.split('|')
-        print 'PARAM_LIST PAGE : ' + repr(param_list)
-        #depth = param_list[1]
-        page_type = param_list[2]
-        #root_or_add = param_list[3]
-        url = param_list[4]
-        url = debug_url(url)
-        url_refer = 'http://www.allocine.fr/video/bandes-annonces/'
-        print 'REFER : ' + url_refer
-        ua = user_agents[randint(0, len(user_agents) - 1)]
-        hdr = {
-            #'Referer': url_refer,
-            'DNT': '1',
-            'Upgrade-Insecure-Requests': '  1',
-            'Accept': ' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'User-Agent': user_agents
-        }
-        req = urllib2.Request(url, headers=hdr)
-        html = urllib2.urlopen(req).read()
-        # filePath = utils.downloadCatalog(
-        #     url,
-        #     'titi.html', False, {})
-        # html = open(filePath).read()
-        soup = bs(html, "html.parser")
-        soup_pager = soup.find(
-            'div',
-            attrs={'class': 'pager'})
+            # Si on est en présence de pages on les ajoute
+            last_page = 0
+            if pages:
+                url = debug_url(long_url)
+                ua = user_agents[randint(0, len(user_agents) - 1)]
+                hdr = {
+                    #'Referer': url_refer,
+                    'DNT': '1',
+                    'Upgrade-Insecure-Requests': '  1',
+                    'Accept': ' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                    'User-Agent': ua
+                }
+                req = urllib2.Request(url, headers=hdr)
+                html = urllib2.urlopen(req).read()
+                soup = bs(html, "html.parser")
+                soup_pager = soup.find(
+                    'div',
+                    attrs={'class': 'pager'})
+                if soup_pager is not None and len(soup_pager) > 0:
+                    soup_pager_li = soup_pager.find('ul').find_all('li')
+                    last_page = soup_pager_li[len(soup_pager_li) - 1]
+                    if last_page.find('span'):
+                        last_page = last_page.find(
+                            'span').get_text().encode('utf-8')
+                    elif last_page.find('a'):
+                        last_page = last_page.find(
+                            'a').get_text().encode('utf-8')
 
-        if len(soup_pager) > 0:
-            soup_pager_li = soup_pager.find('ul').find_all('li')
-            last_page = soup_pager_li[len(soup_pager_li) - 1]
-            if last_page.find('span'):
-                last_page = last_page.find('span')
-                last_page = current_page.get_text().encode('utf-8')
-            elif last_page.find('a'):
-                last_page = last_page.find('a').get_text().encode('utf-8')
+                    last_page = int(last_page)
 
-            for k in range(0, int(last_page)):
-                url_page = url + '/?page=' + str(k + 1)
-                print 'URL : ' + url_page
+            print 'LAST_PAGE : ' + repr(last_page)
+            is_pages = True
+            k = 0
+            while is_pages:
+                if k != 0:
+                    next_title = 'Page ' + str(k + 1)
+                    next_long_url = next_long_url + '/?page=' + str(k + 1)
+                print 'URL : ' + next_long_url
+
+                if '99' in next_depth and next_pages == '':  # On passe en mode shows
+                    page_type = sub_category[4]
+                    param = 'show|' + next_long_url + '|' + page_type + next_pages
+                    param_fonc = 'shows'
+
+                else:
+                    param = 'sub|' + next_depth + '|' + next_cond + '|' + next_long_url + next_pages
+                    param_fonc = 'folder'
+
                 shows.append([
                     channel,
-                    'shows|' + url_page + '|' + page_type,
-                    'Page ' + str(k + 1),
+                    param,
+                    next_title,
                     '',
-                    'shows'])
+                    param_fonc])
+                k += 1
+                if k >= last_page:
+                    is_pages = False
 
+
+
+
+    #         elif sub_category[2] == '89':
+    #             next_type = 'page_emi'
+    #             cond = sub_category[4]
+
+    #         print 'LONG_URL ' + long_url
+    #         shows.append([
+    #             channel,
+    #             'sub|' + sub_category[2] + '|' + cond + '|' + sub_category[3] + '|' + long_url,
+    #             title,
+    #             '',
+    #             'folder'])
+
+    # elif 'page_cine' in param or 'page_emi' in param:
+    #     param_list = param.split('|')
+    #     print 'PARAM_LIST PAGE : ' + repr(param_list)
+    #     page_type = param_list[2]
+    #     url = param_list[4]
+    #     url = debug_url(url)
+
+    #     ua = user_agents[randint(0, len(user_agents)-1)]
+    #     hdr = {
+    #         #'Referer': url_refer,
+    #         'DNT': '1',
+    #         'Upgrade-Insecure-Requests': '  1',
+    #         'Accept': ' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    #         'User-Agent': ua
+    #     }
+
+
+    #     req = urllib2.Request(url, headers=hdr)
+    #     html = urllib2.urlopen(req).read()
+    #     soup = bs(html, "html.parser")
+    #     soup_pager = soup.find(
+    #         'div',
+    #         attrs={'class': 'pager'})
+
+    #     if 'page_cine' in param:
+    #         next_type = 'shows'
+
+    #     elif 'page_emi' in param:
+    #         next_type = 'folder'
+
+    #     if soup_pager is not None and len(soup_pager) > 0:
+    #         soup_pager_li = soup_pager.find('ul').find_all('li')
+    #         last_page = soup_pager_li[len(soup_pager_li) - 1]
+    #         if last_page.find('span'):
+    #             last_page = last_page.find('span').get_text().encode('utf-8')
+    #             #last_page = current_page.get_text().encode('utf-8')
+    #         elif last_page.find('a'):
+    #             last_page = last_page.find('a').get_text().encode('utf-8')
+
+    #         for k in range(0, int(last_page)):
+    #             url_page = url + '/?page=' + str(k + 1)
+    #             print 'URL : ' + url_page
+    #             shows.append([
+    #                 channel,
+    #                 next_type + '|' + url_page + '|' + page_type,
+    #                 'Page ' + str(k + 1),
+    #                 '',
+    #                 next_type])
+    #     else:
+    #         shows.append([
+    #             channel,
+    #             next_type + '|' + url + '|' + page_type,
+    #             'Page 1',
+    #             '',
+    #             next_type])
+
+    # elif 'folder' in param:
+    #     param_list = param.split('|')
+    #     print 'PARAM_LIST PAGE : ' + repr(param_list)
+    #     page_type = param_list[2]
+    #     url = param_list[1]
+    #     url = debug_url(url)
+    #     req = urllib2.Request(url)
+    #     html = urllib2.urlopen(req).read()
+    #     soup = bs(html, "html.parser")
+    #     soup_pgms = soup.find_all(
+    #         'article')
+
+    #     for pgm in soup_pgms:
+    #         title = pgm.find('a').get_text().encode('utf-8')
+    #         title = title.replace('\n', '').replace('\r', '')
+    #         print repr(title)
+
+    #         url = pgm.find('a')['href'].encode('utf-8')
+    #         url = url_root + url
+    #         img = pgm.find('img')['src'].encode('utf-8')
+    #         shows.append([
+    #             channel,
+    #             'show|' + url + '|' + page_type,
+    #             title,
+    #             img,
+    #             'shows'])
+        last_param = param_list
     return shows
 
 
@@ -248,7 +371,19 @@ def list_videos(channel, show_url):
     print 'Param type = ' + page_type
 
     print 'URL List videos ' + url
-    html = urllib2.urlopen(url).read()
+
+    ua = user_agents[randint(0, len(user_agents)-1)]
+    hdr = {
+        #'Referer': url_refer,
+        'DNT': '1',
+        'Upgrade-Insecure-Requests': '  1',
+        'Accept': ' text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'User-Agent': ua
+    }
+
+
+    req = urllib2.Request(url, headers=hdr)
+    html = urllib2.urlopen(req).read()
     soup = bs(html, "html.parser")
 
     page_type_attrs = ''
@@ -269,6 +404,7 @@ def list_videos(channel, show_url):
 
         for soup_film in soup_films:
             title = soup_film.find('a').get_text().encode('utf-8')
+            title = title.replace('\n', '').replace('\r', '')
             img = ''
             if soup_film.find('img').has_attr('data-attr'):
                 img = soup_film.find('img')['data-attr'].encode('utf-8')
@@ -278,10 +414,13 @@ def list_videos(channel, show_url):
             url = soup_film.find('a')['href'].encode('utf-8')
 
             description = ''
-            sortie = soup_film.find(
-                'span',
-                attrs={'itemprop': 'datePublished'}).get_text().encode('utf-8')
-            description += 'Date de sortie : ' + sortie
+            try:
+                sortie = soup_film.find(
+                    'span',
+                    attrs={'itemprop': 'datePublished'}).get_text().encode('utf-8')
+                description += 'Date de sortie : ' + sortie
+            except:
+                pass
 
             infoLabels = {
                 "Title": title,
@@ -304,6 +443,7 @@ def list_videos(channel, show_url):
         for soup_film in soup_films:
             poster = soup_film.find('div', attrs={'class': 'poster'})
             title = poster.find('img')['title'].encode('utf-8')
+            title = title.replace('\n', '').replace('\r', '')
             if title in added_films:
                 continue
             else:
@@ -411,6 +551,13 @@ def list_videos(channel, show_url):
                 img,
                 infoLabels,
                 'play'])
+
+    # elif page_type == '5':
+    #     soup_pgms = soup.find_all(
+    #         'article')
+
+    #     for pgm in soup_pgms:
+
 
     return videos
 
