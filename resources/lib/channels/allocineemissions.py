@@ -45,10 +45,10 @@ categories = [
 ]
 
 sort = {
-    'Pertinance': '',
-    'Date d\'ajout': 'date-ajout',
-    'Ordre alphabétique': 'alpha',
-    'Nombre de fans': 'nb-fans'
+    'Trier par pertinance': '',
+    'Trier par date d\'ajout': 'date-ajout',
+    'Trier par ordre alphabétique': 'alpha',
+    'Trier par nombre de fans': 'nb-fans'
 }
 
 
@@ -239,8 +239,6 @@ def list_shows(channel, param):
                 param = '2'
 
         if param == '2':
-            url = url.replace('/cat', '/prgcat')
-
             for key, value in sort.iteritems():
                 next_url = url_root + url + value
                 shows.append([
@@ -252,30 +250,22 @@ def list_shows(channel, param):
 
         if param == '3':
             print 'URL 3 ' + url
-            req = urllib2.Request(url, headers=get_random_headers())
-            html = urllib2.urlopen(req).read()
-            soup = bs(html, "html.parser")
-            soup_pager = soup.find(
-                'div',
-                class_='pager')
 
-            if soup_pager:
-                soup_pager = soup_pager.find_all('li')
-                last_page = soup_pager[len(soup_pager) - 1]
-                last_page = last_page.get_text().encode('utf-8')
-                last_page = int(last_page)
-                for k in range(0, last_page):
-                    next_url = url + '/?page=' + str(k + 1)
-                    title = 'Page ' + str(k + 1)
-                    shows.append([
-                        channel,
-                        '4|' + next_url,
-                        title,
-                        '',
-                        'folder'])
-            else:
-                print 'Une seule page ici'
-                param = '4'
+            shows.append([
+                channel,
+                url,
+                'Toutes les vidéos',
+                '',
+                'shows'])
+
+            url = url.replace('/cat', '/prgcat')
+
+            shows.append([
+                channel,
+                '4|' + url,
+                'Les programmes',
+                '',
+                'folder'])
 
         if param == '4':
             print 'URL 4 ' + url
@@ -311,6 +301,47 @@ def list_shows(channel, param):
                     img,
                     'folder'])
 
+            soup_pager = soup.find(
+                'div',
+                class_='pager')
+
+            if soup_pager:
+                soup_pager = soup_pager.find_all('li')
+                current_page = ''
+                for li in soup_pager:
+                    try:
+                        span = li.find('span')
+                        if not span.has_attr('class'):
+                            current_page = li.get_text().encode('utf-8')
+                            break
+                    except:
+                        a = li.find('a')
+                        if not a.has_attr('class'):
+                            current_page = li.get_text().encode('utf-8')
+                            break
+                print 'CURRENT PAGE ' + current_page
+                current_page = int(current_page)
+                last_page = soup_pager[len(soup_pager) - 1]
+                last_page = last_page.get_text().encode('utf-8')
+                print 'LAST PAGE ' + last_page
+
+                last_page = int(last_page)
+                if current_page < last_page:
+                    if 'page' in url:
+                        next_url = url[:-1] + str(current_page + 1)
+                    else:
+                        next_url = url + '/?page=' + str(current_page + 1)
+                    shows.append([
+                        channel,
+                        '4|' + next_url,
+                        'Page suivante (page ' + str(current_page + 1) + ')',
+                        '',
+                        'folder'])
+                else:
+                    print 'Je suis à la dernière page'
+            else:
+                print 'Une seule page ici'
+
         if param == '5':
             print 'URL 5 ' + url
             req = urllib2.Request(url, headers=get_random_headers())
@@ -328,8 +359,6 @@ def list_shows(channel, param):
                     next_url = get_obfuscate_url(saisons)
                     next_url = url_root + next_url
 
-                    print 'NEXT URL : ' + next_url
-
                     shows.append([
                         channel,
                         next_url,
@@ -341,6 +370,7 @@ def list_shows(channel, param):
 
 
 def list_videos(channel, show_url):
+    print 'LIST VIDEOS url : ' + show_url
     videos = []
     url = debug_url(show_url)
 
@@ -365,47 +395,46 @@ def list_videos(channel, show_url):
     else:
         pages_url.append(url)
 
-    for url in pages_url:
-        url = debug_url(url)
-        req = urllib2.Request(url, headers=get_random_headers())
-        html = urllib2.urlopen(req).read()
-        soup = bs(html, "html.parser")
+    url = debug_url(url)
+    req = urllib2.Request(url, headers=get_random_headers())
+    html = urllib2.urlopen(req).read()
+    soup = bs(html, "html.parser")
 
-        soup_episodes = soup.find_all(
-            'article',
-            class_="media-meta medium ")
+    soup_episodes = soup.find_all(
+        'article',
+        class_="media-meta medium ")
 
-        for soup_episode in soup_episodes:
-            title = soup_episode.find('a').get_text().encode('utf-8')
-            title = title.replace('\n', '').replace('\r', '')
-            img = ''
-            if soup_episode.find('img').has_attr('data-attr'):
-                img = soup_episode.find('img')['data-attr'].encode('utf-8')
-                img = re.compile(r'{"src":"(.*?)"}', re.DOTALL).findall(img)[0]
-            elif soup_episode.find('img')['src']:
-                img = soup_episode.find('img')['src'].encode('utf-8')
-            url_soup = soup_episode.find('a')
-            url = get_obfuscate_url(url_soup)
+    for soup_episode in soup_episodes:
+        title = soup_episode.find('a').get_text().encode('utf-8')
+        title = title.replace('\n', '').replace('\r', '')
+        img = ''
+        if soup_episode.find('img').has_attr('data-attr'):
+            img = soup_episode.find('img')['data-attr'].encode('utf-8')
+            img = re.compile(r'{"src":"(.*?)"}', re.DOTALL).findall(img)[0]
+        elif soup_episode.find('img')['src']:
+            img = soup_episode.find('img')['src'].encode('utf-8')
+        url_soup = soup_episode.find('a')
+        url = get_obfuscate_url(url_soup)
 
-            try:
-                description = soup_episode.find(
-                    'p',
-                    attrs={'itemprop': 'description'}).get_text().encode('utf-8')
-            except:
-                description = ''
+        try:
+            description = soup_episode.find(
+                'p',
+                attrs={'itemprop': 'description'}).get_text().encode('utf-8')
+        except:
+            description = ''
 
-            infoLabels = {
-                "Title": title,
-                "Plot": description
-            }
+        infoLabels = {
+            "Title": title,
+            "Plot": description
+        }
 
-            videos.append([
-                channel,
-                url,
-                title,
-                img,
-                infoLabels,
-                'play'])
+        videos.append([
+            channel,
+            url,
+            title,
+            img,
+            infoLabels,
+            'play'])
 
     return videos
 
@@ -458,7 +487,6 @@ def getVideoURL(channel, url_video):
             return url_default
 
     elif 'embedCode' in html:
-        
         embed_code = re.compile(
             r'"embedCode":"(.*?)",', re.DOTALL).findall(html)[0]
 
@@ -469,7 +497,6 @@ def getVideoURL(channel, url_video):
                 embed_code_2 = embed_code_2 + obf[two]
             except:
                 print 'Erreur désobfuscation URL (dict incomplet)'
-        print 'LAAA : ' + embed_code_2
 
         url = re.compile(
             r'src="(.*?)"', re.DOTALL).findall(embed_code_2)[0]
@@ -503,7 +530,6 @@ def getVideoURL(channel, url_video):
                     url_hd = url_hd + obf[two]
                 except:
                     print 'Erreur désobfuscation URL (dict incomplet)'
-            print 'LAAA : ' + url_hd
 
         if 'html5PathM' in html:
             html5PathM = re.compile(
@@ -516,7 +542,6 @@ def getVideoURL(channel, url_video):
                     url_sd = url_sd + obf[two]
                 except:
                     print 'Erreur désobfuscation URL (dict incomplet)'
-            print 'LAAA : ' + url_sd
 
         else:
             html5PathL = re.compile(
@@ -529,7 +554,6 @@ def getVideoURL(channel, url_video):
                     url_default = url_default + obf[two]
                 except:
                     print 'Erreur désobfuscation URL (dict incomplet)'
-            print 'LAAA : ' + url_default
 
         if globalvar.ADDON.getSetting('allocineQuality') == 'sd':
             if url_sd != '':
