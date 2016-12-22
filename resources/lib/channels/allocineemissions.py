@@ -68,7 +68,6 @@ user_agents = [
 def get_random_headers():
     ua = user_agents[randint(0, len(user_agents) - 1)]
     hdr = {
-        'DNT': '1',
         'Upgrade-Insecure-Requests': '  1',
         'Accept': ' text/html,application/xhtml+xml,'
         'application/xml;q=0.9,*/*;q=0.8',
