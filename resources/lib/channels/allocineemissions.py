@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-import urllib2
 import re
 from resources.lib import globalvar
 from bs4 import BeautifulSoup as bs
-from random import randint
 import YDStreamExtractor
+from resources.lib import utils
 
 
 title = ['Allocine Émissions']
@@ -52,29 +51,12 @@ sort = {
 }
 
 
-
-user_agents = [
-    'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36'
-    ' (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14'
-    ' (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A',
-    'Opera/9.80 (X11; Linux i686; Ubuntu/14.10) Presto/2.12.388 Version/12.16',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/602.2.14'
-    ' (KHTML, like Gecko) Version/10.0.1 Safari/602.2.14'
-]
-
-
-def get_random_headers():
-    ua = user_agents[randint(0, len(user_agents) - 1)]
-    hdr = {
-        'Upgrade-Insecure-Requests': '  1',
-        'Accept': ' text/html,application/xhtml+xml,'
-        'application/xml;q=0.9,*/*;q=0.8',
-        'User-Agent': ua
-    }
-    return hdr
-
+# hdr = {
+#     'Upgrade-Insecure-Requests': '  1',
+#     'Accept': ' text/html,application/xhtml+xml,'
+#     'application/xml;q=0.9,*/*;q=0.8',
+#     'User-Agent': ua
+# }
 
 obf = {
     'BA': 'A',  #
@@ -227,8 +209,11 @@ def list_shows(channel, param):
 
         if param == '1':
             print 'URL 1 ' + url
-            req = urllib2.Request(url, headers=get_random_headers())
-            html = urllib2.urlopen(req).read()
+            file_path = utils.download_catalog(
+                url,
+                url + '.html',
+                random_ua=True)
+            html = open(file_path).read()
             soup = bs(html, "html.parser")
             soup_subsub = soup.find(
                 'div',
@@ -287,8 +272,11 @@ def list_shows(channel, param):
 
         if param == '4':
             print 'URL 4 ' + url
-            req = urllib2.Request(url, headers=get_random_headers())
-            html = urllib2.urlopen(req).read()
+            file_path = utils.download_catalog(
+                url,
+                url + '.html',
+                random_ua=True)
+            html = open(file_path).read()
             soup = bs(html, "html.parser")
             soup_prg = soup.find_all(
                 'article',
@@ -362,8 +350,11 @@ def list_shows(channel, param):
 
         if param == '5':
             print 'URL 5 ' + url
-            req = urllib2.Request(url, headers=get_random_headers())
-            html = urllib2.urlopen(req).read()
+            file_path = utils.download_catalog(
+                url,
+                url + '.html',
+                random_ua=True)
+            html = open(file_path).read()
             soup = bs(html, "html.parser")
             soup_saisons = soup.find_all(
                 ['a', 'span'],
@@ -392,8 +383,11 @@ def list_videos(channel, show_url):
     videos = []
     url = debug_url(show_url)
 
-    req = urllib2.Request(url, headers=get_random_headers())
-    html = urllib2.urlopen(req).read()
+    file_path = utils.download_catalog(
+        url,
+        url + '.html',
+        random_ua=True)
+    html = open(file_path).read()
     soup = bs(html, "html.parser")
 
     pages_url = []
@@ -414,8 +408,12 @@ def list_videos(channel, show_url):
         pages_url.append(url)
 
     url = debug_url(url)
-    req = urllib2.Request(url, headers=get_random_headers())
-    html = urllib2.urlopen(req).read()
+    file_path = utils.download_catalog(
+        url,
+        url + '.html',
+        random_ua=True)
+    html = open(file_path).read()
+
     soup = bs(html, "html.parser")
 
     soup_episodes = soup.find_all(
@@ -460,8 +458,12 @@ def list_videos(channel, show_url):
 def getVideoURL(channel, url_video):
     url = url_root + url_video
     print 'URL_VIDEO : ' + url
-    req = urllib2.Request(url, headers=get_random_headers())
-    html = urllib2.urlopen(req).read()
+
+    file_path = utils.download_catalog(
+        url,
+        url + '.html',
+        random_ua=True)
+    html = open(file_path).read()
 
     url_default = ''
     url_sd = ''
@@ -473,7 +475,11 @@ def getVideoURL(channel, url_video):
             r'"entityPartnerID":"(.*?)",', re.DOTALL).findall(html)[0]
         url_daily = 'http://www.dailymotion.com/embed/video/' + id_daily
 
-        html_daily = urllib2.urlopen(url_daily).read()
+        #html_daily = urllib2.urlopen(url_daily).read()
+        file_path = utils.download_catalog(
+                url_daily,
+                url_daily + '.html')
+        html_daily = open(file_path).read()
         html_daily = html_daily.replace('\\', '')
 
         urls_mp4 = re.compile(
@@ -513,8 +519,11 @@ def getVideoURL(channel, url_video):
             url_default = vid.streamURL()
 
         elif 'facebook' in url:
-            req = urllib2.Request(url, headers=get_random_headers())
-            html = urllib2.urlopen(req).read()
+            file_path = utils.download_catalog(
+                url,
+                url + '.html',
+                random_ua=True)
+            html = open(file_path).read()
             html = html.replace('\\', '')
 
             url_default = ''
