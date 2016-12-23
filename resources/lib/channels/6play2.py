@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import urllib2
 from resources.lib import utils
 import json
@@ -62,6 +63,14 @@ def list_shows(channel, folder):
             {})
         filPrgm = open(filePath).read()
         jsonParser = json.loads(filPrgm)
+
+        # do not cache failed catalog fetch
+        # the error format is:
+        #   {"error":{"code":403,"message":"Forbidden"}}
+        if isinstance(jsonParser, dict) and \
+            'error' in jsonParser.keys():
+            os.remove(filePath)
+            raise Exception('Failed to fetch the 6play catalog')
 
         for array in jsonParser:
             categoryId = str(array['id'])
