@@ -360,8 +360,11 @@ def list_shows(channel, param):
                 ['a', 'span'],
                 class_='btn-primary')
 
+            len_saisons = 0
+
             for saisons in soup_saisons:
                 if "button btn-primary btn-large" in repr(saisons):
+                    len_saisons += 1
                     title = saisons.get_text().encode('utf-8')
                     title = title.replace('\n', '').replace('\r', '')
 
@@ -374,6 +377,15 @@ def list_shows(channel, param):
                         title,
                         '',
                         'shows'])
+
+            if len_saisons == 0:
+                print 'Pas de saison ici, seulements des vidéos en vrac'
+                shows.append([
+                    channel,
+                    url,
+                    'Toutes les vidéos',
+                    '',
+                    'shows'])
 
     return shows
 
@@ -421,16 +433,23 @@ def list_videos(channel, show_url):
         class_="media-meta medium ")
 
     for soup_episode in soup_episodes:
-        title = soup_episode.find('a').get_text().encode('utf-8')
-        title = title.replace('\n', '').replace('\r', '')
+        try:
+            title = soup_episode.find('a').get_text().encode('utf-8')
+            title = title.replace('\n', '').replace('\r', '')
+            url_soup = soup_episode.find('a')
+            url = get_obfuscate_url(url_soup)
+        except:
+            title_h3 = soup_episode.find('h3')
+            title = title_h3.get_text().encode('utf-8')
+            title = title.replace('\n', '').replace('\r', '')
+            url_soup = title_h3.find('span', attrs={'itemprop': 'url'})
+            url = get_obfuscate_url(url_soup)
         img = ''
         if soup_episode.find('img').has_attr('data-attr'):
             img = soup_episode.find('img')['data-attr'].encode('utf-8')
             img = re.compile(r'{"src":"(.*?)"}', re.DOTALL).findall(img)[0]
         elif soup_episode.find('img')['src']:
             img = soup_episode.find('img')['src'].encode('utf-8')
-        url_soup = soup_episode.find('a')
-        url = get_obfuscate_url(url_soup)
 
         try:
             description = soup_episode.find(
