@@ -9,12 +9,34 @@ import urllib2
 import string
 import log
 import logging
+import requests
+from random import randint
+
+default_ua = "Mozilla/5.0 (Windows NT 6.1; WOW64) " \
+             "AppleWebKit/537.36 (KHTML, like Gecko) " \
+             "Chrome/55.0.2883.87 Safari/537.36"
+
+user_agents = [
+    'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36'
+    ' (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14'
+    ' (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A',
+    'Opera/9.80 (X11; Linux i686; Ubuntu/14.10) Presto/2.12.388 Version/12.16',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/602.2.14'
+    ' (KHTML, like Gecko) Version/10.0.1 Safari/602.2.14',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64) '
+    'AppleWebKit/537.36 (KHTML, like Gecko) '
+    'Chrome/55.0.2883.87 Safari/537.36'
+]
+
 
 class ChromeURLopener(urllib.FancyURLopener):
-    version = "Mozilla/5.0 (Windows NT 6.1; WOW64) " \
-              "AppleWebKit/537.36 (KHTML, like Gecko) " \
-              "Chrome/55.0.2883.87 Safari/537.36"
+    version = default_ua
+
+
 urllib._urlopener = ChromeURLopener()
+
 
 def getOrderChannel(chanName):
     if globalvar.ADDON.getSetting('disp' + chanName):
@@ -67,7 +89,53 @@ def init():
     globalvar.dlfolder = globalvar.ADDON.getSetting('dlFolder')
 
 
-def downloadCatalog(url, fileName, force, dicPost):
+def download_catalog(
+        url,
+        file_name,
+        force_dl=False,
+        request_type='get',
+        post_dic={},
+        random_ua=False,
+        specific_headers={}):
+    file_name = format_filename(file_name)
+    iCtlgRefresh = int(globalvar.ADDON.getSetting('ctlgRefresh')) * 60
+
+    if not os.path.exists(globalvar.CACHE_DIR):
+        os.makedirs(globalvar.CACHE_DIR, mode=0777)
+    file_path = os.path.join(globalvar.CACHE_DIR, file_name)
+
+    if os.path.exists(file_path):
+        mtime = os.stat(file_path).st_mtime
+        dl_file = (time.time() - mtime > iCtlgRefresh)
+    else:
+        dl_file = True
+    if dl_file or force_dl:
+        if random_ua:
+            ua = user_agents[randint(0, len(user_agents) - 1)]
+        else:
+            ua = default_ua
+
+        if specific_headers:
+            headers = specific_headers
+            if 'User-Agent' not in headers:
+                headers['User-Agent'] = ua
+        else:
+            headers = {'User-Agent': ua}
+
+        if request_type == 'get':
+            r = requests.get(url, headers=headers)
+
+        elif request_type == 'post':
+            r = requests.get(url, headers=headers, data=post_dic)
+
+        with open(file_path, 'wb') as f:
+            f.write(r.content)
+
+        log.logDLFile(url)
+    return file_path
+
+
+def downloadCatalog(url, fileName, force, dicPost, specificHeaders=None):
     bDLFile = True
     fileName = format_filename(fileName)
     iCtlgRefresh = int(globalvar.ADDON.getSetting('ctlgRefresh')) * 60
