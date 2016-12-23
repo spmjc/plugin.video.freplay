@@ -402,27 +402,10 @@ def list_videos(channel, show_url):
     html = open(file_path).read()
     soup = bs(html, "html.parser")
 
-    pages_url = []
-
-    soup_pager = soup.find(
-        'div',
-        class_='pager')
-
-    if soup_pager:
-        soup_pager = soup_pager.find_all('li')
-        last_page = soup_pager[len(soup_pager) - 1]
-        last_page = last_page.get_text().encode('utf-8')
-        last_page = int(last_page)
-        for k in range(0, last_page):
-            next_url = url + '/?page=' + str(k + 1)
-            pages_url.append(next_url)
-    else:
-        pages_url.append(url)
-
-    url = debug_url(url)
+    url_page = debug_url(url)
     file_path = utils.download_catalog(
-        url,
-        url + '.html',
+        url_page,
+        url_page + '.html',
         random_ua=True)
     html = open(file_path).read()
 
@@ -470,6 +453,48 @@ def list_videos(channel, show_url):
             img,
             infoLabels,
             'play'])
+
+    soup_pager = soup.find(
+        'div',
+        class_='pager')
+
+    if soup_pager:
+        soup_pager = soup_pager.find_all('li')
+        current_page = ''
+        for li in soup_pager:
+            try:
+                span = li.find('span')
+                if not span.has_attr('class'):
+                    current_page = li.get_text().encode('utf-8')
+                    break
+            except:
+                a = li.find('a')
+                if not a.has_attr('class'):
+                    current_page = li.get_text().encode('utf-8')
+                    break
+        print 'CURRENT PAGE ' + current_page
+        current_page = int(current_page)
+        last_page = soup_pager[len(soup_pager) - 1]
+        last_page = last_page.get_text().encode('utf-8')
+        print 'LAST PAGE ' + last_page
+
+        last_page = int(last_page)
+        if current_page < last_page:
+            if 'page' in url_page:
+                next_url = url_page[:-1] + str(current_page + 1)
+            else:
+                next_url = url_page + '/?page=' + str(current_page + 1)
+            videos.append([
+                channel,
+                next_url,
+                'Page suivante (page ' + str(current_page + 1) + ')',
+                '',
+                {},
+                'shows'])
+        else:
+            print 'Je suis à la dernière page'
+    else:
+        print 'Une seule page ici'
 
     return videos
 
