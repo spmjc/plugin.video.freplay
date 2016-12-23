@@ -46,9 +46,9 @@ categories = [
 
 sort = {
     'Trier par pertinance': '',
-    'Trier par date d\'ajout': 'date-ajout',
-    'Trier par ordre alphabétique': 'alpha',
-    'Trier par nombre de fans': 'nb-fans'
+    'Trier par date d\'ajout': '/date-ajout',
+    'Trier par ordre alphabétique': '/alpha',
+    'Trier par nombre de fans': '/nb-fans'
 }
 
 
@@ -131,6 +131,7 @@ obf = {
     'CD': 'z',  #
     '10': ' ',
     '11': '\"',
+    '13': '%',
     '1F': '/',
     '1E': '-',
     '3F': '_',
@@ -180,6 +181,18 @@ def get_obfuscate_url(url_soup):
         return ''
 
 
+def get_obfuscate_url_string(url_string):
+    url_string = re.findall('..', url_string)
+    url = ''
+    for two in url_string:
+        try:
+            url = url + obf[two]
+        except:
+            url = url + '?' + two + '?'
+            print 'Erreur désobfuscation URL (dict incomplet)'
+    return url
+
+
 def debug_url(url):
     elts = ['/pays-5000', '/decennie-0000', '/genre-13000']
     for elt in elts:
@@ -213,6 +226,7 @@ def list_shows(channel, param):
         url = debug_url(url_long)
 
         if param == '1':
+            print 'URL 1 ' + url
             req = urllib2.Request(url, headers=get_random_headers())
             html = urllib2.urlopen(req).read()
             soup = bs(html, "html.parser")
@@ -239,8 +253,12 @@ def list_shows(channel, param):
                 param = '2'
 
         if param == '2':
+            print 'URL 2 : ' + url
             for key, value in sort.iteritems():
-                next_url = url_root + url + value
+                if url_root not in url:
+                    next_url = url_root + url + value
+                else:
+                    next_url = url + value
                 shows.append([
                     channel,
                     '3|' + next_url,
@@ -442,16 +460,18 @@ def list_videos(channel, show_url):
 def getVideoURL(channel, url_video):
     url = url_root + url_video
     print 'URL_VIDEO : ' + url
-    html = urllib2.urlopen(url).read()
+    req = urllib2.Request(url, headers=get_random_headers())
+    html = urllib2.urlopen(req).read()
+
+    url_default = ''
+    url_sd = ''
+    url_hd = ''
 
     if 'dailymotion' in html:
 
         id_daily = re.compile(
             r'"entityPartnerID":"(.*?)",', re.DOTALL).findall(html)[0]
-
         url_daily = 'http://www.dailymotion.com/embed/video/' + id_daily
-
-        print 'url_daily : ' + url_daily
 
         html_daily = urllib2.urlopen(url_daily).read()
         html_daily = html_daily.replace('\\', '')
@@ -459,9 +479,6 @@ def getVideoURL(channel, url_video):
         urls_mp4 = re.compile(
             r'{"type":"video/mp4","url":"(.*?)"}],"(.*?)":').findall(html_daily)
 
-        url_sd = ''
-        url_hd = ''
-        url_default = ''
         for url, quality in urls_mp4:
             print quality
             if quality == '480':
@@ -472,31 +489,10 @@ def getVideoURL(channel, url_video):
                 url_hd = url
             url_default = url
 
-        if globalvar.ADDON.getSetting('allocineQuality') == 'sd':
-            if url_sd != '':
-                return url_sd
-            else:
-                return url_default
-
-        elif globalvar.ADDON.getSetting('allocineQuality') == 'hd':
-            if url_hd != '':
-                return url_hd
-            else:
-                return url_default
-        else:
-            return url_default
-
     elif 'embedCode' in html:
         embed_code = re.compile(
             r'"embedCode":"(.*?)",', re.DOTALL).findall(html)[0]
-
-        embed_code = re.findall('..', embed_code)
-        embed_code_2 = ''
-        for two in embed_code:
-            try:
-                embed_code_2 = embed_code_2 + obf[two]
-            except:
-                print 'Erreur désobfuscation URL (dict incomplet)'
+        embed_code_2 = get_obfuscate_url_string(embed_code)
 
         url = re.compile(
             r'src="(.*?)"', re.DOTALL).findall(embed_code_2)[0]
@@ -506,69 +502,71 @@ def getVideoURL(channel, url_video):
             #  Kodi (XBMC) only plays the video for DASH streams,
             #  so you don't want these normally.
             #  Of course these are the only 1080p streams on YouTube
-            quality = 1
-            if globalvar.ADDON.getSetting('allocineQuality') == 'sd':
-                quality = 0
-
-            elif globalvar.ADDON.getSetting('allocineQuality') == 'hd':
-                quality = 2
-            vid = YDStreamExtractor.getVideoInfo(url, quality=quality)
+            vid = YDStreamExtractor.getVideoInfo(url, quality=2)
             # quality is 0=SD, 1=720p, 2=1080p and is a maximum
-            return vid.streamURL()
+            url_hd = vid.streamURL()
             #  This is what Kodi (XBMC) will play
-        return ''
+            vid = YDStreamExtractor.getVideoInfo(url, quality=0)
+            url_sd = vid.streamURL()
+
+            vid = YDStreamExtractor.getVideoInfo(url, quality=1)
+            url_default = vid.streamURL()
+
+        elif 'facebook' in url:
+            req = urllib2.Request(url, headers=get_random_headers())
+            html = urllib2.urlopen(req).read()
+            html = html.replace('\\', '')
+
+            url_default = ''
+            try:
+                url_hd = re.compile(
+                    r'"hd_src_no_ratelimit":"(.*?)"', re.DOTALL).findall(html)[0]
+                url_default = url_hd
+            except:
+                url_hd = ''
+
+            try:
+                url_sd = re.compile(
+                    r'"hs_src_no_ratelimit":"(.*?)"', re.DOTALL).findall(html)[0]
+                url_default = url_sd
+            except:
+                url_sd = ''
+
+        else:
+            return ''
 
     elif 'html5Path' in html:
         if 'html5PathHD' in html:
             html5PathHD = re.compile(
                 r'"html5PathHD":"(.*?)",', re.DOTALL).findall(html)[0]
-
-            html5PathHD = re.findall('..', html5PathHD)
-            url_hd = ''
-            for two in html5PathHD:
-                try:
-                    url_hd = url_hd + obf[two]
-                except:
-                    print 'Erreur désobfuscation URL (dict incomplet)'
+            url_hd = get_obfuscate_url_string(html5PathHD)
 
         if 'html5PathM' in html:
             html5PathM = re.compile(
                 r'"html5PathM":"(.*?)",', re.DOTALL).findall(html)[0]
 
-            html5PathM = re.findall('..', html5PathM)
-            url_sd = ''
-            for two in html5PathM:
-                try:
-                    url_sd = url_sd + obf[two]
-                except:
-                    print 'Erreur désobfuscation URL (dict incomplet)'
+            url_sd = get_obfuscate_url_string(html5PathM)
 
         else:
             html5PathL = re.compile(
                 r'"html5PathL":"(.*?)",', re.DOTALL).findall(html)[0]
 
-            html5PathL = re.findall('..', html5PathL)
-            url_default = ''
-            for two in html5PathL:
-                try:
-                    url_default = url_default + obf[two]
-                except:
-                    print 'Erreur désobfuscation URL (dict incomplet)'
-
-        if globalvar.ADDON.getSetting('allocineQuality') == 'sd':
-            if url_sd != '':
-                return url_sd
-            else:
-                return url_default
-
-        elif globalvar.ADDON.getSetting('allocineQuality') == 'hd':
-            if url_hd != '':
-                return url_hd
-            else:
-                return url_default
-        else:
-            return url_default
+            url_default = get_obfuscate_url_string(html5PathL)
 
     else:
         print 'Erreur : provider vidéo inconnu'
         return ''
+
+    if globalvar.ADDON.getSetting('allocineQuality') == 'sd':
+        if url_sd:
+            return url_sd
+        else:
+            return url_default
+
+    elif globalvar.ADDON.getSetting('allocineQuality') == 'hd':
+        if url_hd:
+            return url_hd
+        else:
+            return url_default
+    else:
+        return url_default
