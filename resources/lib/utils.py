@@ -89,6 +89,13 @@ def init():
     globalvar.dlfolder = globalvar.ADDON.getSetting('dlFolder')
 
 
+def get_random_ua_hdr():
+    ua = user_agents[randint(0, len(user_agents) - 1)]
+    return {
+        'User-Agent': ua
+    }
+
+
 def download_catalog(
         url,
         file_name,

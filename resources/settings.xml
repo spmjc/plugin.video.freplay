@@ -95,6 +95,7 @@
         <setting label="30310" type="labelenum" id="allocineQuality" default="hd" values="sd|hd"/>
         <setting label="30324" type="labelenum" id="france24Quality" default="mp4-mbr" values="flv|mp4|mp4-mbr"/>     
         <setting label="30325" type="labelenum" id="arteQuality" default="HD" values="HD|SD"/>
+        <setting label="30327" type="labelenum" id="6playQuality" default="Auto" values="Auto|Force HD|Force SD"/>
         <setting label="30326" type="bool" id="arteFull" default="false"/>       
         <setting label="30331" type="labelenum" id="la_1ereQuality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>  
         <setting label="30332" type="labelenum" id="france2Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>

@@ -3,6 +3,7 @@
 import os
 import urllib2
 from resources.lib import utils
+from resources.lib import globalvar
 import json
 
 title = ['M6', 'W9', '6ter']
@@ -47,20 +48,15 @@ urlJsonVideo = 'https://pc.middleware.6play.fr/6play/v2/platforms/' \
 urlImg = 'https://images.6play.fr/v1/images/%s/raw'
 
 
-hdr = {
-    'User-Agent': 'Mozilla/5.0'
-}
-
-
 def list_shows(channel, folder):
     shows = []
 
     if folder == 'none':
-        filePath = utils.downloadCatalog(
+        filePath = utils.download_catalog(
             urlRoot % (channel),
             '%s.json' % (channel),
             False,
-            {})
+            random_ua=True)
         filPrgm = open(filePath).read()
         jsonParser = json.loads(filPrgm)
 
@@ -68,7 +64,7 @@ def list_shows(channel, folder):
         # the error format is:
         #   {"error":{"code":403,"message":"Forbidden"}}
         if isinstance(jsonParser, dict) and \
-            'error' in jsonParser.keys():
+                'error' in jsonParser.keys():
             os.remove(filePath)
             raise Exception('Failed to fetch the 6play catalog')
 
@@ -85,7 +81,9 @@ def list_shows(channel, folder):
 
     elif 'category' in folder:
         category = folder.split('|')[1]
-        req = urllib2.Request(urlCategory % (category), headers=hdr)
+        req = urllib2.Request(
+            urlCategory % (category),
+            headers=utils.get_random_ua_hdr())
         filPrgm = urllib2.urlopen(req).read()
         jsonParser = json.loads(filPrgm)
 
@@ -110,8 +108,9 @@ def list_shows(channel, folder):
     elif 'subCategory' in folder:
         programId = folder.split('|')[1]
         programImg = folder.split('|')[2]
-        req = urllib2.Request(urlSubcategory % (programId), headers=hdr)
-        print urlSubcategory % (programId)
+        req = urllib2.Request(
+            urlSubcategory % (programId),
+            headers=utils.get_random_ua_hdr())
         programJson = urllib2.urlopen(req).read()
 
         jsonParser = json.loads(programJson)
@@ -136,9 +135,8 @@ def list_videos(channel, id):
     subCategoryId = id.split('|')[1]
     req = urllib2.Request(
         urlVideos % (programId, subCategoryId),
-        headers=hdr)
+        headers=utils.get_random_ua_hdr())
     programJson = urllib2.urlopen(req).read()
-    print urlVideos % (programId, subCategoryId)
     jsonParser = json.loads(programJson)
 
     for video in jsonParser:
@@ -182,8 +180,7 @@ def getVideoURL(channel, media_id):
 
     req = urllib2.Request(
         urlJsonVideo % (media_id),
-        headers=hdr)
-    print 'getVideoURL URL : ' + urlJsonVideo % (media_id)
+        headers=utils.get_random_ua_hdr())
     videoJson = urllib2.urlopen(req).read()
     jsonParser = json.loads(videoJson)
 
@@ -199,10 +196,51 @@ def getVideoURL(channel, media_id):
                 url2 = asset['full_physical_path'].encode('utf-8')
         else:
             url3 = asset['full_physical_path'].encode('utf-8')
-
+    manifest_url = ''
     if url:
-        return url
+        manifest_url = url
     elif url2:
-        return url2
+        manifest_url = url2
     else:
-        return url3
+        manifest_url = url3
+
+    if globalvar.ADDON.getSetting('6playQuality') == 'Auto':
+        return manifest_url
+
+    req = urllib2.Request(
+        manifest_url,
+        headers=utils.get_random_ua_hdr())
+
+    manifest = urllib2.urlopen(req).read()
+
+    root = os.path.dirname(manifest_url)
+
+    url_sd = ''
+    url_hd = ''
+    url_ultra_sd = ''
+    url_ultra_hd = ''
+
+    lines = manifest.splitlines()
+    for k in range(0, len(lines) - 1):
+        if 'RESOLUTION=400' in lines[k]:
+            url_ultra_sd = root + '/' + lines[k + 1]
+        elif 'RESOLUTION=640' in lines[k]:
+            url_sd = root + '/' + lines[k + 1]
+        elif 'RESOLUTION=720' in lines[k]:
+            url_hd = root + '/' + lines[k + 1]
+        elif 'RESOLUTION=1080' in lines[k]:
+            url_ultra_hd = root + '/' + lines[k + 1]
+
+    if globalvar.ADDON.getSetting('6playQuality') == 'Force HD':
+        if url_ultra_hd:
+            return url_ultra_hd
+        elif url_hd:
+            return url_hd
+        return manifest_url
+
+    elif globalvar.ADDON.getSetting('6playQuality') == 'Force SD':
+        if url_ultra_sd:
+            return url_ultra_sd
+        elif url_sd:
+            return url_sd
+        return manifest_url
