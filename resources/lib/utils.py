@@ -142,27 +142,37 @@ def download_catalog(
     return file_path
 
 
+# def downloadCatalog(url, fileName, force, dicPost, specificHeaders=None):
+#     bDLFile = True
+#     fileName = format_filename(fileName)
+#     iCtlgRefresh = int(globalvar.ADDON.getSetting('ctlgRefresh')) * 60
+#     if not os.path.exists(globalvar.CACHE_DIR):
+#         os.makedirs(globalvar.CACHE_DIR, mode=0777)
+#     filePath = os.path.join(globalvar.CACHE_DIR, fileName)
+#     if os.path.exists(filePath):
+#         mtime = os.stat(filePath).st_mtime
+#         bDLFile = (time.time() - mtime > iCtlgRefresh)
+#     else:
+#         bDLFile = True
+#     if bDLFile:
+#         if dicPost:
+#             data = urllib.urlencode(dicPost)
+#             print data
+#             urllib.urlretrieve(url, filePath, None, data)
+#         else:
+#             urllib.urlretrieve(url, filePath)
+#         log.logDLFile(url)
+#     return filePath
+
+
+# Compatibilité avec les anciennes chaines
 def downloadCatalog(url, fileName, force, dicPost, specificHeaders=None):
-    bDLFile = True
-    fileName = format_filename(fileName)
-    iCtlgRefresh = int(globalvar.ADDON.getSetting('ctlgRefresh')) * 60
-    if not os.path.exists(globalvar.CACHE_DIR):
-        os.makedirs(globalvar.CACHE_DIR, mode=0777)
-    filePath = os.path.join(globalvar.CACHE_DIR, fileName)
-    if os.path.exists(filePath):
-        mtime = os.stat(filePath).st_mtime
-        bDLFile = (time.time() - mtime > iCtlgRefresh)
-    else:
-        bDLFile = True
-    if bDLFile:
-        if dicPost:
-            data = urllib.urlencode(dicPost)
-            print data
-            urllib.urlretrieve(url, filePath, None, data)
-        else:
-            urllib.urlretrieve(url, filePath)
-        log.logDLFile(url)
-    return filePath
+    return download_catalog(
+        url=url,
+        file_name=fileName,
+        force_dl=force,
+        post_dic=dicPost,
+        specific_headers=specificHeaders)
 
 
 def format_filename(s):
