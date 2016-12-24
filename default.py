@@ -13,7 +13,7 @@ import xbmcaddon
 import resources.lib.globalvar as globalvar
 import resources.lib.utils as utils
 import resources.lib.channels.favourites as favourites
-import resources.lib.commondownloader as commondownloader 
+import resources.lib.commondownloader as commondownloader
 import resources.lib.log as log
 
 base_url = sys.argv[0]
@@ -143,10 +143,11 @@ else:
 
     elif mode[0] == 'play':
         url = globalvar.channels[channel][1].getVideoURL(channel, param)
-        programName = args['name'][0]
-        log.logGA(channel, param, programName)
-        item = xbmcgui.ListItem(path=url)
-        xbmcplugin.setResolvedUrl(addon_handle, True, item)
+        if url:
+            programName = args['name'][0]
+            log.logGA(channel, param, programName)
+            item = xbmcgui.ListItem(path=url)
+            xbmcplugin.setResolvedUrl(addon_handle, True, item)
 
     elif mode[0] == 'Search':
         keyboard = xbmc.Keyboard('', globalvar.LANGUAGE(33023).encode('utf-8'))
@@ -202,3 +203,4 @@ else:
         handle=int(addon_handle),
         succeeded=True,
         updateListing=False)
+print 'fin'

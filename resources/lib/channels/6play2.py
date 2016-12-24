@@ -4,6 +4,7 @@ import os
 import urllib2
 from resources.lib import utils
 from resources.lib import globalvar
+from resources.lib import log
 import json
 
 title = ['M6', 'W9', '6ter']
@@ -38,6 +39,9 @@ urlVideos = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
             'csa=6&with=clips,freemiumpacks&type=vi,vc,playlist&limit=9999'\
             '&offset=0&subcat=%s&sort=subcat'
 
+urlVideos2 = 'https://pc.middleware.6play.fr/6play/v2/platforms/' \
+             'm6group_web/services/6play/programs/%s/videos?' \
+             'csa=6&with=clips,freemiumpacks&type=vi&limit=9999&offset=0'
 
 # Pour aller sur la page de la video
 urlJsonVideo = 'https://pc.middleware.6play.fr/6play/v2/platforms/' \
@@ -125,6 +129,13 @@ def list_shows(channel, folder):
                 programImg,
                 'shows'])
 
+        shows.append([
+                channel,
+                programId + '|' + 'null',
+                'Toutes les vidéos',
+                programImg,
+                'shows'])
+
     return shows
 
 
@@ -133,8 +144,12 @@ def list_videos(channel, id):
 
     programId = id.split('|')[0]
     subCategoryId = id.split('|')[1]
+    if subCategoryId == 'null':
+        url = urlVideos2 % programId
+    else:
+        url = urlVideos % (programId, subCategoryId)
     req = urllib2.Request(
-        urlVideos % (programId, subCategoryId),
+        url,
         headers=utils.get_random_ua_hdr())
     programJson = urllib2.urlopen(req).read()
     jsonParser = json.loads(programJson)
@@ -145,10 +160,15 @@ def list_videos(channel, id):
         title = video['title'].encode('utf-8')
         duration = video['clips'][0]['duration']
         description = video['description'].encode('utf-8')
-        dateDiffusion = video['clips'][0]['product']['last_diffusion']
-        dateDiffusion = dateDiffusion.encode('utf-8')
-        dateDiffusion = dateDiffusion[:10]
-        year = dateDiffusion[:4]
+        try:
+            dateDiffusion = video['clips'][0]['product']['last_diffusion']
+            dateDiffusion = dateDiffusion.encode('utf-8')
+            dateDiffusion = dateDiffusion[:10]
+            year = dateDiffusion[:4]
+
+        except:
+            dateDiffusion = ''
+            year = ''
         img = ''
 
         programImgs = video['clips'][0]['images']
@@ -177,7 +197,6 @@ def list_videos(channel, id):
 
 
 def getVideoURL(channel, media_id):
-
     req = urllib2.Request(
         urlJsonVideo % (media_id),
         headers=utils.get_random_ua_hdr())
@@ -204,14 +223,17 @@ def getVideoURL(channel, media_id):
     else:
         manifest_url = url3
 
-    if globalvar.ADDON.getSetting('6playQuality') == 'Auto':
-        return manifest_url
-
     req = urllib2.Request(
         manifest_url,
         headers=utils.get_random_ua_hdr())
-
     manifest = urllib2.urlopen(req).read()
+    if 'drm' in manifest:
+        msg = 'Vidéo protégée par DRM'
+        log.logError(msg, msg)
+        return ''
+
+    if globalvar.ADDON.getSetting('6playQuality') == 'Auto':
+        return manifest_url
 
     root = os.path.dirname(manifest_url)
 
