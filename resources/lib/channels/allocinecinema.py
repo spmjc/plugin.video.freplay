@@ -483,68 +483,15 @@ def list_shows(channel, param):
             categories_name = param_list[4]
         url_long = param_list[2]
 
-        # Si c'est la dernière page avant l'accès aux vidéos
-        if categories_name == 'shows':
-            # On regarde s'il y a plusieurs pages
-            page_type = param_list[3]
-            last_page = 0
-            url = debug_url(url_long)
-            req = urllib2.Request(url, headers=get_random_headers())
-            html = urllib2.urlopen(req).read()
-            soup = bs(html, "html.parser")
-            soup_pager = soup.find(
-                'div',
-                attrs={'class': 'pager'})
-            if soup_pager is not None and len(soup_pager) > 0:
-                soup_pager_li = soup_pager.find('ul').find_all('li')
-                last_page = soup_pager_li[len(soup_pager_li) - 1]
-                if last_page.find('span'):
-                    last_page = last_page.find(
-                        'span').get_text().encode('utf-8')
-                elif last_page.find('a'):
-                    last_page = last_page.find(
-                        'a').get_text().encode('utf-8')
-
-                last_page = int(last_page)
-            soup_pager = soup.find(
-                'div',
-                attrs={'class': 'pagination-item-holder'})
-            if soup_pager is not None and len(soup_pager) > 0:
-                soup_pager_a = soup_pager.find_all('a')
-                if len(soup_pager_a) == 0:
-                    soup_pager_a = soup_pager.find_all('span')
-
-                last_page = soup_pager_a[len(soup_pager_a) - 1]
-                last_page = last_page.get_text().encode('utf-8')
-                last_page = int(last_page)
-
-            if last_page == 0:
-                shows.append([
-                    channel,
-                    url_long + '|' + page_type,
-                    'Page 1',
-                    '',
-                    'shows'])
-            else:
-                for k in range(0, last_page):
-                    url = url_long + '/?page=' + str(k + 1)
-                    title = 'Page ' + str(k + 1)
-                    shows.append([
-                        channel,
-                        url + '|' + page_type,
-                        title,
-                        '',
-                        'shows'])
-
         # Si on a un filtrage
-        elif categories_name == 'ages' \
+        if categories_name == 'ages' \
                 or categories_name == 'genres' \
                 or categories_name == 'years' \
                 or categories_name == 'genres_2' \
                 or categories_name == 'types' \
                 or categories_name == 'versions' \
                 or categories_name == 'pays':
-
+            # print 'FILTRAGE'
             key = ''
             next_filt = 'shows'
             if categories_name == 'ages':
@@ -608,7 +555,7 @@ def list_shows(channel, param):
                     else:
                         url = url_root + url
 
-                    if key == 'show':
+                    if key == 'show' or next_filt == 'shows':
                         next_param = url + '|' + page_type
                         next_func = 'shows'
                     else:
@@ -625,6 +572,7 @@ def list_shows(channel, param):
 
         #  Sinon on a encore des catégories à parcourir
         else:
+            # print 'ENCORE DES CATEGORIES A PARCOURIR'
             categories = sub_categories[categories_name]
             for category in categories:
                 title = category[0]
@@ -637,23 +585,32 @@ def list_shows(channel, param):
                     url = url_long + url_short
 
                 next_categories = category[3]
-                shows.append([
-                    channel,
-                    'sub|' + next_categories + '|' + url + '|' + page_type,
-                    title,
-                    '',
-                    'folder'])
+
+                if next_categories == 'shows':
+                    shows.append([
+                        channel,
+                        url + '|' + page_type,
+                        title,
+                        '',
+                        'shows'])
+                else:
+                    shows.append([
+                        channel,
+                        'sub|' + next_categories + '|' + url + '|' + page_type,
+                        title,
+                        '',
+                        'folder'])
     return shows
 
 
 def list_videos(channel, show_url):
     videos = []
     param_list = show_url.split('|')
-    url = param_list[0]
-    url = debug_url(url)
+    page_url = param_list[0]
+    page_url = debug_url(page_url)
     page_type = param_list[1]
 
-    req = urllib2.Request(url, headers=get_random_headers())
+    req = urllib2.Request(page_url, headers=get_random_headers())
     html = urllib2.urlopen(req).read()
     soup = bs(html, "html.parser")
 
@@ -681,7 +638,11 @@ def list_videos(channel, show_url):
             attrs=page_type_attrs)
 
         for soup_film in soup_films:
-            title = soup_film.find('a').get_text().encode('utf-8')
+            try:
+                title = soup_film.find('a').get_text().encode('utf-8')
+            except:
+                title = soup_film.find(
+                    'h2', class_='title').get_text().encode('utf-8')
             title = title.replace('\n', '').replace('\r', '')
             img = ''
             if soup_film.find('img').has_attr('data-attr'):
@@ -744,13 +705,15 @@ def list_videos(channel, show_url):
             if page_type == 'page_type_4':
                 box_office = soup_film.find(
                     'div',
-                    attrs={'class': 'entries_inner'}).get_text().encode('utf-8')
+                    attrs={'class': 'entries_inner'}
+                ).get_text().encode('utf-8')
                 description += box_office
 
             try:
                 sortie = soup_film.find(
                     'span',
-                    attrs={'itemprop': 'datePublished'}).get_text().encode('utf-8')
+                    attrs={'itemprop': 'datePublished'}
+                ).get_text().encode('utf-8')
                 description += 'Date de sortie : ' + sortie
             except:
                 pass
@@ -843,23 +806,26 @@ def list_videos(channel, show_url):
             try:
                 title = soup_film.find(
                     'a',
-                    attrs={'class': 'meta-title-link'}).get_text().encode('utf-8')
+                    attrs={'class': 'meta-title-link'}
+                ).get_text().encode('utf-8')
             except:
                 title = soup_film.find(
                     'span',
-                    attrs={'class': 'meta-title-link'}).get_text().encode('utf-8')
+                    attrs={'class': 'meta-title-link'}
+                ).get_text().encode('utf-8')
             title = title.replace('\n', '').replace('\r', '')
             img = soup_film.find(
                 'img',
                 attrs={'class': 'thumbnail-img'})['data-src'].encode('utf-8')
 
-            try:
-                url_soup = soup_film.find('a', attrs={'class': 'button button-primary'})
-
-            except:
+            url_soup = soup_film.find(
+                'a',
+                attrs={'class': 'button button-primary'})
+            if not url_soup:
                 url_soup = soup_film.find(
                     'span',
-                    attrs={'class': 'button-primary'})
+                    class_='button-primary')
+
             url = get_obfuscate_url(url_soup)
 
             description = ''
@@ -868,12 +834,12 @@ def list_videos(channel, show_url):
                 'div',
                 attrs={'class': 'meta-body-info'}).get_text().encode('utf-8')
             main_infos = " ".join(main_infos.split())
-            print main_infos
             description += main_infos
 
             reals = soup_film.find(
                 'div',
-                attrs={'class': 'meta-body-direction'}).get_text().encode('utf-8')
+                attrs={'class': 'meta-body-direction'}
+            ).get_text().encode('utf-8')
             reals = " ".join(reals.split())
             reals = '\n\n' + reals
             description += reals
@@ -895,11 +861,9 @@ def list_videos(channel, show_url):
                 synopsis = '\n\n' + synopsis
                 description += synopsis
 
-
             lighten = soup_film.find_all(
                 'span',
                 attrs={'class': 'lighten'})
-
 
             stars = soup_film.find_all(
                 'div',
@@ -908,7 +872,8 @@ def list_videos(channel, show_url):
             try:
                 starts_press = stars[0].find(
                     'span',
-                    attrs={'class': 'stareval-note'}).get_text().encode('utf-8')
+                    attrs={'class': 'stareval-note'}
+                ).get_text().encode('utf-8')
                 description += '\n\nNote presse : ' + " ".join(starts_press.split()) + '/5'
             except:
                 pass
@@ -916,7 +881,8 @@ def list_videos(channel, show_url):
             try:
                 starts_spact = stars[1].find(
                     'span',
-                    attrs={'class': 'stareval-note'}).get_text().encode('utf-8')
+                    attrs={'class': 'stareval-note'}
+                ).get_text().encode('utf-8')
                 description += '\nNote spectateurs : ' + " ".join(starts_spact.split()) + '/5'
             except:
                 pass
@@ -934,12 +900,68 @@ def list_videos(channel, show_url):
                 infoLabels,
                 'play'])
 
+    last_page = 0
+    current_page = 1
+    soup_pager = soup.find(
+        'div',
+        attrs={'class': 'pager'})
+    if soup_pager is not None and len(soup_pager) > 0:
+        soup_pager_li = soup_pager.find('ul').find_all('li')
+        last_page = soup_pager_li[len(soup_pager_li) - 1]
+        if last_page.find('span'):
+            last_page = last_page.find(
+                'span').get_text().encode('utf-8')
+        elif last_page.find('a'):
+            last_page = last_page.find(
+                'a').get_text().encode('utf-8')
+
+        for page in soup_pager_li:
+            if page.find('span') and not page.find('span').has_attr('class'):
+                current_page = page.find(
+                    'span').get_text().encode('utf-8')
+
+        current_page = int(current_page)
+        last_page = int(last_page)
+    soup_pager = soup.find(
+        'div',
+        attrs={'class': 'pagination-item-holder'})
+    if soup_pager is not None and len(soup_pager) > 0:
+        soup_pager_a = soup_pager.find_all('a')
+        if len(soup_pager_a) == 0:
+            soup_pager_a = soup_pager.find_all('span')
+
+        last_page = soup_pager_a[len(soup_pager_a) - 1]
+        last_page = last_page.get_text().encode('utf-8')
+        last_page = int(last_page)
+
+        for page in soup_pager_a:
+            if 'current-item' in page['class']:
+                current_page = page.get_text().encode('utf-8')
+                current_page = int(current_page)
+
+    # print 'CURRENT_PAGE : ' + str(current_page)
+    # print 'LAST-PAGE : ' + str(last_page)
+    if current_page < last_page:
+        if 'page' in page_url:
+            next_url = page_url[:-1] + str(current_page + 1)
+        else:
+            next_url = page_url + '/?page=' + str(current_page + 1)
+        title = 'Page suivante (page ' + str(current_page + 1) + ')'
+        # print 'NEXT URL PAGE '+ next_url
+        videos.append([
+            channel,
+            next_url + '|' + page_type,
+            title,
+            '',
+            {},
+            'shows'])
+
     return videos
 
 
 def getVideoURL(channel, url_video):
     url = url_root + url_video
-    print 'URL_VIDEO : ' + url
+    # print 'URL_VIDEO : ' + url
     html = urllib2.urlopen(url).read()
     soup = bs(html, "html.parser")
 
@@ -952,7 +974,7 @@ def getVideoURL(channel, url_video):
         'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]' +
         '|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
         soup_urls)
-    print 'URLS_VIDEOS : ' + repr(urls)
+    # print 'URLS_VIDEOS : ' + repr(urls)
     url_video = ''
     if len(urls) == 1:
         return urls[0]
