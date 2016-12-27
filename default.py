@@ -16,6 +16,13 @@ import resources.lib.channels.favourites as favourites
 import resources.lib.commondownloader as commondownloader
 import resources.lib.log as log
 
+try:
+    import subprocess
+except ImportError:
+    print 'To download m3u8 videos you have to'\
+          ' import subprocess and install ffmpeg binary'
+
+
 base_url = sys.argv[0]
 addon_handle = int(sys.argv[1])
 args = urlparse.parse_qs(sys.argv[2][1:])
@@ -171,12 +178,49 @@ else:
             notify(globalvar.LANGUAGE(33024).encode('utf-8'), channel)
         else:
             url = globalvar.channels[channel][1].getVideoURL(channel, param)
+            # print 'URL à DL : ' + repr(url)
             extensionStart = url.rfind('.')
             extension = url[extensionStart:len(url)].upper()
             if extension == '.MP4':
                 fileName = utils.format_filename(args['name'][0] + '.mp4')
                 commondownloader.download(
                     url, os.path.join(globalvar.dlfolder, fileName))
+
+            elif extension == '.M3U8' or extension == '.M3U':
+                try:
+                    path = '/usr/local/bin:/usr/local/sbin:'\
+                           '/usr/bin:/bin:/usr/sbin:/sbin'
+
+                    fileName = utils.format_filename(args['name'][0] + '.mkv')
+
+                    file_path = os.path.join(globalvar.dlfolder, fileName)
+                    file_path = file_path.replace(' ', '\ ')
+                    cmd = 'ffmpeg -i "' + url + '"'\
+                          ' -c copy ' + file_path
+
+                    notify(
+                        'Téléchargement démarré',
+                        channel)
+                    p = subprocess.Popen(
+                        cmd,
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE,
+                        env={'PATH': path},
+                        shell=True
+                    )
+                    p.wait()
+                    notify(
+                        'Téléchargement terminé',
+                        channel)
+                    (output, err) = p.communicate()
+                    print "Output subprocess : " + output
+                    print "Error subprocess : " + err
+                except:
+                    notify(
+                        'To download m3u8 videos you have to'
+                        ' import subprocess and install ffmpeg binary',
+                        channel)
+
             else:
                 notify(
                     extension + globalvar.LANGUAGE(33025).encode('utf-8'),
@@ -203,4 +247,3 @@ else:
         handle=int(addon_handle),
         succeeded=True,
         updateListing=False)
-print 'fin'
