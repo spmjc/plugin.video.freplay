@@ -43,6 +43,11 @@
         <setting label="TNTV" type="number" id="disptntv" default="28"/>
         <setting label="Ushuaia TV" type="number" id="dispushuaiatv" default="29"/>  
 
+    <!--- Chaînes Belges -->
+    <setting type="sep"/>
+    <setting label="30115" type="lsep"/>
+        <setting label="RTBF Auvio" type="number" id="disprtbf" default="35"/>
+
     <!--- Chaînes suisses -->
     <setting type="sep"/>
     <setting label="30111" type="lsep"/>
