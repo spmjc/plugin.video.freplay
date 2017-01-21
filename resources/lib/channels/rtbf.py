@@ -76,7 +76,6 @@ def list_shows(channel, param):
 
 
 def list_videos(channel, show_url):
-    print 'LIST VIDEOS url : ' + show_url
     videos = []
     html = utils.get_webcontent(show_url)
     page_soup = bs(html, "html.parser")
@@ -103,8 +102,7 @@ def list_videos(channel, show_url):
             r'(.*?)min(.*?)s', re.DOTALL).findall(duration_soup)[0]
         duration = int(duration_soup[0]) * 60 + int(duration_soup[1])
         time = article.find('time')['datetime'].encode('utf-8')
-        time = time[:10]
-        print time
+        time = time[:10]/60
 
         infoLabels = {
             "Title": title + '  ' + time,
@@ -126,7 +124,6 @@ def list_videos(channel, show_url):
 
 
 def getVideoURL(channel, url_video):
-    print 'URL_VIDEO : ' + url_video
     video_id = url_video[-7:]
     url = 'http://www.rtbf.be/auvio/embed/media?id=' + video_id
     html = utils.get_webcontent(url)

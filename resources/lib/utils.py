@@ -104,6 +104,7 @@ def download_catalog(
         post_dic={},
         random_ua=False,
         specific_headers={}):
+    print url
     file_name = format_filename(file_name)
     iCtlgRefresh = int(globalvar.ADDON.getSetting('ctlgRefresh')) * 60
 

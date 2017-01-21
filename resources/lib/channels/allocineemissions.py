@@ -2,7 +2,7 @@
 import re
 from resources.lib import globalvar
 from bs4 import BeautifulSoup as bs
-import YDStreamExtractor
+#import YDStreamExtractor
 from resources.lib import utils
 
 

@@ -1,3 +1,9 @@
+Version 0.6.6
+  -Fixed issue while charging 6play lists
+  -Fixed duration for 6play
+  -Added RTBF Auvio
+  -Fixed Allocine
+
 Version 0.6.5
   -Added M6 group channels
   -Added INA (Thanks Gdusart)

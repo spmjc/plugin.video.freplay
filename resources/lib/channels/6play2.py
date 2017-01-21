@@ -15,14 +15,14 @@ readyForUse = True
 # (Info, Divertissement, Séries ...)
 # On récuère un id
 urlRoot = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
-          'm6group_web/services/%sreplay/folders?limit=10000&offset=0'
+          'm6group_web/services/%sreplay/folders?limit=999&offset=0'
 
 # Pour connaitre les programmes de cette catégorie
 # (Le meilleur patissier, La france à un incroyable talent, ...)
 # On récupère un id
 urlCategory = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
               'm6group_web/services/6play/folders/%s/programs' \
-              '?limit=1000&offset=0&csa=9&with=parentcontext'
+              '?limit=999&offset=0&csa=9&with=parentcontext'
 
 # Pour connaitres les dossiers de ce programme
 # (Saison 5, Les meilleurs moments, les recettes pas à pas, ...)
@@ -36,12 +36,12 @@ urlSubcategory = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
 # (Episode 1, Episode 2, ...)
 urlVideos = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
             'm6group_web/services/6play/programs/%s/videos?' \
-            'csa=6&with=clips,freemiumpacks&type=vi,vc,playlist&limit=9999'\
+            'csa=6&with=clips,freemiumpacks&type=vi,vc,playlist&limit=999'\
             '&offset=0&subcat=%s&sort=subcat'
 
 urlVideos2 = 'https://pc.middleware.6play.fr/6play/v2/platforms/' \
              'm6group_web/services/6play/programs/%s/videos?' \
-             'csa=6&with=clips,freemiumpacks&type=vi&limit=9999&offset=0'
+             'csa=6&with=clips,freemiumpacks&type=vi&limit=999&offset=0'
 
 # Pour aller sur la page de la video
 urlJsonVideo = 'https://pc.middleware.6play.fr/6play/v2/platforms/' \
@@ -158,7 +158,7 @@ def list_videos(channel, id):
         videoId = str(video['id'])
 
         title = video['title'].encode('utf-8')
-        duration = video['clips'][0]['duration']
+        duration = video['clips'][0]['duration']/60
         description = video['description'].encode('utf-8')
         try:
             dateDiffusion = video['clips'][0]['product']['last_diffusion']
