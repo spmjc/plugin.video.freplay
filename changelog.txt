@@ -1,3 +1,6 @@
+Version 0.6.7
+  -Fixed NRJ12, Cherie25
+  
 Version 0.6.6
   -Fixed issue while charging 6play lists
   -Fixed duration for 6play
