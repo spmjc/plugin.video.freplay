@@ -1,3 +1,6 @@
+Version 0.6.8
+  -Reverted to TF1 API
+
 Version 0.6.7
   -Fixed NRJ12, Cherie25
   

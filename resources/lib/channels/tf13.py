@@ -12,7 +12,7 @@ import re
 
 title = ['TF1', 'NT1', 'HD1', 'TMC', 'XTRA']
 img = ['tf1', 'nt1', 'hd1', 'tmc', 'xtra']
-readyForUse = True
+readyForUse = False
 
 urlRoot = "http://www.tf1.fr/"
 

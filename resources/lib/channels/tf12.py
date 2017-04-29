@@ -10,7 +10,7 @@ from resources.lib import globalvar
 
 title=['TF1','NT1','HD1','TMC','XTRA']
 img=['tf1','nt1','hd1','tmc','xtra']
-readyForUse=False          
+readyForUse=True          
 
 urlCatalog='http://api.mytf1.tf1.fr/mobile/init?device=ios-tablet'
 
