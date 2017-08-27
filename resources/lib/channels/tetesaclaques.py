@@ -124,12 +124,10 @@ def parse_clips_page(soup, results, channel):
 
 
 #getVideoURL(channel,video_URL)**: Retourne l'URL qui devra etre lu par KODI
-def getVideoURL(channel,video_URL):
-    tempfile = video_URL
-    print("VIDEO URL : " + video_URL)
-    file_path = utils.downloadCatalog(video_URL, tempfile, bypass_cache, {})
+def getVideoURL(channel,video_url):
+    file_path = utils.downloadCatalog(video_url, video_url, bypass_cache, {})
     html = open(file_path).read()
     videoId  = video_id_re.search(html).group(1)
-    result =  'https://youtu.be/' + videoId
+    result = 'plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid='+videoId;
     print("RESULT : " + result)
     return result;
