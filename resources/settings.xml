@@ -78,6 +78,7 @@
         <setting label="Wat.tv" type="number" id="dispwattv" default="77"/>  
         <setting label="XTra" type="number" id="dispxtra" default="78"/>
         <setting label="BFM Business" type="number" id="dispbfmbusiness" default="79"/>
+        <setting label="Têtes à claques" type="number" id="tetesaclaques" default="80"/>
 
     </category>
 
