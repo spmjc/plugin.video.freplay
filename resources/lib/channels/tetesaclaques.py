@@ -7,8 +7,7 @@ import re
 title       = ['Têtes à claques']
 img         = ['tac']
 readyForUse = True
-
-bypass_cache = True
+bypass_cache = False
 
 root_url         = "https://www.tetesaclaques.tv"
 categories_url     = root_url
