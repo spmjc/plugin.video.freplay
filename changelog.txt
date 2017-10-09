@@ -1,3 +1,6 @@
+Version 0.6.9
+  -Fixzd NRJ12
+  
 Version 0.6.8
   -Reverted to TF1 API
 

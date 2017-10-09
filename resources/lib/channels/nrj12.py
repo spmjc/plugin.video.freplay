@@ -33,13 +33,14 @@ def list_shows(channel,folder):
       html=' '.join(html.split())
       print html
       
-      match = re.compile(r'<h2 class="linkProgram-title">(.*?)</h2>(.*?)<a href="(.*?)" class="linkProgram-more"(.*?)<img src="(.*?)" class="program-img"',re.DOTALL).findall(html)
-
+      match = re.compile(r'<h2 class="linkProgram-title"> <a href="(.*?)">(.*?)</a> </h2>',re.DOTALL).findall(html)
+      print 'rr'
       if match:
-        for title,empty1,link,empty2,img in match:
+        for link,title in match:
+          print 'ff'
           title = common.replaceHTMLCodes(title)
           title = title.title()
-          shows.append( [channel,link, title.encode("utf-8") , img,'shows'] )                           
+          shows.append( [channel,link, title.encode("utf-8") , '','shows'] )                           
                      
     return shows           
 
@@ -52,14 +53,14 @@ def list_videos(channel,link):
     html=' '.join(html.split())    
     print html
     
-    match = re.compile(r'<img itemprop="thumbnailUrl" src="(.*?)" class="thumbnail-img embed-responsive-item"(.*?)<h3 class="thumbnail-title" itemprop="name"> <a href="(.*?)">(.*?)</a> </h3>',re.DOTALL).findall(html)
+    match = re.compile(r'<h3 class="thumbnailReplay-title" itemprop="name"> <a href="(.*?)">(.*?)</a> </h3>',re.DOTALL).findall(html)
 
     if match:
-      for img,empty,link,title in match:
+      for link,title in match:
         title = common.replaceHTMLCodes(title)
         title = title.title()                          
         infoLabels={ "Title": title}
-        videos.append( [channel, link , title , img,infoLabels,'play'] )
+        videos.append( [channel, link , title , '',infoLabels,'play'] )
     else:         
       match = re.compile(r'<meta itemprop="name" content="(.*?)" />',re.DOTALL).findall(html) 
       if match:
