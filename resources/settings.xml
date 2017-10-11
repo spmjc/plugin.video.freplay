@@ -28,7 +28,7 @@
         <setting label="LCP" type="number" id="displcp" default="13"/>
         <setting label="France 4" type="number" id="dispfrance4" default="14"/>
         <setting label="BFM TV" type="number" id="dispbfmtv" default="15"/>
-        <setting label="iTele" type="number" id="dispitele" default="16"/>
+        <setting label="cNews" type="number" id="dispcnews" default="16"/>
         <setting label="CSTAR" type="number" id="dispcstar" default="17"/>
         <setting label="Gulli" type="number" id="dispgulli" default="18"/>
         <setting label="France Ô" type="number" id="dispfranceo" default="19"/>

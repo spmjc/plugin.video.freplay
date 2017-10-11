@@ -6,7 +6,7 @@ from resources.lib import globalvar
 
 title       = ['L\'Equipe.fr']
 img         = ['lequipefr']
-readyForUse = True
+readyForUse = False
 
 def list_shows(channel,param):  
   shows      = []           

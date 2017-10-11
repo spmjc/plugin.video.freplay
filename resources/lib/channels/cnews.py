@@ -2,22 +2,22 @@
 import urllib2
 import simplejson as json
 
-title       = ['iTélé']
-img         = ['itele']
+title       = ['cNews']
+img         = ['cnews']
 readyForUse = True
 
 def list_shows(channel,folder):
     shows      = [] 
-    urls = {'http://service.itele.fr/iphone/topnews':'A la une', 
-        'http://service.itele.fr/iphone/categorie_news?query=france':'France',
-        'http://service.itele.fr/iphone/categorie_news?query=monde':'Monde',
-        'http://service.itele.fr/iphone/categorie_news?query=politique':'Politique',
-        'http://service.itele.fr/iphone/categorie_news?query=justice':'Justice',
-        'http://service.itele.fr/iphone/categorie_news?query=economie':'Economie',
-        'http://service.itele.fr/iphone/categorie_news?query=sport':'Sport',
-        'http://service.itele.fr/iphone/categorie_news?query=culture':'Culture',
-        'http://service.itele.fr/iphone/categorie_news?query=insolite':'Insolite',
-        'http://service.itele.fr/iphone/dernieres_emissions':'Dernières émissions'
+    urls = {'http://service.cnews.fr/iphone/topnews':'A la une', 
+        'http://service.cnews.fr/iphone/categorie_news?query=france':'France',
+        'http://service.cnews.fr/iphone/categorie_news?query=monde':'Monde',
+        'http://service.cnews.fr/iphone/categorie_news?query=politique':'Politique',
+        'http://service.cnews.fr/iphone/categorie_news?query=justice':'Justice',
+        'http://service.cnews.fr/iphone/categorie_news?query=economie':'Economie',
+        'http://service.cnews.fr/iphone/categorie_news?query=sport':'Sport',
+        'http://service.cnews.fr/iphone/categorie_news?query=culture':'Culture',
+        'http://service.cnews.fr/iphone/categorie_news?query=insolite':'Insolite',
+        'http://service.cnews.fr/iphone/dernieres_emissions':'Dernières émissions'
         }
     for url,title in urls.iteritems():
         shows.append([channel,url,title,'','shows'])

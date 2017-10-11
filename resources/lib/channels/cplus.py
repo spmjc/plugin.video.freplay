@@ -9,9 +9,9 @@ img = ['cplus']
 readyForUse = True
 
 urlToken = 'http://service.mycanal.fr/authenticate.json/' \
-           'Android_Tab/1.1?highResolution=1'
+           'Android_Tab/1.7?highResolution=1'
 
-urlShow = 'http://service.mycanal.fr/page/%s/1595.json'
+urlShow = 'http://service.mycanal.fr/page/%s/4578.json?cache=60000'
 
 
 def get_token():
