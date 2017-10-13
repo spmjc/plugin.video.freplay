@@ -8,7 +8,7 @@ from resources.lib import utils
 
 title = ['Allocine Émissions']
 img = ['allocineemissions']
-readyForUse = True
+readyForUse = False
 
 url_root = 'http://www.allocine.fr'
 

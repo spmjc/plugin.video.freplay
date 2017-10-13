@@ -8,7 +8,7 @@ from random import randint
 
 title = ['Allocine Cinéma']
 img = ['allocinecinema']
-readyForUse = True
+readyForUse = False
 
 url_root = 'http://www.allocine.fr'
 

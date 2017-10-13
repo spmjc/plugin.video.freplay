@@ -1,5 +1,5 @@
 Version 0.6.10
-  -Fixzd Canal +
+  -Fixed Canal +
   -Renamed iTele to cNews
   -Fixed l'equipe TV
   
