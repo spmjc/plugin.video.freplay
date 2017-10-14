@@ -51,12 +51,12 @@ def getVideoURL(channel,video_id):
       q = globalvar.ADDON.getSetting('lequipefrQuality')
       if q == '0':
         # Highest Quality
-        video_url = video_urls[0]
+        video_url = video_urls[video_url_len - 1]
       elif q == '1':
         # Medium Quality
         video_url = video_urls[(int)(video_url_len / 2)]
       elif q == '2':
         # Lowest Quality
-        video_url = video_urls[video_url_len - 1] 
+        video_url = video_urls[0] 
     return video_url
  

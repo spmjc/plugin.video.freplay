@@ -58,7 +58,7 @@ def list_shows(channel,folder):
           if folder.find('bandes-annonces')!=-1: 
             videoId=re.findall('player_gen_cmedia=(.*?)&cfilm',item[0])[0]   
             infoLabels={ "Title": formatTitle(item[1])}
-            shows.append( [channel, videoId, formatTitle(item[1]), image,'play'] )   
+            shows.append( [channel, videoId, formatTitle(item[1]), image,'folder'] )   
           else:        
             shows.append( [channel,item[0], formatTitle(item[1]) ,image ,'folder'] )
           j=j+1
