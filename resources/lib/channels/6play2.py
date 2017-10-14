@@ -22,7 +22,7 @@ urlRoot = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
 # On récupère un id
 urlCategory = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
               'm6group_web/services/6play/folders/%s/programs' \
-              '?limit=999&offset=0&csa=9&with=parentcontext'
+              '?limit=999&offset=0&csa=1&with=parentcontext'
 
 # Pour connaitres les dossiers de ce programme
 # (Saison 5, Les meilleurs moments, les recettes pas à pas, ...)
@@ -46,7 +46,7 @@ urlVideos2 = 'https://pc.middleware.6play.fr/6play/v2/platforms/' \
 # Pour aller sur la page de la video
 urlJsonVideo = 'https://pc.middleware.6play.fr/6play/v2/platforms/' \
                'm6group_web/services/6play/videos/%s'\
-               '?csa=9&with=clips,freemiumpacks'
+               '?csa=6&with=clips,freemiumpacks'
 
 
 urlImg = 'https://images.6play.fr/v1/images/%s/raw'
