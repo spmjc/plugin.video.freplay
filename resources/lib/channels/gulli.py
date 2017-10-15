@@ -44,7 +44,7 @@ def list_shows(channel,folder):
 
 def getVideoURL(channel,id):
     html=utils.get_webcontent(urlVideo % id)
-    url= re.findall("file:\"(.*\/"+id[3:len(id)]+"\/.*)\"",html) [0]
+    url= re.findall("file:\s?\"(.*\/"+id[3:len(id)]+"\/.*\.mp4)\"",html) [0]
     return url
 
 def list_videos(channel,param):
