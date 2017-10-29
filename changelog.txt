@@ -1,3 +1,9 @@
+Version 0.6.11
+  -Added Jeux Video.com
+  -Added Tetes a claques (merci gdusart)
+  -Fixed Gully (Merci mperreir)
+  -Fixed M6 (Merci jeangu)
+  
 Version 0.6.10
   -Fixed Canal +
   -Renamed iTele to cNews
