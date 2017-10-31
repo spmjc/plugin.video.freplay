@@ -90,7 +90,7 @@ def list_videos(channel,folder):
    
   match = re.compile(r'<h3 class="title "> <span > <a href="/video/video-(.*?)/" itemprop="url">(.*?)</a> </span> </h3>',re.DOTALL).findall(html) 
   if match:
-    for link,title in match:
+    for idVideo,title in match:
       title=title.replace('<strong>','').replace('</strong>','')
       infoLabels={ "Title": title}
       videos.append( [channel, idVideo , title , '',infoLabels,'play'] )  

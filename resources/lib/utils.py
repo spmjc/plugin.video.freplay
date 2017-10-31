@@ -105,6 +105,7 @@ def download_catalog(
         random_ua=False,
         specific_headers={}):
     print url
+    print 'spec' + str(specific_headers)
     file_name = format_filename(file_name)
     iCtlgRefresh = int(globalvar.ADDON.getSetting('ctlgRefresh')) * 60
 
@@ -138,7 +139,8 @@ def download_catalog(
 
         with open(file_path, 'wb') as f:
             f.write(r.content)
-
+            
+        print 'fin' + str(headers)
         log.logDLFile(url)
     return file_path
 

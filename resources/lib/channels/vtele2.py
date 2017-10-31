@@ -12,7 +12,7 @@ readyForUse = True
 url_themes='http://api.noovo.ca/api/v1/themes'
 url_episodes='http://api.noovo.ca/api/v1/search/videos?limit=199&subThemes=%s'
 url_video='https://noovo.ca/videos/%s'
-url_video_json='https://edge.api.brightcove.com/playback/v1/accounts/%s/videos/%s'
+url_video_json='https://edge.api.brightcove.com/playback/v1/accounts/%s/videos/%s' 
 
 def list_shows(channel,folder):  
   shows      = []  
@@ -63,7 +63,7 @@ def getVideoURL(channel,slug):
   da=re.findall('data-account="(.*?)"', html)[0]
   vid=re.findall('data-video-id="(.*?)"', html)[0]
   
-  filePath = utils.downloadCatalog(url_video_json % (da,vid), 'VTELE%s.json' % vid, True, {})
+  filePath = utils.downloadCatalog(url_video_json % (da,vid), 'VTELE%s.json' % vid, True, {}, {'Accept':'application/json;pk=BCpkADawqM145C2ijKGLTnwjc7d61ZlONDwMyE_8xJ-8UVM6hjWtMzw5gMSTc3xniaSHQAJ7Mj23t6tajoj7IQdwFuqpwLac1Gm0L6F11zSTeSWfsOW2KF83_vo'})
   filPrgm = open(filePath).read()
   print filPrgm 
   jsonParser = json.loads(filPrgm)

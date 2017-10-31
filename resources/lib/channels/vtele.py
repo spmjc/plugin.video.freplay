@@ -6,7 +6,7 @@ from resources.lib import globalvar
 
 title       = ['VTele']
 img         = ['vtele']
-readyForUse = True
+readyForUse = False
 
 urlCatalog = 'http://apps.vtele.ca/api/shows'
 videoList       = 'http://apps.vtele.ca/api/shows/%s/videos'
