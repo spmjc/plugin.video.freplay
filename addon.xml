@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.video.freplay"
        name="FReplay"
-       version="0.6.11"
-       provider-name="SPM, JUL1EN094, sy6sy2">
+       version="0.6.12"
+       provider-name="SPM, JUL1EN094">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.beautifulsoup4" version="4.3.2"/>
