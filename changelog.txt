@@ -1,3 +1,7 @@
+Version 0.6.12
+  -Fixed Allocine
+  -Fixed vTele
+  
 Version 0.6.11
   -Added Jeux Video.com
   -Added Tetes a claques (merci gdusart)
