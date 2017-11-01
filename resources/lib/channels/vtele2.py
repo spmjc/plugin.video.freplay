@@ -18,13 +18,13 @@ def list_shows(channel,folder):
   shows      = []  
   
   if folder == 'none':
-    filePath = utils.downloadCatalog(url_themes, 'VTELE.XML', False, {})
+    filePath = utils.downloadCatalog(url_themes, 'VTELE.JSON', False, {})
     filPrgm = open(filePath).read()
     jsonParser = json.loads(filPrgm)
     for em in jsonParser['data']['results']:
       shows.append( [channel,em['slug'], em['title'].encode('utf-8'),em['header']['url-list'],'folder'] )
   else:
-    filePath = utils.downloadCatalog(url_themes, 'VTELE.XML', False, {})
+    filePath = utils.downloadCatalog(url_themes, 'VTELE.JSON', False, {})
     filPrgm = open(filePath).read()
     jsonParser = json.loads(filPrgm)
     for em in jsonParser['data']['results']:

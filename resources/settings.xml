@@ -42,7 +42,6 @@
         <setting label="Histoire" type="number" id="disphistoire" default="27"/> 
         <setting label="TNTV" type="number" id="disptntv" default="28"/>
         <setting label="Ushuaia TV" type="number" id="dispushuaiatv" default="29"/> 
-        <setting label="Jeux Video.com" type="number" id="dispjvc" default="29"/>   
 
     <!--- Chaînes Belges -->
     <setting type="sep"/>
@@ -79,6 +78,8 @@
         <setting label="XTra" type="number" id="dispxtra" default="78"/>
         <setting label="BFM Business" type="number" id="dispbfmbusiness" default="79"/>
         <setting label="Têtes à claques" type="number" id="tetesaclaques" default="80"/>
+        <setting label="Jeux Video.com" type="number" id="dispjvc" default="81"/> 
+        <setting label="Nat Geo" type="number" id="dispnatgeo" default="82"/>     
 
     </category>
 
