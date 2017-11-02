@@ -1,5 +1,6 @@
 Version 0.6.13
   -Added Nat Geo
+  -Added Bein Sport
   
 Version 0.6.12
   -Fixed Allocine
