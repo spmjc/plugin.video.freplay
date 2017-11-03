@@ -67,7 +67,6 @@ def list_videos(channel,folder):
   videos=[]
   filePath=utils.downloadCatalog('http://www.allocine.fr/' + cat + '/?page=' + page ,'allocine' + cat + '-' + page +'.html',False,{})
   html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a').replace('\n', ' ').replace('\r', '')
-  print html
   
   match = re.compile(r'btn-primary btn-large (.*?)">(.*?)<i class="icon-arrow-(.*?)"></i>',re.DOTALL).findall(html)
   prev=False
