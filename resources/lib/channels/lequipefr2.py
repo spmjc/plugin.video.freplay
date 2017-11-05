@@ -32,31 +32,5 @@ def list_videos(channel,show_url):
 
 def getVideoURL(channel,video_id):
     web_url  = 'http://www.dailymotion.com/embed/video/%s' % video_id
-    html     = utils.get_webcontent(web_url)
-    jsonFile=re.compile('var config = (.+?)};', re.DOTALL).findall(html)
-    jsonParser = json.loads(jsonFile[0] + '}') 
-    qualities=[]
-    for key, value in jsonParser['metadata']['qualities'].items():
-      if str(key)!='auto':
-        qualities.append(int(key))
-    qualities.sort()
-    video_urls = []
-    for q in qualities:
-      for i in jsonParser['metadata']['qualities'][str(q)]:
-        if i['type']=='video/mp4':
-          video_urls.append(i['url'])  
-    
-    video_url_len = len(video_urls)
-    if video_url_len > 0:
-      q = globalvar.ADDON.getSetting('lequipefrQuality')
-      if q == '0':
-        # Highest Quality
-        video_url = video_urls[video_url_len - 1]
-      elif q == '1':
-        # Medium Quality
-        video_url = video_urls[(int)(video_url_len / 2)]
-      elif q == '2':
-        # Lowest Quality
-        video_url = video_urls[0] 
-    return video_url
+    return utils.getDMURL(web_url)
  

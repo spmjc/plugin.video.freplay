@@ -1,6 +1,10 @@
 Version 0.6.13
   -Added Nat Geo
   -Added Bein Sport
+  -Added RMC Decouverte
+  -Added Futura Sciences
+  -Updated DailyMotion management (Thanks Wark91)
+  -Updated M6 (Thanks Kagonia)
   
 Version 0.6.12
   -Fixed Allocine

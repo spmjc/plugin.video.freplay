@@ -7,22 +7,22 @@ from resources.lib import globalvar
 from resources.lib import log
 import json
 
-title = ['M6', 'W9', '6ter']
-img = ['m6', 'w9', '6ter']
+title = ['M6', 'W9', '6ter','Stories','Bruce','Crazy Kitchen','Home Time','Sixiem Style','Comic']
+img = ['m6', 'w9', '6ter','stories','bruce','crazy_kitchen','home','styles','comedy']
 readyForUse = True
 
 # Pour connaitre les catégories de la chaine
 # (Info, Divertissement, Séries ...)
 # On récuère un id
 urlRoot = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
-          'm6group_web/services/%sreplay/folders?limit=999&offset=0'
+          'm6group_web/services/%s/folders?limit=999&offset=0'
 
 # Pour connaitre les programmes de cette catégorie
 # (Le meilleur patissier, La france à un incroyable talent, ...)
 # On récupère un id
 urlCategory = 'http://pc.middleware.6play.fr/6play/v2/platforms/' \
               'm6group_web/services/6play/folders/%s/programs' \
-              '?limit=999&offset=0&csa=1&with=parentcontext'
+              '?limit=999&offset=0&csa=6&with=parentcontext'
 
 # Pour connaitres les dossiers de ce programme
 # (Saison 5, Les meilleurs moments, les recettes pas à pas, ...)
@@ -56,11 +56,12 @@ def list_shows(channel, folder):
     shows = []
 
     if folder == 'none':
-        filePath = utils.download_catalog(
-            urlRoot % (channel),
-            '%s.json' % (channel),
-            False,
-            random_ua=True)
+        if channel in ('stories','bruce','crazy_kitchen','home','styles','comedy'):
+          url=urlRoot % (channel)
+        else:
+          url=urlRoot % (channel + 'replay')
+        filePath = utils.download_catalog(url,'%s.json' % (channel),False,random_ua=True)
+        
         filPrgm = open(filePath).read()
         jsonParser = json.loads(filPrgm)
 
@@ -203,20 +204,26 @@ def getVideoURL(channel, media_id):
     videoJson = urllib2.urlopen(req).read()
     jsonParser = json.loads(videoJson)
 
+    
     videoAssets = jsonParser['clips'][0]['assets']
     url = ''
     url2 = ''
     url3 = ''
+    url4 = ''
     for asset in videoAssets:
         if 'ism' in asset['video_container'].encode('utf-8'):
             url = asset['full_physical_path'].encode('utf-8')
         if 'mp4' in asset['video_container'].encode('utf-8'):
             if 'hd' in asset['video_quality'].encode('utf-8'):
                 url2 = asset['full_physical_path'].encode('utf-8')
+        if 'usp_hls_h264' in asset['type'].encode('utf-8'):
+            url4 = asset['full_physical_path'].encode('utf-8')
         else:
             url3 = asset['full_physical_path'].encode('utf-8')
     manifest_url = ''
-    if url:
+    if url4:
+        manifest_url = url4
+    elif url:
         manifest_url = url
     elif url2:
         manifest_url = url2
@@ -230,6 +237,10 @@ def getVideoURL(channel, media_id):
     if 'drm' in manifest:
         msg = 'Vidéo protégée par DRM'
         log.logError(msg, msg)
+        #log.logError(manifest, manifest)
+        #log.logError(manifest_url, manifest_url)
+    	#log.logEvent(videoJson)
+        
         return ''
 
     if globalvar.ADDON.getSetting('6playQuality') == 'Auto':

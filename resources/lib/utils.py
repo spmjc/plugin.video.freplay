@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-import globalvar
-
+import globalvar                  
+import simplejson as json    
+import re
 import os
 import imp
 import time
@@ -223,3 +224,27 @@ def unhide(order):
     globalvar.ADDON.setSetting(
         'disp' + globalvar.hidden_channelsName[order],
         str(len(globalvar.ordered_channels)))
+
+def getDMURL(urlPage):
+  html     = get_webcontent(urlPage)
+  jsonFile=re.compile('var config = (.+?)};', re.DOTALL).findall(html)
+  jsonParser = json.loads(jsonFile[0] + '}') 
+  qualities=[]
+  auto_url=jsonParser['metadata']['qualities']['auto'][0]['url']
+  html=get_webcontent(auto_url)
+  video_urls = re.compile(r'https:(.+?)core',re.DOTALL).findall(html)
+  
+  video_url_len = len(video_urls)
+  if video_url_len > 0:
+    q = globalvar.ADDON.getSetting('DMQuality')
+    print q
+    if q == 'HD':
+      # Highest Quality
+      video_url = video_urls[video_url_len - 1]
+    elif q == 'MD':
+      # Medium Quality
+      video_url = video_urls[(int)(video_url_len / 2)]
+    elif q == 'SD':
+      # Lowest Quality
+      video_url = video_urls[0] 
+  return 'https:%score' % video_url

@@ -43,6 +43,7 @@
         <setting label="TNTV" type="number" id="disptntv" default="28"/>
         <setting label="Ushuaia TV" type="number" id="dispushuaiatv" default="29"/> 
         <setting label="Bein Sport" type="number" id="dispbsport" default="29"/> 
+        <setting label="RMC Decouverte" type="number" id="disprmcd" default="29"/> 
 
     <!--- Chaînes Belges -->
     <setting type="sep"/>
@@ -80,7 +81,14 @@
         <setting label="BFM Business" type="number" id="dispbfmbusiness" default="79"/>
         <setting label="Têtes à claques" type="number" id="tetesaclaques" default="80"/>
         <setting label="Jeux Video.com" type="number" id="dispjvc" default="81"/> 
-        <setting label="Nat Geo" type="number" id="dispnatgeo" default="82"/>     
+        <setting label="Nat Geo" type="number" id="dispnatgeo" default="82"/>    
+        <setting label="Futura Sciences" type="number" id="dispfutura" default="83"/>
+        <setting label="Stories" type="number" id="dispstories" default="84"/>     
+        <setting label="Bruce" type="number" id="dispbruce" default="85"/>     
+        <setting label="Crazy Kitchen" type="number" id="dispcrazy_kitchen" default="86"/>     
+        <setting label="Home Time" type="number" id="disphome" default="87"/>     
+        <setting label="Sixieme Style" type="number" id="dispstyles" default="88"/>     
+        <setting label="Comic" type="number" id="dispcomedy" default="89"/>     
 
     </category>
 
@@ -111,7 +119,7 @@
         <setting label="30334" type="labelenum" id="france4Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
         <setting label="30335" type="labelenum" id="france5Quality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>  
         <setting label="30336" type="labelenum" id="franceoQuality" default="m3u8-download" values="m3u8-download|hls_v5_os"/>
-        <setting label="30340" type="enum" id="lequipefrQuality" values="HD|MD|SD" default="HD"/>          
+        <setting label="30340" type="enum" id="DMQuality" values="HD|MD|SD" default="HD"/>          
         <setting label="30345" type="labelenum" id="tntvQuality" values="mp4|m3u8" default="mp4"/>            
         <setting label="30348" type="slider" id="tf1ThemePages" default="10" range="0,1,20" option="int"/>        
     </category>

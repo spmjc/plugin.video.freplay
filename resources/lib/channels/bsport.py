@@ -34,7 +34,7 @@ def list_videos(channel,id):
   filPrgm = open(filePath).read()
   jsonParser = json.loads(filPrgm)
   for item in jsonParser['hydra:member']:
-    url=item['media'][0]['media']['externalUrl'].encode('utf-8')
+    url=item['media'][0]['media']['uri'].encode('utf-8')
     name=item['headline'].encode('utf-8')
     infoLabels = {"Title": name}
     videos.append( [channel, url , name , '',infoLabels,'play'] )
@@ -42,4 +42,4 @@ def list_videos(channel,id):
   return videos    
 
 def getVideoURL(channel,url):
-  return url
+  return utils.getDMURL(url)

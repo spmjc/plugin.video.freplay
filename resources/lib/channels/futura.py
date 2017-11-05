@@ -35,7 +35,7 @@ def list_videos(channel,cat):
     title='<<Page Precedente'
     videos.append( [channel,prev[0].replace(url_base,''), title , '',{"Title": title},'shows'] )  
     
-  match = re.compile(r'<a href="(.*?)" class="link-wrapper"><article><h3 class="gamma image-mosaic-title text-shadow">(.*?)</h3></article>',re.DOTALL).findall(html)
+  match = re.compile(r'</header><a href="(.*?)" class="link-wrapper"><article><h3 class="gamma image-mosaic-title text-shadow">(.*?)</h3></article>',re.DOTALL).findall(html)
   for url,title in match:
     videos.append( [channel,url, title , '',{"Title": title},'play'] )    
   
@@ -47,8 +47,8 @@ def list_videos(channel,cat):
   return videos 
   
 def getVideoURL(channel,idVideo):  
-  filePath=utils.downloadCatalog(url_base + cat ,'futuravideo.html',True,{})
+  filePath=utils.downloadCatalog(url_base + idVideo ,'futuravideo.html',True,{})
   html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a').replace('\n', ' ').replace('\r', '')
-  url=da=re.findall('src="(.*?)" allowfullscreen', html)[0]
-  return url
+  url=da=re.findall('src="http://www.dailymotion.com(.*?)"', html)[0]
+  return utils.getDMURL('http://www.dailymotion.com' + url)
   
