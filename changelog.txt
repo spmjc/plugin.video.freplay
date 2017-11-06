@@ -1,3 +1,7 @@
+Version 0.6.14
+  -Fixed Allocine
+  -Added Les Docus
+  
 Version 0.6.13
   -Added Nat Geo
   -Added Bein Sport

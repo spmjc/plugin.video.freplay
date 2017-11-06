@@ -42,6 +42,8 @@ def list_shows(channel,folder):
         html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a').replace('\n', ' ').replace('\r', '')
         
         match = re.compile(r'btn-primary btn-large (.*?)">(.*?)<i class="icon-arrow-(.*?)"></i>',re.DOTALL).findall(html)
+        prev=False
+        next=False
         for status,empty,arrow in match:
           if arrow=='left':
             prev=('disabled' not in status)
@@ -49,14 +51,14 @@ def list_shows(channel,folder):
             next=('disabled' not in status)
             
         if prev:
-          shows.append( [channel,cat + '-' + str(int(page)-1), '<<Page Precedente' ,'' ,'folder'] )
+          shows.append( [channel,cat + '|' + str(int(page)-1), '<<Page Precedente' ,'' ,'folder'] )
               
         match = re.compile(r'<h2 class="title "> <span > <a href="(.*?)">(.*?)</a> </span> </h2>',re.DOTALL).findall(html)
         for url,title in match:                                                          
           shows.append( [channel,url, title ,'' ,'folder'] )
         
         if next :
-          shows.append( [channel,cat + '-' + str(int(page)+1), 'Page Suivante>>' ,'' ,'folder'] )
+          shows.append( [channel,cat + '|' + str(int(page)+1), 'Page Suivante>>' ,'' ,'folder'] )
                              
       
   return shows          

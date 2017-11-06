@@ -248,3 +248,13 @@ def getDMURL(urlPage):
       # Lowest Quality
       video_url = video_urls[0] 
   return 'https:%score' % video_url
+  
+def getVimeoURL(urlPage):
+  html     = get_webcontent(urlPage)
+  jsonFile=re.compile('var t=(.+?)};', re.DOTALL).findall(html)
+  print jsonFile[0] + '}'
+  jsonParser = json.loads(jsonFile[0] + '}')
+  qualities= jsonParser['request']['files']['progressive'] 
+  lenQ=len(qualities)
+  print qualities[lenQ-1]['url'] 
+  return qualities[lenQ-1]['url']
