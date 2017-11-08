@@ -88,7 +88,8 @@
         <setting label="Crazy Kitchen" type="number" id="dispcrazy_kitchen" default="86"/>     
         <setting label="Home Time" type="number" id="disphome" default="87"/>     
         <setting label="Sixieme Style" type="number" id="dispstyles" default="88"/>     
-        <setting label="Comic" type="number" id="dispcomedy" default="89"/>     
+        <setting label="Comic" type="number" id="dispcomedy" default="89"/>         
+        <setting label="Les Docus" type="number" id="displedocus" default="90"/>     
 
     </category>
 

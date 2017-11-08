@@ -10,7 +10,9 @@ import urllib2
 import string
 import log
 import logging
-import requests
+import requests       
+import YDStreamExtractor     
+import HTMLParser
 from random import randint
 
 default_ua = "Mozilla/5.0 (Windows NT 6.1; WOW64) " \
@@ -225,6 +227,17 @@ def unhide(order):
         'disp' + globalvar.hidden_channelsName[order],
         str(len(globalvar.ordered_channels)))
 
+def formatName(text):
+  return HTMLParser.HTMLParser().unescape(text).title().encode('utf-8')
+  
+def getExtURL(urlPage):
+  print 'YoutubeDL decoding ' + urlPage
+  
+  vid = YDStreamExtractor.getVideoInfo(urlPage,quality=2) #quality is 0=SD, 1=720p, 2=1080p and is a maximum
+  stream_url = vid.streamURL() #This is what Kodi (XBMC) will play
+  
+  return stream_url
+  
 def getDMURL(urlPage):
   html     = get_webcontent(urlPage)
   jsonFile=re.compile('var config = (.+?)};', re.DOTALL).findall(html)

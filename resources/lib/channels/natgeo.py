@@ -31,7 +31,7 @@ def list_videos(channel,page):
   jsonParser = json.loads(filPrgm)
   for vid in jsonParser:
     id=vid['field_mpx_guid'].encode('utf-8')
-    title=vid['title'].encode('utf-8')
+    title=utils.formatName(vid['title'])
     img=url_base + vid['field_promo_image']
     infoLabels = {"Title": title}
     videos.append( [channel, id , title , img,infoLabels,'play'] )

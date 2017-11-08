@@ -37,6 +37,7 @@ def list_videos(channel,cat):
     
   match = re.compile(r'</header><a href="(.*?)" class="link-wrapper"><article><h3 class="gamma image-mosaic-title text-shadow">(.*?)</h3></article>',re.DOTALL).findall(html)
   for url,title in match:
+    title=utils.formatName(title)
     videos.append( [channel,url, title , '',{"Title": title},'play'] )    
   
   next=re.findall('<link rel="next" href="(.*?)" />', html)
