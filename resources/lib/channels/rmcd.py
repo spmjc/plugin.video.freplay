@@ -34,7 +34,4 @@ def list_videos(channel,page):
   
 def getVideoURL(channel,url):
   url='http://rmcdecouverte.bfmtv.com' + url 
-  #http://rmcdecouverte.bfmtv.com/mediaplayer-replay/?id=18118&title=DEVOIR%20D%27ENQUETE%20:LES%20TUEURS%20DU%20BRABANT
-  #/mediaplayer-replay/?id=18118&title= 																			DEVOIR D'ENQUETE : 																		LES%20TUEURS%20DU%20BRABANT
-  #url='http://rmcdecouverte.bfmtv.com/mediaplayer-replay/?id=16112&title=CONSTRUIRE%20L%27IMPOSSIBLE%20:LE%20CANAL%20DE%20PANAMA'
   return utils.getExtURL(url)

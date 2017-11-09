@@ -24,7 +24,8 @@ def list_videos(channel,param):
   
   filePath=utils.downloadCatalog('https://docs.google.com/spreadsheets/d/%s/pubhtml' % (param),'%s.HTML' % (param),False,{})  
   html=open(filePath).read()
-  match = re.compile(r'<td class="s19" dir="ltr">(.*?)</td><td class="s19" dir="ltr">(.*?)</td><td class="s17" dir="ltr">(.*?)</td>',re.DOTALL).findall(html)
+  match = re.compile(r'<td class="s16" dir="ltr">(.*?)</td><td class="s16" dir="ltr">(.*?)</td><td class="s15" dir="ltr">(.*?)</td>',re.DOTALL).findall(html)
+  #match = re.compile(r'<td class="s16" dir="ltr">(.*?)</td><td class="s16" dir="ltr">(.*?)</td><td class="s15" dir="ltr">(.*?)
   if match:
     for title,path,cnt in match:
       pIndex=path.find('&amp;p=')  

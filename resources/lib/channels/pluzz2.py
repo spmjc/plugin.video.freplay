@@ -123,41 +123,33 @@ def list_videos(channel, folder):
             duration = 0
             date = ''
             id_diffusion = emission['id_diffusion']
-            print 'URL :' + showInfo % (emission['id_diffusion'])
-            filPrgm = utils.get_webcontent(
-                showInfo % (emission['id_diffusion']))
-            if(filPrgm != ''):
-                jsonParserShow = json.loads(filPrgm)
-                if jsonParserShow['synopsis']:
-                    plot = jsonParserShow['synopsis'].encode('utf-8')
-                if jsonParserShow['diffusion']['date_debut']:
-                    date = jsonParserShow['diffusion']['date_debut']
-                    date = date.encode('utf-8')
-                if jsonParserShow['real_duration']:
-                    duration = int(jsonParserShow['real_duration'])
-                if jsonParserShow['titre']:
-                    titre = jsonParserShow['titre'].encode('utf-8')
-                if jsonParserShow['sous_titre']:
-                    titre += ' - ' + \
-                             jsonParserShow['sous_titre'].encode('utf-8')
-                image = imgURL % (jsonParserShow['image'])
-                infoLabels = {
-                    "Title": titre,
-                    "Plot": plot,
-                    "Aired": date.split(' ')[0],
-                    "Duration": duration,
-                    "Year": date[6:10]}
-                if jsonParserShow['genre'] != '':
-                    infoLabels['Genre'] = \
-                        jsonParserShow['genre'].encode('utf-8')
+            if 'accroche' in emission:
+                plot = emission['accroche'].encode('utf-8')
+            if 'real_duration' in emission:
+                duration = int(emission['real_duration'])
+            if 'titre' in emission:
+                titre = emission['titre'].encode('utf-8')
+            if 'soustitre' in emission:
+                titre += ' - ' + emission['soustitre'].encode('utf-8')
+            if 'date_diffusion' in emission:
+                year = emission['date_diffusion'][:4]            
+                titre += ' - ' + emission['date_diffusion'][:10].encode('utf-8')
+            if 'image_medium' in emission:
+                image = imgURL % emission['image_medium']                              
+            
+            infoLabels = {
+                "Title": titre,
+                "Plot": plot,
+                "Duration": duration,
+                "Year": year}
 
-                videos.append([
-                    channel,
-                    id_diffusion,
-                    titre,
-                    image,
-                    infoLabels,
-                    'play'])
+            videos.append([
+                channel,
+                id_diffusion,
+                titre,
+                image,
+                infoLabels,
+                'play'])
     return videos
 
 

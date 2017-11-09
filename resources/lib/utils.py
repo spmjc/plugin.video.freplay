@@ -45,6 +45,7 @@ def getOrderChannel(chanName):
     if globalvar.ADDON.getSetting('disp' + chanName):
         return int(globalvar.ADDON.getSetting('disp' + chanName))
     else:
+        print 'Missing Settings for :' + chanName
         return 20
 
 
@@ -250,14 +251,13 @@ def getDMURL(urlPage):
   video_url_len = len(video_urls)
   if video_url_len > 0:
     q = globalvar.ADDON.getSetting('DMQuality')
-    print q
-    if q == 'HD':
+    if q == 'HD' or q=='0':
       # Highest Quality
       video_url = video_urls[video_url_len - 1]
-    elif q == 'MD':
+    elif q == 'MD' or q=='1':
       # Medium Quality
       video_url = video_urls[(int)(video_url_len / 2)]
-    elif q == 'SD':
+    elif q == 'SD' or q=='2':
       # Lowest Quality
       video_url = video_urls[0] 
   return 'https:%score' % video_url

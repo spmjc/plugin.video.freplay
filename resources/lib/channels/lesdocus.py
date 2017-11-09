@@ -67,5 +67,9 @@ def getVideoURL(channel,url):
   if(len(urls)==0):
     url=re.findall('<meta itemprop="embedURL" content="(.*?)">', html)[0]
   else:
-    url=urls[0][1]
+    if 'vimeo' in url:
+      return utils.getVimeoURL(urls[0][1])
+    else: 
+      return utils.getDMURL(urls[0][1])
+      
   return utils.getExtURL(url)
