@@ -7,7 +7,7 @@ from operator import itemgetter
 
 title       = ['INA']
 img         = ['ina']
-readyForUse = True
+readyForUse = False
 
 bypass_cache = False
 lsLowercase  = list(ascii_lowercase)

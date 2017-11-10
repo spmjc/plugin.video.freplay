@@ -77,6 +77,8 @@ def init():
                                 channelModule.title[i])
                             globalvar.hidden_channelsName.append(
                                 channelModule.img[i])
+                else:
+                  print 'Enlever:' + filename
 
     globalvar.ordered_channels.sort(key=lambda channel: channel[0])
     globalvar.ordered_channels.sort(key=lambda channel: channel[1])
