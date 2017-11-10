@@ -33,7 +33,7 @@ def list_videos(channel,url):
   
   url='https://www.ina.fr/layout/set/ajax/recherche/result?q=tree%3A%28Top%2Fina%2Fogpv3%2Frubrique%2Faudiovideo%2F' + cat + '%2F' + sub + '%29&autopromote=0&c=ina_rubrique&b=' + id + '&type=Video&typeBlock=ina_resultat_exalead&r=Top%2Fina%2Fpremium%2Fnon'
   
-  filePath=utils.downloadCatalog(url ,sub + '.html',True,{})
+  filePath=utils.downloadCatalog(url ,sub + '.html',False,{})
   html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a').replace('\\n', ' ').replace('\r', '').replace('\\t', '').replace("\\","")
   
   if id!='0':

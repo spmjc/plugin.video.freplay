@@ -150,6 +150,7 @@ else:
 
     elif mode[0] == 'play':
         url = globalvar.channels[channel][1].getVideoURL(channel, param)
+        print url
         if url:
             programName = args['name'][0]
             log.logGA(channel, param, programName)

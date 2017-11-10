@@ -6,7 +6,7 @@ common = CommonFunctions
 
 title       = ['BeCurious TV']
 img         = ['becurioustv']
-readyForUse = True
+readyForUse = False
 
 url_root = 'http://becurioustv.com'
 url_shows = '%s/fr/shows'%url_root

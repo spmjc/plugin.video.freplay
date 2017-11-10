@@ -3,6 +3,7 @@ Version 0.6.16
   -Fixed RTBF
   -Fixed Canal-U
   -Fixed INA
+  -Fixed BeCuriousTv
   
 Version 0.6.15
   -Fixed Most Viewed
