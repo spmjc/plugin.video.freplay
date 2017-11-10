@@ -1,3 +1,8 @@
+Version 0.6.16
+  -Added Au Feminin.com
+  -Fixed RTBF
+  -Fixed Canal-U
+  
 Version 0.6.15
   -Fixed Most Viewed
   -Misc Fixes

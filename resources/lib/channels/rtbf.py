@@ -2,8 +2,6 @@
 
 from resources.lib import utils
 import re
-from bs4 import BeautifulSoup as bs
-
 
 title = ['RTBF Auvio']
 img = ['rtbf']
@@ -28,112 +26,26 @@ categories = {
 
 
 def list_shows(channel, param):
-    shows = []
-    if param == 'none':
-        for url, title in categories.iteritems():
-            url = url_root + url
-            shows.append([
-                channel,
-                url + '|' + title,
-                title,
-                '',
-                'folder'])
+  shows = []
+  if param == 'none':
+    for url, title in categories.iteritems():
+      shows.append([channel,url,title,'','shows'])
+  return shows
+    
+def list_videos(channel, cat_url):  
+  videos = []
+  cat=cat_url[2:]  
+  filePath=utils.downloadCatalog(url_root + cat_url ,'rtbf' + cat + '.html',False,{})
+  html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a').replace('\n', ' ').replace('\r', '')
+  match = re.compile(r'<h3 class="rtbf-media-item__title "><a href="(.*?)" title="(.*?)">',re.DOTALL).findall(html)
+  for url,title in match:
+    title=utils.formatName(title)   
+    infoLabels={ "Title": title}
+    videos.append( [channel, url , title , '',infoLabels,'play'] )
 
-    else:
-        url = param.split('|')[0]
-        cat = param.split('|')[1]
-        file_path = utils.download_catalog(
-            url,
-            cat + '.html',
-            random_ua=True)
-        html = open(file_path).read()
-        page_soup = bs(html, "html.parser")
-        articles = page_soup.find('section', class_='js-item-container')
-        articles = articles.find_all('article')
-
-        for article in articles:
-            title_url = article.find(
-                'h3').find('a')
-            title = title_url['title'].encode('utf-8')
-            url_pgm = title_url['href'].encode('utf-8')
-            imgs = article.find('img')['data-srcset']
-            imgs = re.compile(
-                r'http://(.*?).jpg', re.DOTALL).findall(imgs)
-            if len(imgs) == 0:
-                img = ''
-            else:
-                img = imgs[len(imgs) - 1]
-                img = 'http://' + img + '.jpg'
-
-            shows.append([
-                channel,
-                url_pgm,
-                title,
-                img,
-                'shows'])
-
-    return shows
-
-
-def list_videos(channel, show_url):
-    videos = []
-    html = utils.get_webcontent(show_url)
-    page_soup = bs(html, "html.parser")
-    page_soup = bs(html, "html.parser")
-    articles = page_soup.find('section', class_='js-item-container')
-    articles = articles.find_all('article')
-    for article in articles:
-        title_url = article.find(
-            'h3').find('a')
-        title = title_url['title'].encode('utf-8')
-        url_pgm = title_url['href'].encode('utf-8')
-        imgs = article.find('img')['data-srcset']
-        imgs = re.compile(
-            r'http://(.*?).jpg', re.DOTALL).findall(imgs)
-        if len(imgs) == 0:
-            img = ''
-        else:
-            img = imgs[len(imgs) - 1]
-            img = 'http://' + img + '.jpg'
-        duration_soup = article.find(
-            'span',
-            class_='www-media-duration').get_text().encode('utf-8')
-        duration_soup = re.compile(
-            r'(.*?)min(.*?)s', re.DOTALL).findall(duration_soup)[0]
-        duration = int(duration_soup[0]) * 60 + int(duration_soup[1])
-        time = article.find('time')['datetime'].encode('utf-8')
-        time = time[:10]/60
-
-        infoLabels = {
-            "Title": title + '  ' + time,
-            # "Plot": description,
-            'Duration': duration,
-            "Aired": time,
-            "Year": time[-4:]
-        }
-
-        videos.append([
-            channel,
-            url_pgm,
-            title,
-            img,
-            infoLabels,
-            'play'])
-
-    return videos
-
+  return videos
 
 def getVideoURL(channel, url_video):
-    video_id = url_video[-7:]
-    url = 'http://www.rtbf.be/auvio/embed/media?id=' + video_id
-    html = utils.get_webcontent(url)
-    html = html.replace('\\', '')
-    html = html.replace('&quot;', '"')
-    videos = re.findall(
-        'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]' +
-        '|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
-        html)
-
-    for video in videos:
-        if '.mp4' in video:
-            return video
+    html = utils.get_webcontent(url_video).replace('\xe9', 'e').replace('\xe0', 'a').replace('\n', ' ').replace('\r', '')
+    url=re.findall(r'<meta property="og:video" content="(.*?).mp4"', html)[0]
+    return url+'.mp4'

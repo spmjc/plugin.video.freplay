@@ -89,7 +89,8 @@
         <setting label="Home Time" type="number" id="disphome" default="87"/>     
         <setting label="Sixieme Style" type="number" id="dispstyles" default="88"/>     
         <setting label="Comic" type="number" id="dispcomedy" default="89"/>         
-        <setting label="Les Docus" type="number" id="displedocus" default="90"/>     
+        <setting label="Les Docus" type="number" id="displedocus" default="90"/>    
+        <setting label="Au Feminin" type="number" id="dispaufem" default="91"/>     
 
     </category>
 

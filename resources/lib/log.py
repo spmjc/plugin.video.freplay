@@ -55,9 +55,12 @@ def logGA(channel, param, programName):
               't': 'pageview',
               'dl': 'c=%s&p=%s' % (channel, param),
               'dt': programName[:50],
-              'ua': (build + '-' + globalvar.ADDON.getAddonInfo('name') +
-                     ' ' + globalvar.ADDON.getAddonInfo('version'))}
+              'ua': build,
+              'dr': (globalvar.ADDON.getAddonInfo('name') + '-' + globalvar.ADDON.getAddonInfo('version'))}
     print 'Log', 'c=%s&p=%s' % (channel, param)
-    data = urllib.urlencode(values)
-    req = urllib2.Request(url, data)
-    response = urllib2.urlopen(req)
+    try:
+      data = urllib.urlencode(values)
+      req = urllib2.Request(url, data)
+      response = urllib2.urlopen(req)
+    except Exception:
+      print 'Error during Google Analytics'

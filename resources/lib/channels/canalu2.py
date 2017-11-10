@@ -170,11 +170,11 @@ def list_videos(channel, param):
 
 
 def getVideoURL(channel, url):
-    # print 'URL VIDEO : ' + url
-    html = utils.get_webcontent(url)
-    url_videos = re.compile(
-        r'file: "(.*?)"', re.DOTALL).findall(html)
-    for url_video in url_videos:
-        if '.mp4' in url_video:
-            return url_video
+    html = utils.get_webcontent(url).replace('\xe9', 'e').replace('\xe0', 'a').replace('\n', ' ').replace('\r', '')
+    
+    urls = re.compile(r'"file": "(.*?)"', re.DOTALL).findall(html)
+    for url in urls:
+      if '.hd.mp4' in url:
+        url_video=url
+        
     return url_video
