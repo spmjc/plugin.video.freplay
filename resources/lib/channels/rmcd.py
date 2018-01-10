@@ -4,7 +4,8 @@ import re
 import CommonFunctions
 common = CommonFunctions 
 from resources.lib import utils     
-from resources.lib import globalvar 
+from resources.lib import globalvar
+from unidecode import unidecode
 import json       
 
 title=['RMC Decouverte']
@@ -21,7 +22,7 @@ def list_shows(channel,page):
 def list_videos(channel,page):
   videos=[]
   filePath=utils.downloadCatalog('http://rmcdecouverte.bfmtv.com/mediaplayer-replay/' ,'rmcd.html',False,{})
-  html=open(filePath).read().replace('\xe9', 'e').replace('\xe0', 'a').replace('\n', ' ').replace('\r', '')
+  html=unidecode(unicode(open(filePath).read().replace('\n', ' ').replace('\r', ''), encoding = "utf-8"))
   
   
   match = re.compile(r'<figure class="figure modulx1-5-inside-bloc">(.*?)<a href="(.*?)" title="(.*?)">(.*?)data-original="(.*?)"  alt=',re.DOTALL).findall(html)
