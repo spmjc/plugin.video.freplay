@@ -12,7 +12,8 @@ title=['TF1','NT1','HD1','TMC','XTRA']
 img=['tf1','nt1','hd1','tmc','xtra']
 readyForUse=True          
 
-urlCatalog='http://api.mytf1.tf1.fr/mobile/init?device=ios-tablet'
+#urlCatalog='http://api.mytf1.tf1.fr/mobile/init?device=ios-tablet'
+urlCatalog='http://api.mytf1.tf1.fr/mobile/2/init?device=ios-tablet'
 
 def list_shows(channel,param):  
   shows=[]
