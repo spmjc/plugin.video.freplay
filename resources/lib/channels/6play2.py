@@ -218,6 +218,8 @@ def getVideoURL(channel, media_id):
                 url2 = asset['full_physical_path'].encode('utf-8')
         if 'usp_hls_h264' in asset['type'].encode('utf-8'):
             url4 = asset['full_physical_path'].encode('utf-8')
+        elif 'usp_wvhls_h264' in asset['type'].encode('utf-8'):
+            url4 = asset['full_physical_path'].encode('utf-8')
         else:
             url3 = asset['full_physical_path'].encode('utf-8')
     manifest_url = ''
