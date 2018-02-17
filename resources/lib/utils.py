@@ -65,7 +65,9 @@ def init():
                         "Error loading channel module " + filepath)
 
                 if channelModule.readyForUse:
+                  
                     for i in range(0, len(channelModule.title)):
+                        print filename + channelModule.title[i]
                         order = getOrderChannel(channelModule.img[i])
                         if order != 99:
                             globalvar.channels[channelModule.img[i]] = [channelModule.title[i], channelModule, order]
@@ -78,7 +80,7 @@ def init():
                             globalvar.hidden_channelsName.append(
                                 channelModule.img[i])
                 else:
-                  print 'Enlever:' + filename
+                  print 'Remove:' + filename
 
     globalvar.ordered_channels.sort(key=lambda channel: channel[0])
     globalvar.ordered_channels.sort(key=lambda channel: channel[1])

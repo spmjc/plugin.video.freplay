@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.video.freplay"
        name="[COLOR blue]FR[/COLOR]epl[COLOR red]ay[/COLOR]"
-       version="0.6.15"
+       version="0.6.16"
        provider-name="SPM, JUL1EN094">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>

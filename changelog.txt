@@ -4,6 +4,8 @@ Version 0.6.16
   -Fixed Canal-U
   -Fixed INA
   -Fixed BeCuriousTv
+  -Fixed TF1 (Thanks quatsch)
+  -Fixed M6 (Thanks Electrocut)
   
 Version 0.6.15
   -Fixed Most Viewed

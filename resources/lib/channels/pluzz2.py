@@ -143,6 +143,7 @@ def list_videos(channel, folder):
                 "Duration": duration,
                 "Year": year}
 
+            #print titre + getVideoURL(channel,id_diffusion)
             videos.append([
                 channel,
                 id_diffusion,
@@ -154,6 +155,7 @@ def list_videos(channel, folder):
 
 
 def getVideoURL(channel, id):
+        print showInfo % (id) 
         filPrgm = utils.get_webcontent(showInfo % (id))
         jsonParser = json.loads(filPrgm)
         for video in jsonParser['videos']:
